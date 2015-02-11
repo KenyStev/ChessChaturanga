@@ -1,0 +1,44 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ChessChaturanga.Logica;
+
+/**
+ *
+ * @author KenyStev
+ */
+public abstract class Piece{
+    //protected ArrayList<Position> movementsValids= new ArrayList<>();
+    protected Color color;
+    protected String name;
+    //protected Position;
+
+    public Piece(String name,Color color, int row, int col) {
+        this.color=color;
+        this.name=name;
+        //position = new Position(row, col);
+    }
+    
+    protected abstract void genereMovementsValid(Board b);
+    protected abstract boolean validMovement(int row, int col);
+    protected abstract boolean mover(Board b, int row, int col);
+    
+//    public ArrayList<Position> getMovementsValids(){
+//        return movementsValids;
+//    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
+    public String toString() {
+        return name.charAt(0)+""+color.getClass().getName().charAt(0);
+    }
+}
