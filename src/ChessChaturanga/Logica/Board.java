@@ -16,4 +16,10 @@ public class Board {
     public Board() {
         pieces = new Piece[SIZE][SIZE];
     }
+    
+    public Piece getPieceAt(int row, int col){
+        if(pieces[row][col]!=null)
+            return pieces[row][col];
+        return null;
+    }
 }

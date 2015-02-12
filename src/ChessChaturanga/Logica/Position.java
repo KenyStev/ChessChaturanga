@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ChessChaturanga.Logica;
+
+/**
+ *
+ * @author KenyStev
+ */
+public class Position {
+    public int row, col;
+
+    public Position(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+    
+    public void set(int row, int col){
+        setRow(row); setCol(col);
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+    
+    public boolean validar(int r, int c){
+        return row == r && col == c;
+    }
+}

@@ -5,11 +5,14 @@
  */
 package ChessChaturanga.Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author KenyStev
  */
 public class Pawn extends Piece{
+    private ArrayList<Position> attaksValids= new ArrayList<>();
 
     public Pawn(Color color, int row, int col) {
         super("Peon", color, row, col);
@@ -17,17 +20,67 @@ public class Pawn extends Piece{
 
     @Override
     protected void genereMovementsValid(Board b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int row = position.row, col = position.col;
+        switch(color){
+            case GREEN: 
+                if(row < b.SIZE){
+                    if(b.getPieceAt(row+1, col)==null)
+                        movementsValids.add(new Position(row+1, col));
+                    if(col>0){
+                        Piece pIzqu = b.getPieceAt(row+1, col-1);
+                        if(pIzqu!=null && isEnemy(pIzqu))
+                            attaksValids.add(pIzqu.position);
+                    }
+                    if(col<b.SIZE){
+                        Piece pDer = b.getPieceAt(row+1, col+1);
+                        if(pDer!=null && isEnemy(pDer))
+                            attaksValids.add(pDer.position);
+                    }
+                }
+                break;
+            case RED: 
+                if(row > 0){
+                    if(b.getPieceAt(row-1, col)==null)
+                        movementsValids.add(new Position(row-1, col));
+                    if(col>0){
+                        Piece pIzqu = b.getPieceAt(row-1, col-1);
+                        if(pIzqu!=null && isEnemy(pIzqu))
+                            attaksValids.add(pIzqu.position);
+                    }
+                    if(col<b.SIZE){
+                        Piece pDer = b.getPieceAt(row-1, col+1);
+                        if(pDer!=null && isEnemy(pDer))
+                            attaksValids.add(pDer.position);
+                    }
+                }
+                break;
+        }
     }
 
     @Override
     protected boolean validMovement(int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(row!=position.row){
+            for (Position a : attaksValids) {
+                if(a.validar(row, col))
+                    return true;
+            }
+        }else{
+            for (Position m : movementsValids) {
+                if(m.validar(row, col))
+                    return true;
+            }
+        }
+        return false;
     }
 
     @Override
     protected boolean mover(Board b, int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isValid = validMovement(row, col);
+        if(isValid){
+            position.set(row, col);
+            genereMovementsValid(b);
+        }
+        return isValid;
     }
     
 }

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ChessChaturanga.Logica;
+package ChessChaturanga.Visual;
 
-import javax.swing.event.ChangeListener;
+import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.Piece;
 
 /**
  *
@@ -13,20 +14,17 @@ import javax.swing.event.ChangeListener;
  */
 public class Casilla extends javax.swing.JToggleButton{
     private Color color;
-    private boolean thereIsPiece, activeToMove, selected;
+    private boolean activeToMove, selected;
     private Piece piece;
     
     public Casilla() {
         setBounds(TOP, TOP, 84, 84);
-        thereIsPiece=false;
         activeToMove=false;
         selected=false;
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        if(piece!=null)
-            thereIsPiece=true;
     }
 
     public Piece getPiece() {
@@ -35,11 +33,10 @@ public class Casilla extends javax.swing.JToggleButton{
     
     public void deletePiece(){
         piece=null;
-        thereIsPiece=false;
     }
 
     public boolean thereIsPiece() {
-        return thereIsPiece;
+        return piece != null;
     }
     
     public void select(){
@@ -53,5 +50,13 @@ public class Casilla extends javax.swing.JToggleButton{
 
     public boolean isActiveToMove() {
         return activeToMove;
+    }
+    
+    public boolean excangePiece(Casilla c){
+        boolean state = false;
+        if(c.getPiece()!=null && (!c.thereIsPiece() || c.getPiece().isEnemy(c.getPiece()))){
+            setPiece(c.getPiece());
+        }
+        return state;
     }
 }
