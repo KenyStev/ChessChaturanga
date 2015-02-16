@@ -13,6 +13,7 @@ public class Board {
     public static final int SIZE = 8;
     private Piece[][] pieces;
     private User player1, player2, activo;
+    private boolean active;
     
     //Constructor para crear una nueva partida
     public Board(User play1, User play2) {
@@ -20,14 +21,16 @@ public class Board {
         player1 = play1;
         player2 = play2;
         activo=player1;
+        active=true;
     }
 
     //Constructor para cargar partida
-    public Board(Piece[][] pieces, User player1, User player2, User activo) {
+    public Board(Piece[][] pieces, User player1, User player2, boolean active) {
         this.pieces = pieces;
         this.player1 = player1;
         this.player2 = player2;
-        this.activo = activo;
+        this.activo = active?player1:player2;
+        this.active=active;
     }
     
     
@@ -48,8 +51,27 @@ public class Board {
             if(state){
                 pieces[ne.row][ne.col] = p;
                 pieces[piece.row][piece.col]=null;
+                activo = active?player1:player2;
             }
         }
         return state;
+    }
+    
+    
+
+    public Piece[][] getPieces() {
+        return pieces;
+    }
+
+    public User getActivo() {
+        return activo;
+    }
+
+    public User getPlayer1() {
+        return player1;
+    }
+
+    public User getPlayer2() {
+        return player2;
     }
 }

@@ -19,7 +19,7 @@ public class Pawn extends Piece{
     }
 
     @Override
-    protected void genereMovementsValid(Board b) {
+    public Piece genereMovementsValid(Board b) {
         int row = position.row, col = position.col;
         switch(color){
             case GREEN: 
@@ -55,6 +55,7 @@ public class Pawn extends Piece{
                 }
                 break;
         }
+        return this;
     }
 
     @Override

@@ -10,7 +10,22 @@ package ChessChaturanga.Logica;
  * @author KenyStev
  */
 public enum Color {
-    GREEN,
-    RED,
-    WITHOUT
+    GREEN{
+
+        @Override
+        String getCapital() {
+            return "V";
+        }
+        
+    },
+    RED{
+
+        @Override
+        String getCapital() {
+            return "R";
+        }
+        
+    };
+    
+    abstract String getCapital();
 }

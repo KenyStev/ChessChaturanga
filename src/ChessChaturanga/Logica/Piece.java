@@ -23,7 +23,7 @@ public abstract class Piece{
         position = new Position(row, col);
     }
     
-    protected abstract void genereMovementsValid(Board b);
+    protected abstract Piece genereMovementsValid(Board b);
     protected abstract boolean validMovement(int row, int col);
     protected abstract boolean mover(Board b, int row, int col);
     
@@ -41,7 +41,7 @@ public abstract class Piece{
 
     @Override
     public String toString() {
-        return name.charAt(0)+""+color.getClass().getName().charAt(0);
+        return name.charAt(0)+color.getCapital();
     }
 
     public boolean isEnemy(Piece p) {
