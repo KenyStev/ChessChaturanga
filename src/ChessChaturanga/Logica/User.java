@@ -11,11 +11,14 @@ package ChessChaturanga.Logica;
  */
 public class User {
     private Color color;
-    private String name;
+    private String name, pass, email, passFace;
 
-    public User(Color color, String name) {
+    public User(Color color, String name, String pass, String email, String passFace) {
         this.color = color;
         this.name = name;
+        this.pass = pass;
+        this.email = email;
+        this.passFace = passFace;
     }
 
     public void setColor(Color color) {
@@ -27,6 +30,30 @@ public class User {
     }
     
     public boolean valirColor(Color c){
-        return c == color;s
+        return c == color;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassFace() {
+        return passFace;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

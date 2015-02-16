@@ -10,5 +10,5 @@ package ChessChaturanga.Logica;
  * @author KenyStev
  */
 public interface Savable {
-    
+    boolean crearUser(String name, String pass, String email, String passFace);
 }

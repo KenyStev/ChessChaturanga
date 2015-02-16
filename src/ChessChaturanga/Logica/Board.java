@@ -15,10 +15,10 @@ public class Board {
     private User player1, player2, activo;
     
     //Constructor para crear una nueva partida
-    public Board(String play1, String play2) {
+    public Board(User play1, User play2) {
         pieces = new Piece[SIZE][SIZE];
-        player1 = new User(Color.GREEN, play1);
-        player2 = new User(Color.RED, play2);
+        player1 = play1;
+        player2 = play2;
         activo=player1;
     }
 
@@ -43,7 +43,7 @@ public class Board {
     public boolean move(Position piece, Position ne){
         boolean state = false;
         Piece p = pieces[piece.row][piece.col];
-        if(p!=null && p.getColor()==activo.getColor()){
+        if(p!=null && activo.valirColor(p.getColor())){
             state = p.mover(this, ne.row, ne.col);
             if(state){
                 pieces[ne.row][ne.col] = p;
