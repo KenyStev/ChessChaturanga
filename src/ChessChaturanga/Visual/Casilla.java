@@ -31,17 +31,9 @@ public class Casilla extends javax.swing.JToggleButton{
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        if(piece instanceof Pawn){
+        if(piece != null){
             ImageIcon i = new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+piece+".png"));
             setIcon(i);
-//        }else if(piece instanceof Tower){
-//            
-//        }else if(piece instanceof Horse){
-//            
-//        }else if(piece instanceof Advisor){
-//            
-        }else if(piece instanceof King){
-            
         }
     }
 
