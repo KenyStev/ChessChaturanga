@@ -17,7 +17,15 @@ public class King extends Piece{
 
     @Override
     protected Piece genereMovementsValid(Board b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int row = position.row, col = position.col;
+        switch(color){
+            case GREEN: 
+                
+                break;
+            case RED: 
+                
+                break;
+        }
     }
 
     @Override

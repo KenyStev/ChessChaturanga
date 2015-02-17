@@ -10,7 +10,7 @@ package ChessChaturanga.Logica;
  * @author KenyStev
  */
 public enum Color {
-    GREEN{
+    GREEN{ //Piezas de Arriba
 
         @Override
         String getCapital() {
@@ -18,7 +18,7 @@ public enum Color {
         }
         
     },
-    RED{
+    RED{ //Piezas de Abajo
 
         @Override
         String getCapital() {

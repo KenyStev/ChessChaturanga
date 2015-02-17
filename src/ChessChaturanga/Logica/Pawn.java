@@ -55,6 +55,7 @@ public class Pawn extends Piece{
                 }
                 break;
         }
+        
         return this;
     }
 
