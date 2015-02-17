@@ -5,8 +5,6 @@
  */
 package ChessChaturanga.Logica;
 
-import javax.swing.text.html.CSS;
-
 /**
  *
  * @author KenyStev
@@ -42,15 +40,22 @@ public class Board {
         this.atePieces2 = board.atePieces2;
     }
     
-    
-    
     public Piece getPieceAt(int row, int col){
-        if(row>=0 && row<SIZE && col>=0 && col<SIZE){
-            if(pieces[row][col]!=null)
-                return pieces[row][col];
+        for (Piece[] piece : pieces) {
+            for (Piece piece1 : piece) {
+                if(piece1.position.validar(row, col))
+                    return piece1;
+            }
         }
         return null;
     }
+    
+    //Mala Planteacion
+//    public Piece getPieceAt(int row, int col){
+//        if(row>=0 && row<SIZE && col>=0 && col<SIZE)
+//            return pieces[row][col];
+//        return null;
+//    }
     
     public boolean move(Position piece, Position ne){
         boolean state = false;
