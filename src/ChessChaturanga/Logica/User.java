@@ -5,6 +5,8 @@
  */
 package ChessChaturanga.Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author KenyStev
@@ -12,6 +14,8 @@ package ChessChaturanga.Logica;
 public class User {
     private Color color;
     private String name, pass, email, passFace;
+    private int puntos;
+    private ArrayList<String> logs;
 
     public User(Color color, String name, String pass, String email, String passFace) {
         this.color = color;
@@ -19,6 +23,8 @@ public class User {
         this.pass = pass;
         this.email = email;
         this.passFace = passFace;
+        logs = new ArrayList<>();
+        puntos=0;
     }
 
     public void setColor(Color color) {
@@ -55,5 +61,12 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof User)
+            return name.equals(((User)obj).name);
+        return false;
     }
 }

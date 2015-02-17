@@ -23,7 +23,7 @@ public class Pawn extends Piece{
         int row = position.row, col = position.col;
         switch(color){
             case GREEN: 
-                if(row < b.SIZE){
+                if(row < b.SIZE-1){
                     if(b.getPieceAt(row+1, col)==null)
                         movementsValids.add(new Position(row+1, col));
                     if(col>0){
@@ -31,7 +31,7 @@ public class Pawn extends Piece{
                         if(pIzqu!=null && isEnemy(pIzqu))
                             attaksValids.add(pIzqu.position);
                     }
-                    if(col<b.SIZE){
+                    if(col<b.SIZE-1){
                         Piece pDer = b.getPieceAt(row+1, col+1);
                         if(pDer!=null && isEnemy(pDer))
                             attaksValids.add(pDer.position);
@@ -47,7 +47,7 @@ public class Pawn extends Piece{
                         if(pIzqu!=null && isEnemy(pIzqu))
                             attaksValids.add(pIzqu.position);
                     }
-                    if(col<b.SIZE){
+                    if(col<b.SIZE-1){
                         Piece pDer = b.getPieceAt(row-1, col+1);
                         if(pDer!=null && isEnemy(pDer))
                             attaksValids.add(pDer.position);
@@ -55,6 +55,7 @@ public class Pawn extends Piece{
                 }
                 break;
         }
+        
         return this;
     }
 

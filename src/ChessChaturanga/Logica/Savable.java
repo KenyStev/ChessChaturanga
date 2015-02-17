@@ -11,4 +11,9 @@ package ChessChaturanga.Logica;
  */
 public interface Savable {
     boolean crearUser(String name, String pass, String email, String passFace);
+    boolean eliminarUser(String name);
+    boolean crearPartida(String player1, String player2);
+    boolean guardarPartida(String code);
+    boolean eliminarPartida(String code);
+    boolean transferirPartida(String code, String user1, String user2);
 }

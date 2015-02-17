@@ -27,6 +27,14 @@ public abstract class Piece{
     protected abstract boolean validMovement(int row, int col);
     protected abstract boolean mover(Board b, int row, int col);
     
+    public boolean isInMyRoad(Piece p){
+        for (Position m : movementsValids) {
+            if(m.validar(p.position.row, p.position.col))
+                return true;
+        }
+        return false;
+    }
+    
     public ArrayList<Position> getMovementsValids(){
         return movementsValids;
     }
