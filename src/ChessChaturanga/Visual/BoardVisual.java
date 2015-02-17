@@ -5,17 +5,32 @@
  */
 package ChessChaturanga.Visual;
 
+import ChessChaturanga.Logica.Board;
+import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.Piece;
+import ChessChaturanga.Logica.User;
+import java.awt.Rectangle;
+
 /**
  *
  * @author KenyStev
  */
 public class BoardVisual extends javax.swing.JFrame {
 
+    private Board borad;
+    private Casilla[][] casillas;
+    private User player1, player2;
+
     /**
      * Creates new form BoardVisual
      */
-    public BoardVisual() {
+    public BoardVisual(User player1, User player2) {
         initComponents();
+        this.player1 = player1;
+        this.player2 = player2;
+        borad = new Board(player1, player2);
+        casillas = new Casilla[borad.SIZE][borad.SIZE];
+        initCasillas();
     }
 
     /**
@@ -27,17 +42,36 @@ public class BoardVisual extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        table = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout tableLayout = new javax.swing.GroupLayout(table);
+        table.setLayout(tableLayout);
+        tableLayout.setHorizontalGroup(
+            tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 591, Short.MAX_VALUE)
+        );
+        tableLayout.setVerticalGroup(
+            tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 553, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -73,11 +107,25 @@ public class BoardVisual extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardVisual().setVisible(true);
+                new BoardVisual(new User(Color.RED, "Keny", "keny", null, null), new User(Color.GREEN, "Konami", "kon", null, null)).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel table;
     // End of variables declaration//GEN-END:variables
+
+    private void initCasillas() {
+        Piece[][] pieces = borad.getPieces();
+        table.setBounds(table.getX(), table.getY(), 0, 0);
+        for (int i = 0; i < casillas.length; i++) {
+            for (int j = 0; j < casillas.length; j++) {
+                casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64));
+                casillas[j][i].setPiece(pieces[j][i]);
+                table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                table.add(casillas[j][i]);
+            }
+        }
+    }
 }

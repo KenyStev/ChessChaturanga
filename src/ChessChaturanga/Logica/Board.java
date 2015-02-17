@@ -131,8 +131,8 @@ public class Board {
         //addPiece(new Tower()); //r2--
         
         for (int i = 0; i < SIZE; i++) {
-            addPiece(new Pawn(Color.RED, r1, i));
-            addPiece(new Pawn(Color.GREEN, r2, i));
+            addPiece(new Pawn(Color.RED, r2, i));
+            addPiece(new Pawn(Color.GREEN, r1, i));
         }
     }
     

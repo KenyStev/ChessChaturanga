@@ -5,8 +5,12 @@
  */
 package ChessChaturanga.Visual;
 
-import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.King;
+import ChessChaturanga.Logica.Pawn;
 import ChessChaturanga.Logica.Piece;
+import java.awt.Color;
+import java.awt.Rectangle;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,14 +21,28 @@ public class Casilla extends javax.swing.JToggleButton{
     private boolean activeToMove, selected;
     private Piece piece;
     
-    public Casilla() {
-        setBounds(TOP, TOP, 84, 84);
+    public Casilla(Rectangle r) {
+        setBounds(r);
         activeToMove=false;
         selected=false;
+        color = new Color(200, 100, 0);
+        setBackground(color);
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+        if(piece instanceof Pawn){
+            ImageIcon i = new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+piece+".png"));
+            setIcon(i);
+//        }else if(piece instanceof Tower){
+//            
+//        }else if(piece instanceof Horse){
+//            
+//        }else if(piece instanceof Advisor){
+//            
+        }else if(piece instanceof King){
+            
+        }
     }
 
     public Piece getPiece() {
