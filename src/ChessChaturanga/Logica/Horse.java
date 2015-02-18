@@ -66,12 +66,21 @@ public class Horse extends Piece{
 
     @Override
     protected boolean validMovement(int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (Position m : movementsValids) {
+            if(m.validar(row, col))
+                return true;
+        }
+        return false;
     }
 
     @Override
     protected boolean mover(Board b, int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isvalid = validMovement(row, col);
+        if(isvalid){
+            position.set(row, col);
+            genereMovementsValid(b);
+        }
+        return isvalid;
     }
     
 }
