@@ -5,9 +5,9 @@
  */
 package ChessChaturanga.Visual;
 
-import ChessChaturanga.Logica.King;
-import ChessChaturanga.Logica.Pawn;
+import ChessChaturanga.Logica.Board;
 import ChessChaturanga.Logica.Piece;
+import ChessChaturanga.Logica.Position;
 import java.awt.Color;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -18,15 +18,16 @@ import javax.swing.ImageIcon;
  */
 public class Casilla extends javax.swing.JToggleButton{
     private Color color;
-    private boolean activeToMove, selected;
+    private boolean activeToMove;
     private Piece piece;
+    public int row, col;
     
-    public Casilla(Rectangle r) {
-        setBounds(r);
+    public Casilla(Rectangle rec, int r, int c) {
+        setBounds(rec);
         activeToMove=false;
-        selected=false;
         color = new Color(200, 100, 0);
         setBackground(color);
+        row=r; col=c;
     }
 
     public void setPiece(Piece piece) {
@@ -34,7 +35,8 @@ public class Casilla extends javax.swing.JToggleButton{
         if(piece != null){
             ImageIcon i = new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+piece+".png"));
             setIcon(i);
-        }
+        }else
+            setIcon(null);
     }
 
     public Piece getPiece() {
@@ -50,23 +52,50 @@ public class Casilla extends javax.swing.JToggleButton{
     }
     
     public void select(){
-        selected=true;
+        setSelected(true);
         
     }
     
     public void unSelect(){
-        selected=false;
+        setSelected(false);
     }
 
     public boolean isActiveToMove() {
         return activeToMove;
     }
     
-    public boolean excangePiece(Casilla c){
-        boolean state = false;
-        if(c.getPiece()!=null && (!c.thereIsPiece() || c.getPiece().isEnemy(c.getPiece()))){
-            setPiece(c.getPiece());
-        }
-        return state;
+    public void activeToMove(){
+        activeToMove=true;
     }
+    
+    public boolean excangePiece(Casilla c, Board b){
+        Position old = new Position(c.row, c.col), now = new Position(row, col);
+        if(c.getPiece()!=null && b.move(old, now)){
+            System.out.println("cambio la pieza "+ c.getPiece() +" de: "+old+" a: "+ now);
+            setPiece(c.getPiece());
+            c.deletePiece();
+            unSelect();//setSelected(false);
+            c.unSelect();//c.setSelected(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Casilla)
+            if(piece!=null)
+                return piece.equals(((Casilla)obj).getPiece());
+        return false;
+    }
+
+    void unActiveToMove() {
+        activeToMove=false;
+        if(piece != null){
+            ImageIcon i = new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+piece+".png"));
+            setIcon(i);
+        }else
+            setIcon(null);
+    }
+    
 }

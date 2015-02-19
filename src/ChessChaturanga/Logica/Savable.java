@@ -10,10 +10,23 @@ package ChessChaturanga.Logica;
  * @author KenyStev
  */
 public interface Savable {
+    //serializar y deserealizar el arraylist de users
+    /*funcion de buscar es propia de la clase que la implementa*/
+    //int     buscarUser(String name); //return index of userArrayList
     boolean crearUser(String name, String pass, String email, String passFace);
     boolean eliminarUser(String name);
-    boolean crearPartida(String player1, String player2);
-    boolean guardarPartida(String code);
-    boolean eliminarPartida(String code);
-    boolean transferirPartida(String code, String user1, String user2);
+    boolean modificarPassword(String pass);
+    
+    /*funcion buscar es propia de la clase que la implementa*/
+    //String  buscarPartida(int num); //return path
+    //int  buscarPartida(int num); //return index
+    boolean crearPartida(User player1, User player2);
+    Partida cargarPartida(int num); //casting (Partida)Object
+    boolean sobrescribirPartida(Partida p);
+    boolean guardarPartida(Partida p);
+    boolean eliminarPartida(String path);
+    boolean transferirPartida(String path, User user1, User user2);
+    
+    boolean serializar(Object obj);
+    Object deserializar(String path);
 }

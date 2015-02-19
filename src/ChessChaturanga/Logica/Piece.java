@@ -25,7 +25,8 @@ public abstract class Piece{
     
     protected abstract Piece genereMovementsValid(Board b);
     protected abstract boolean validMovement(int row, int col);
-    protected abstract boolean mover(Board b, int row, int col);
+    public abstract boolean mover(Board b, int row, int col);
+    public abstract ArrayList<Position> getMovementsValids(Board b);
     
     public boolean isInMyRoad(Piece p){
         for (Position m : movementsValids) {
@@ -33,10 +34,6 @@ public abstract class Piece{
                 return true;
         }
         return false;
-    }
-    
-    public ArrayList<Position> getMovementsValids(){
-        return movementsValids;
     }
 
     public String getName() {
@@ -54,5 +51,12 @@ public abstract class Piece{
 
     public boolean isEnemy(Piece p) {
         return p.getColor()!=color;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Piece)
+            return toString().equals(obj);
+        return false;
     }
 }

@@ -5,11 +5,10 @@
  */
 package ChessChaturanga.Visual;
 
-import ChessChaturanga.Logica.Board;
-import ChessChaturanga.Logica.Color;
-import ChessChaturanga.Logica.Piece;
-import ChessChaturanga.Logica.User;
+import ChessChaturanga.Logica.*;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,18 +16,26 @@ import java.awt.Rectangle;
  */
 public class BoardVisual extends javax.swing.JFrame {
 
-    private Board borad;
+    public Board borad;
     private Casilla[][] casillas;
-    private User player1, player2;
+    private Casilla casillaActiva;
+    private static final String PIECESATE = "Piezas comidas: ";
 
     /**
      * Creates new form BoardVisual
      */
     public BoardVisual(User player1, User player2) {
         initComponents();
-        this.player1 = player1;
-        this.player2 = player2;
         borad = new Board(player1, player2);
+        casillas = new Casilla[borad.SIZE][borad.SIZE];
+        lblPlayer1.setText(player1.getName());
+        lblPlayer2.setText(player2.getName());
+        showPiecesAte();
+        initCasillas();
+    }
+
+    public BoardVisual(Board b) {
+        borad=b;
         casillas = new Casilla[borad.SIZE][borad.SIZE];
         initCasillas();
     }
@@ -43,36 +50,82 @@ public class BoardVisual extends javax.swing.JFrame {
     private void initComponents() {
 
         table = new javax.swing.JPanel();
+        paneUsersInfo = new javax.swing.JPanel();
+        lblPlayer2 = new javax.swing.JLabel();
+        lblPlayer1 = new javax.swing.JLabel();
+        lblP2AtePieces = new javax.swing.JLabel();
+        lblP1AtePieces = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBounds(new java.awt.Rectangle(250, 0, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         javax.swing.GroupLayout tableLayout = new javax.swing.GroupLayout(table);
         table.setLayout(tableLayout);
         tableLayout.setHorizontalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGap(0, 557, Short.MAX_VALUE)
         );
         tableLayout.setVerticalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 553, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        lblPlayer2.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
+
+        lblPlayer1.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
+
+        javax.swing.GroupLayout paneUsersInfoLayout = new javax.swing.GroupLayout(paneUsersInfo);
+        paneUsersInfo.setLayout(paneUsersInfoLayout);
+        paneUsersInfoLayout.setHorizontalGroup(
+            paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneUsersInfoLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+        paneUsersInfoLayout.setVerticalGroup(
+            paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paneUsersInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
+                .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(18, 18, 18)
+                .addComponent(paneUsersInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(paneUsersInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        table.getAccessibleContext().setAccessibleName("");
+        table.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -113,6 +166,11 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblP1AtePieces;
+    private javax.swing.JLabel lblP2AtePieces;
+    private javax.swing.JLabel lblPlayer1;
+    private javax.swing.JLabel lblPlayer2;
+    private javax.swing.JPanel paneUsersInfo;
     private javax.swing.JPanel table;
     // End of variables declaration//GEN-END:variables
 
@@ -121,11 +179,75 @@ public class BoardVisual extends javax.swing.JFrame {
         table.setBounds(table.getX(), table.getY(), 0, 0);
         for (int i = 0; i < casillas.length; i++) {
             for (int j = 0; j < casillas.length; j++) {
-                casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64));
+                casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64), j,i);
+                casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
                 casillas[j][i].setPiece(pieces[j][i]);
                 table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
                 table.add(casillas[j][i]);
             }
         }
+        
+    }
+
+    public void showWhereCanMove(ArrayList<Position> movementsValids) {
+        for (Position m : movementsValids) {
+            casillas[m.row][m.col].activeToMove();
+            if(casillas[m.row][m.col].getPiece()==null)
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove.png")));
+            else
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove"+casillas[m.row][m.col].getPiece()+".png")));
+        }
+        getContentPane().repaint();
+    }
+
+    private void unShowWhereCanMove(ArrayList<Position> movementsValids) {
+        for (Position m : movementsValids) {
+            casillas[m.row][m.col].unActiveToMove();
+        }
+        getContentPane().repaint();
+    }
+
+    public void clickedCasilla(Casilla casilla) {
+        if(casilla.isActiveToMove()){
+            unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+            if(mover(casilla)){
+                casillaActiva=null;
+                showPiecesAte();
+            }
+        }else if(casilla.getPiece()==null || 
+                //Si se selecciona una pieza contraria que no esta activa para mover, se deselecciona la que estaba si lo habia
+                (casilla.getPiece()!=null && !borad.getActivo().valirColor(casilla.getPiece().getColor()))){
+            casilla.unSelect();
+            if(casillaActiva!=null)
+                unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+            casillaActiva=null;
+            reOrder();
+        }else if(borad.getActivo().valirColor(casilla.getPiece().getColor())){
+            if(casillaActiva!=null)
+                unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+            casillaActiva = casilla;
+            showWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+        }
+    }
+
+    private void reOrder() {
+        Piece[][] pieces = borad.getPieces();
+        for (int i = 0; i < casillas.length; i++) {
+            for (int j = 0; j < casillas.length; j++) {
+                casillas[j][i].setPiece(pieces[j][i]);
+            }
+        }
+        getContentPane().repaint();
+    }
+
+    private boolean mover(Casilla casilla) {
+        boolean state = casilla.excangePiece(casillaActiva, borad);
+        if(state)reOrder();
+        return state;
+    }
+
+    private void showPiecesAte() {
+        lblP1AtePieces.setText(PIECESATE+borad.getAtePieces1());
+        lblP2AtePieces.setText(PIECESATE+borad.getAtePieces2());
     }
 }

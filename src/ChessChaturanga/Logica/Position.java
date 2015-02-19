@@ -32,4 +32,9 @@ public class Position {
     public boolean validar(int r, int c){
         return row == r && col == c;
     }
+
+    @Override
+    public String toString() {
+        return "("+row+","+col+")";
+    }
 }

@@ -43,7 +43,7 @@ public class Board {
     public Piece getPieceAt(int row, int col){
         for (Piece[] piece : pieces) {
             for (Piece piece1 : piece) {
-                if(piece1.position.validar(row, col))
+                if(piece1!=null && piece1.position.validar(row, col))
                     return piece1;
             }
         }
@@ -57,6 +57,16 @@ public class Board {
 //        return null;
 //    }
     
+    public Board genMovements(){
+        for (Piece[] piece : pieces) {
+            for (Piece piece1 : piece) {
+                if(piece1!=null)
+                    piece1.genereMovementsValid(this);
+            }
+        }
+        return this;
+    }
+    
     public boolean move(Position piece, Position ne){
         boolean state = false;
         Piece p = pieces[piece.row][piece.col];
@@ -64,10 +74,14 @@ public class Board {
             state = p.mover(this, ne.row, ne.col);
             if(state){
                 if(pieces[ne.row][ne.col]!=null && !activo.valirColor(pieces[ne.row][ne.col].getColor())){
-                    if(activo.equals(player1))
+                    if(activo.equals(player1)){
                         atePieces1++;
-                    else
+                        System.out.println("Piezas comidas P1: "+atePieces1);
+                    }
+                    else{
                         atePieces2++;
+                        System.out.println("Piezas comidas P2: "+atePieces2);
+                    }
                 }
                 pieces[ne.row][ne.col] = p;
                 pieces[piece.row][piece.col]=null;
@@ -95,6 +109,14 @@ public class Board {
     public User getPlayer2() {
         return player2;
     }
+
+    public int getAtePieces1() {
+        return atePieces1;
+    }
+
+    public int getAtePieces2() {
+        return atePieces2;
+    }
     
     public void addPiece(Piece p){
         pieces[p.position.row][p.position.col] = p;
@@ -115,8 +137,8 @@ public class Board {
         //addPiece(new Advisor());
         //addPiece(new Advisor());
         
-        kingRed = new King(Color.RED, r1, c1++);
-        kingGreen = new King(Color.GREEN, r2, c2--);
+        kingRed = new King(Color.RED, r2, c1++);
+        kingGreen = new King(Color.GREEN, r1, c2--);
         
         addPiece(kingRed);
         addPiece(kingGreen);
@@ -131,8 +153,8 @@ public class Board {
         //addPiece(new Tower()); //r2--
         
         for (int i = 0; i < SIZE; i++) {
-            addPiece(new Pawn(Color.RED, r2, i));
-            addPiece(new Pawn(Color.GREEN, r1, i));
+            addPiece(new Pawn(Color.RED, 6, i));
+            addPiece(new Pawn(Color.GREEN, 1, i));
         }
     }
     

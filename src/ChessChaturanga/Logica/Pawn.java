@@ -20,6 +20,8 @@ public class Pawn extends Piece{
 
     @Override
     public Piece genereMovementsValid(Board b) {
+        movementsValids.clear();
+        attaksValids.clear();
         int row = position.row, col = position.col;
         switch(color){
             case GREEN: 
@@ -61,7 +63,7 @@ public class Pawn extends Piece{
 
     @Override
     protected boolean validMovement(int row, int col) {
-        if(row!=position.row){
+        if(col!=position.col){
             for (Position a : attaksValids) {
                 if(a.validar(row, col))
                     return true;
@@ -76,13 +78,30 @@ public class Pawn extends Piece{
     }
 
     @Override
-    protected boolean mover(Board b, int row, int col) {
+    public boolean mover(Board b, int row, int col) {
+        System.out.println("movements valids for: "+this+": "+movementsValids.size());
         boolean isValid = validMovement(row, col);
         if(isValid){
             position.set(row, col);
             genereMovementsValid(b);
         }
         return isValid;
+    }
+
+    @Override
+    public ArrayList<Position> getMovementsValids(Board b) {
+        genereMovementsValid(b);
+        ArrayList<Position> movements = new ArrayList<>();
+        
+        for (Position m : movementsValids) {
+            movements.add(m);
+        }
+        
+        for (Position p : attaksValids) {
+            movements.add(p);
+        }
+        
+        return movements;
     }
     
 }
