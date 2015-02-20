@@ -5,6 +5,8 @@
  */
 package ChessChaturanga.Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author KenyStev
@@ -16,9 +18,11 @@ public class Board {
     private User player1, player2, activo;
     private boolean active;
     private int atePieces1, atePieces2;
+    private ArrayList<String> allMovements;
     
     //Constructor para crear una nueva partida
     public Board(User play1, User play2) {
+        allMovements = new ArrayList<>();
         pieces = new Piece[SIZE][SIZE];
         player1 = play1;
         player2 = play2;
@@ -40,6 +44,14 @@ public class Board {
         this.atePieces1 = board.atePieces1;
         this.atePieces2 = board.atePieces2;
         setColorOfUsers();
+    }
+    
+    public ArrayList<String> getJugadas(){
+        return allMovements;
+    }
+    
+    public void addUltimaJugada(String jugada){
+        allMovements.add(jugada);
     }
     
     public final void setColorOfUsers(){

@@ -53,6 +53,8 @@ public class BoardVisual extends javax.swing.JFrame {
         lblPlayer1 = new javax.swing.JLabel();
         lblP2AtePieces = new javax.swing.JLabel();
         lblP1AtePieces = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableProcesoDelGame = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(250, 0, 0, 0));
@@ -74,6 +76,11 @@ public class BoardVisual extends javax.swing.JFrame {
 
         lblPlayer1.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
 
+        tableProcesoDelGame.setEditable(false);
+        tableProcesoDelGame.setColumns(20);
+        tableProcesoDelGame.setRows(5);
+        jScrollPane2.setViewportView(tableProcesoDelGame);
+
         javax.swing.GroupLayout paneUsersInfoLayout = new javax.swing.GroupLayout(paneUsersInfo);
         paneUsersInfo.setLayout(paneUsersInfoLayout);
         paneUsersInfoLayout.setHorizontalGroup(
@@ -81,11 +88,12 @@ public class BoardVisual extends javax.swing.JFrame {
             .addGroup(paneUsersInfoLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         paneUsersInfoLayout.setVerticalGroup(
             paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,11 +102,13 @@ public class BoardVisual extends javax.swing.JFrame {
                 .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(81, 81, 81))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,12 +174,14 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblP1AtePieces;
     private javax.swing.JLabel lblP2AtePieces;
     private javax.swing.JLabel lblPlayer1;
     private javax.swing.JLabel lblPlayer2;
     private javax.swing.JPanel paneUsersInfo;
     private javax.swing.JPanel table;
+    private javax.swing.JTextArea tableProcesoDelGame;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -189,7 +201,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 table.add(casillas[j][i]);
             }
         }
-        showUserActive();
+        showPlayerActive();
     }
 
     /**
@@ -272,7 +284,8 @@ public class BoardVisual extends javax.swing.JFrame {
                 casillas[j][i].setPiece(pieces[j][i]);
             }
         }
-        showUserActive();
+        showPlayerActive();
+        showAllJugadas();
         getContentPane().repaint();
     }
 
@@ -296,19 +309,31 @@ public class BoardVisual extends javax.swing.JFrame {
         lblP2AtePieces.setText(PIECESATE+borad.getAtePieces2());
     }
     
-    public void showUserActive(){
+    /**
+     * Muestra el Player que esta en turno coloreandolo del color de piezas que esta usando
+     */
+    public void showPlayerActive(){
         if(borad.getActivo().equals(borad.getPlayer1())){
-            lblPlayer1.setForeground(java.awt.Color.red);
+            lblPlayer1.setForeground(java.awt.Color.RED);
             lblPlayer2.setForeground(java.awt.Color.BLACK);
             
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
         }else{
-            lblPlayer2.setForeground(java.awt.Color.green);
+            lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
             
             lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
             lblPlayer1.setIcon(null);
         }
+    }
+    
+    public void showAllJugadas(){
+        ArrayList<String> jugadas = borad.getJugadas();
+        String j="";
+        for (String jugada : jugadas) {
+            j += String.format("%s\n", jugada);
+        }
+        tableProcesoDelGame.setText(j);
     }
 }
