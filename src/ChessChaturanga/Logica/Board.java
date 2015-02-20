@@ -27,6 +27,7 @@ public class Board {
         atePieces1=0;
         atePieces2=0;
         initPieces();
+        setColorOfUsers();
     }
 
     //Constructor para cargar partida
@@ -38,6 +39,12 @@ public class Board {
         this.active=board.active;
         this.atePieces1 = board.atePieces1;
         this.atePieces2 = board.atePieces2;
+        setColorOfUsers();
+    }
+    
+    public final void setColorOfUsers(){
+        player1.setColor(Color.RED);
+        player2.setColor(Color.GREEN);
     }
     
     /**

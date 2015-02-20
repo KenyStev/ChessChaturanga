@@ -17,7 +17,7 @@ public class User {
     private int puntos;
     private ArrayList<String> logs;
 
-    public User(Color color, String name, String pass, String email, String passFace) {
+    public User(String name, String pass, String email, String passFace) {
         this.color = color;
         this.name = name;
         this.pass = pass;

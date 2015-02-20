@@ -158,7 +158,7 @@ public class BoardVisual extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardVisual(new User(Color.RED, "Keny", "keny", null, null), new User(Color.GREEN, "Konami", "kon", null, null)).setVisible(true);
+                new BoardVisual(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)).setVisible(true);
             }
         });
     }
@@ -189,7 +189,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 table.add(casillas[j][i]);
             }
         }
-        
+        showUserActive();
     }
 
     /**
@@ -272,6 +272,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 casillas[j][i].setPiece(pieces[j][i]);
             }
         }
+        showUserActive();
         getContentPane().repaint();
     }
 
@@ -293,5 +294,21 @@ public class BoardVisual extends javax.swing.JFrame {
     private void showPiecesAte() {
         lblP1AtePieces.setText(PIECESATE+borad.getAtePieces1());
         lblP2AtePieces.setText(PIECESATE+borad.getAtePieces2());
+    }
+    
+    public void showUserActive(){
+        if(borad.getActivo().equals(borad.getPlayer1())){
+            lblPlayer1.setForeground(java.awt.Color.red);
+            lblPlayer2.setForeground(java.awt.Color.BLACK);
+            
+            lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
+            lblPlayer2.setIcon(null);
+        }else{
+            lblPlayer2.setForeground(java.awt.Color.green);
+            lblPlayer1.setForeground(java.awt.Color.BLACK);
+            
+            lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
+            lblPlayer1.setIcon(null);
+        }
     }
 }
