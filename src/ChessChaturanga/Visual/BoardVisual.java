@@ -158,7 +158,7 @@ public class BoardVisual extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardVisual(new User(Color.RED, "Keny", "keny", null, null), new User(Color.GREEN, "Konami", "kon", null, null)).setVisible(true);
+                new BoardVisual(new User(Color.RED, "Dennis", "Dennis", null, null), new User(Color.GREEN, "DAME", "kon", null, null)).setVisible(true);
             }
         });
     }
