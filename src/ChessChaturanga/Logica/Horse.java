@@ -18,7 +18,7 @@ public class Horse extends Piece{
     }
 
     @Override
-    protected Piece genereMovementsValid(Board b) {
+    protected void genereMovementsValid(Board b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -5,6 +5,7 @@
  */
 package ChessChaturanga.Logica;
 
+import ChessChaturanga.Visual.BoardVisual;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +42,7 @@ public class King extends Piece{
     }
 
     @Override
-    public Piece genereMovementsValid(Board b) {
+    public void genereMovementsValid(Board b) {
         int row = position.row, col = position.col;
         movementsValids.clear();
         Piece p;
@@ -140,8 +141,6 @@ public class King extends Piece{
                 }
             }
         }
-        
-        return this;
     }
 
     @Override

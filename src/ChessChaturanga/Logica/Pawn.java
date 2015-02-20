@@ -19,7 +19,7 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public Piece genereMovementsValid(Board b) {
+    public void genereMovementsValid(Board b) {
         movementsValids.clear();
         attaksValids.clear();
         int row = position.row, col = position.col;
@@ -57,8 +57,6 @@ public class Pawn extends Piece{
                 }
                 break;
         }
-        
-        return this;
     }
 
     @Override

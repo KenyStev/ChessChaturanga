@@ -40,6 +40,12 @@ public class Board {
         this.atePieces2 = board.atePieces2;
     }
     
+    /**
+     * 
+     * @param row
+     * @param col
+     * @return la pieza que esta en la row y col indicados en los parametros
+     */
     public Piece getPieceAt(int row, int col){
         for (Piece[] piece : pieces) {
             for (Piece piece1 : piece) {
@@ -50,13 +56,7 @@ public class Board {
         return null;
     }
     
-    //Mala Planteacion
-//    public Piece getPieceAt(int row, int col){
-//        if(row>=0 && row<SIZE && col>=0 && col<SIZE)
-//            return pieces[row][col];
-//        return null;
-//    }
-    
+    //no usado
     public Board genMovements(){
         for (Piece[] piece : pieces) {
             for (Piece piece1 : piece) {
@@ -67,6 +67,14 @@ public class Board {
         return this;
     }
     
+    /**
+     * Intenta mover la piece, si el lugar donde se movio se comio una pieza del
+     * adversario, entonces aumenta el contarod de las piezas comidas correspondiene.
+     * si se logra mover tambien cambia el turno del jugador
+     * @param piece posicion de la pieza a mover
+     * @param ne posicion a donde se intenta mover
+     * @return true si fue posible moverla y false de lo contrario
+     */
     public boolean move(Position piece, Position ne){
         boolean state = false;
         Piece p = pieces[piece.row][piece.col];
@@ -122,6 +130,9 @@ public class Board {
         pieces[p.position.row][p.position.col] = p;
     }
 
+    /**
+     * Inicializa las pocisiones de las pieces en el tablero
+     */
     private void initPieces() {
         int r1=0, r2=SIZE-1, c1=0, c2=SIZE-1;
         
@@ -158,6 +169,11 @@ public class Board {
         }
     }
     
+    /**
+     * 
+     * @param p anything piece
+     * @return Rey enemigo de una piece
+     */
     public King getKingEnemy(Piece p){
         if(kingRed.isEnemy(p))
             return (King)kingRed;
