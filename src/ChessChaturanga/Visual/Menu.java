@@ -93,9 +93,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_CrearUsuarioActionPerformed
 
     private void Btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IniciarSesionActionPerformed
-        Login Log = new Login();
-        this.setVisible(false);
-        Log.setVisible(true);
+        //Abrimos otra jframe con este codigo.
+        //Login Log = new Login();
+        //this.setVisible(false);
+        //Log.setVisible(true);
     }//GEN-LAST:event_Btn_IniciarSesionActionPerformed
 
     /**
