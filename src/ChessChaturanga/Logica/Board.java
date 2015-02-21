@@ -15,7 +15,7 @@ public class Board {
     public static final int SIZE = 8;
     private Piece[][] pieces;
     private Piece kingGreen, kingRed;
-    private User player1, player2, activo, winer;
+    private User player1, player2, activo, winer, loser;
     private boolean active, terminada;
     private int atePieces1, atePieces2;
     private ArrayList<String> allMovements;
@@ -41,11 +41,13 @@ public class Board {
         this.player1 = board.player1;
         this.player2 = board.player2;
         this.activo = board.active?player1:player2;
-        this.active=board.active;
+        this.active = board.active;
         this.atePieces1 = board.atePieces1;
         this.atePieces2 = board.atePieces2;
         this.allMovements = board.allMovements;
         this.terminada = board.terminada;
+        this.winer = board.winer;
+        this.loser = board.loser;
         setColorOfUsers();
     }
     
@@ -109,6 +111,7 @@ public class Board {
                     if(moveTo.equals(getKingEnemy(p))){
                         terminada=true;
                         winer=activo;
+                        loser=!active?player1:player2;
                     }
                     
                     if(activo.equals(player1)){
@@ -163,6 +166,10 @@ public class Board {
 
     public User getWiner() {
         return winer;
+    }
+
+    public User getLoser() {
+        return loser;
     }
 
     public boolean isTerminada() {

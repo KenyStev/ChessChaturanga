@@ -289,12 +289,8 @@ public class BoardVisual extends javax.swing.JFrame {
         getContentPane().repaint();
         
         if(borad.isTerminada()){
-            for (int i = 0; i < casillas.length; i++) {
-                for (int j = 0; j < casillas.length; j++) {
-                    casillas[j][i].setEnabled(false);
-                }
-            }
-            JOptionPane.showMessageDialog(this, "Winer "+ borad.getWiner().getName()+" con las Piezas "+borad.getWiner().getColor(), "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+            String msj = borad.getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getLoser().equals(borad.getPlayer1())?borad.getAtePieces2()-1:borad.getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getLoser().getName()+"!!!!";
+            JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -355,5 +351,9 @@ public class BoardVisual extends javax.swing.JFrame {
         lblPlayer1.setText(borad.getPlayer1().getName());
         lblPlayer2.setText(borad.getPlayer2().getName());
         showPiecesAte();
+    }
+
+    public void doNothing(Casilla casilla) {
+        casilla.unSelect();
     }
 }
