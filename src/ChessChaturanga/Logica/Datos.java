@@ -11,4 +11,5 @@ package ChessChaturanga.Logica;
  */
 public class Datos {
     public static User logedin;
+    public static Savable saver = new saveWithArrayList();
 }
