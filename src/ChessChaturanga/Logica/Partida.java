@@ -5,6 +5,7 @@
  */
 package ChessChaturanga.Logica;
 
+import ChessChaturanga.Visual.BoardVisual;
 import java.util.Calendar;
 
 /**
@@ -15,12 +16,14 @@ public class Partida {
     private Board board;
     private Calendar fechaCreada, lastFechaEdited;
     private int num;
+    
 
     public Partida(Board board, int num) {
         this.board = board;
         this.fechaCreada = Calendar.getInstance();
         this.lastFechaEdited = Calendar.getInstance();
         this.num = num;
+        new BoardVisual(board).setVisible(true);
     }
 
     public Board getBoard() {

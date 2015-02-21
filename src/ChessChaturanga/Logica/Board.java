@@ -15,8 +15,8 @@ public class Board {
     public static final int SIZE = 8;
     private Piece[][] pieces;
     private Piece kingGreen, kingRed;
-    private User player1, player2, activo;
-    private boolean active;
+    private User player1, player2, activo, winer;
+    private boolean active, terminada;
     private int atePieces1, atePieces2;
     private ArrayList<String> allMovements;
     
@@ -30,6 +30,7 @@ public class Board {
         active=true;
         atePieces1=0;
         atePieces2=0;
+        terminada=false;
         initPieces();
         setColorOfUsers();
     }
@@ -43,6 +44,8 @@ public class Board {
         this.active=board.active;
         this.atePieces1 = board.atePieces1;
         this.atePieces2 = board.atePieces2;
+        this.allMovements = board.allMovements;
+        this.terminada = board.terminada;
         setColorOfUsers();
     }
     
@@ -96,11 +99,18 @@ public class Board {
      */
     public boolean move(Position piece, Position ne){
         boolean state = false;
-        Piece p = pieces[piece.row][piece.col];
+        Piece p = pieces[piece.row][piece.col], moveTo = pieces[ne.row][ne.col];
         if(p!=null && activo.valirColor(p.getColor())){
+            String matoPiece = "";
             state = p.mover(this, ne.row, ne.col);
             if(state){
-                if(pieces[ne.row][ne.col]!=null && !activo.valirColor(pieces[ne.row][ne.col].getColor())){
+                if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
+                    
+                    if(moveTo.equals(getKingEnemy(p))){
+                        terminada=true;
+                        winer=activo;
+                    }
+                    
                     if(activo.equals(player1)){
                         atePieces1++;
                         System.out.println("Piezas comidas P1: "+atePieces1);
@@ -109,11 +119,13 @@ public class Board {
                         atePieces2++;
                         System.out.println("Piezas comidas P2: "+atePieces2);
                     }
+                    matoPiece=" matando a: "+moveTo.getName()+moveTo.getColor().name();
                 }
                 pieces[ne.row][ne.col] = p;
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
+                addUltimaJugada(p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne + matoPiece);
             }
         }
         return state;
@@ -147,6 +159,14 @@ public class Board {
     
     public void addPiece(Piece p){
         pieces[p.position.row][p.position.col] = p;
+    }
+
+    public User getWiner() {
+        return winer;
+    }
+
+    public boolean isTerminada() {
+        return terminada;
     }
 
     /**

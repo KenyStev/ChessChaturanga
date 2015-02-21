@@ -9,6 +9,7 @@ import ChessChaturanga.Logica.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,10 +28,7 @@ public class BoardVisual extends javax.swing.JFrame {
     public BoardVisual(User player1, User player2) {
         initComponents();
         borad = new Board(player1, player2);
-        casillas = new Casilla[borad.SIZE][borad.SIZE];
-        lblPlayer1.setText(player1.getName());
-        lblPlayer2.setText(player2.getName());
-        showPiecesAte();
+        init();
         initCasillas();
     }
 
@@ -38,8 +36,10 @@ public class BoardVisual extends javax.swing.JFrame {
      * Creates new form BoardVisual from existing partida
      */
     public BoardVisual(Board b) {
+        initComponents();
         borad=b;
         casillas = new Casilla[borad.SIZE][borad.SIZE];
+        init();
         initCasillas();
     }
     
@@ -287,6 +287,15 @@ public class BoardVisual extends javax.swing.JFrame {
         showPlayerActive();
         showAllJugadas();
         getContentPane().repaint();
+        
+        if(borad.isTerminada()){
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    casillas[j][i].setEnabled(false);
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Winer "+ borad.getWiner().getName()+" con las Piezas "+borad.getWiner().getColor(), "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -328,6 +337,10 @@ public class BoardVisual extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Toma todas las jugadas que se han hecho durante el juego del arraylist que esta
+     * en board y las agrega al textAreal
+     */
     public void showAllJugadas(){
         ArrayList<String> jugadas = borad.getJugadas();
         String j="";
@@ -335,5 +348,12 @@ public class BoardVisual extends javax.swing.JFrame {
             j += String.format("%s\n", jugada);
         }
         tableProcesoDelGame.setText(j);
+    }
+
+    private void init() {
+        casillas = new Casilla[borad.SIZE][borad.SIZE];
+        lblPlayer1.setText(borad.getPlayer1().getName());
+        lblPlayer2.setText(borad.getPlayer2().getName());
+        showPiecesAte();
     }
 }
