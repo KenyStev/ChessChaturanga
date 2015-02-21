@@ -17,7 +17,7 @@ public class User {
     private int puntos;
     private ArrayList<String> logs;
 
-    public User(Color color, String name, String pass, String email, String passFace) {
+    public User(String name, String pass, String email, String passFace) {
         this.color = color;
         this.name = name;
         this.pass = pass;
@@ -61,6 +61,14 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+    
+    public void addLog(String log){
+        logs.add(log);
+    }
+    
+    void addPoints() {
+        puntos+=3;
     }
 
     @Override

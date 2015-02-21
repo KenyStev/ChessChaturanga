@@ -9,6 +9,7 @@ import ChessChaturanga.Logica.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,13 +25,20 @@ public class BoardVisual extends javax.swing.JFrame {
     /**
      * Creates new form BoardVisual
      */
+    public BoardVisual(Partida parent) {
+        initComponents();
+        borad = parent.getBoard();
+        init();
+        initCasillas();
+    }
+    
+    /**
+     * Creates new form BoardVisual
+     */
     public BoardVisual(User player1, User player2) {
         initComponents();
         borad = new Board(player1, player2);
-        casillas = new Casilla[borad.SIZE][borad.SIZE];
-        lblPlayer1.setText(player1.getName());
-        lblPlayer2.setText(player2.getName());
-        showPiecesAte();
+        init();
         initCasillas();
     }
 
@@ -38,8 +46,10 @@ public class BoardVisual extends javax.swing.JFrame {
      * Creates new form BoardVisual from existing partida
      */
     public BoardVisual(Board b) {
+        initComponents();
         borad=b;
         casillas = new Casilla[borad.SIZE][borad.SIZE];
+        init();
         initCasillas();
     }
     
@@ -53,6 +63,8 @@ public class BoardVisual extends javax.swing.JFrame {
         lblPlayer1 = new javax.swing.JLabel();
         lblP2AtePieces = new javax.swing.JLabel();
         lblP1AtePieces = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableProcesoDelGame = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(250, 0, 0, 0));
@@ -74,6 +86,11 @@ public class BoardVisual extends javax.swing.JFrame {
 
         lblPlayer1.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
 
+        tableProcesoDelGame.setEditable(false);
+        tableProcesoDelGame.setColumns(20);
+        tableProcesoDelGame.setRows(5);
+        jScrollPane2.setViewportView(tableProcesoDelGame);
+
         javax.swing.GroupLayout paneUsersInfoLayout = new javax.swing.GroupLayout(paneUsersInfo);
         paneUsersInfo.setLayout(paneUsersInfoLayout);
         paneUsersInfoLayout.setHorizontalGroup(
@@ -81,11 +98,12 @@ public class BoardVisual extends javax.swing.JFrame {
             .addGroup(paneUsersInfoLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         paneUsersInfoLayout.setVerticalGroup(
             paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,11 +112,13 @@ public class BoardVisual extends javax.swing.JFrame {
                 .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(81, 81, 81))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,18 +178,21 @@ public class BoardVisual extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardVisual(new User(Color.RED, "Dennis", "Dennis", null, null), new User(Color.GREEN, "DAME", "kon", null, null)).setVisible(true);
+                Partida game = new Partida(new Board(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)), 0);
+                new BoardVisual(game);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblP1AtePieces;
     private javax.swing.JLabel lblP2AtePieces;
     private javax.swing.JLabel lblPlayer1;
     private javax.swing.JLabel lblPlayer2;
     private javax.swing.JPanel paneUsersInfo;
     private javax.swing.JPanel table;
+    private javax.swing.JTextArea tableProcesoDelGame;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -189,7 +212,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 table.add(casillas[j][i]);
             }
         }
-        
+        showPlayerActive();
     }
 
     /**
@@ -272,7 +295,15 @@ public class BoardVisual extends javax.swing.JFrame {
                 casillas[j][i].setPiece(pieces[j][i]);
             }
         }
+        showPlayerActive();
+        showAllJugadas();
         getContentPane().repaint();
+        
+        if(borad.getParent().isTerminada()){
+            String msj = "EL JUGADOR : "+borad.getParent().getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getParent().getLoser().equals(borad.getPlayer1())?borad.getParent().getAtePieces2()-1:borad.getParent().getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getParent().getLoser().getName()+"!!!!";
+            borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+            JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -291,7 +322,50 @@ public class BoardVisual extends javax.swing.JFrame {
      * Actusliza las labels que mustran la cantidad de piezas comidas por cada player
      */
     private void showPiecesAte() {
-        lblP1AtePieces.setText(PIECESATE+borad.getAtePieces1());
-        lblP2AtePieces.setText(PIECESATE+borad.getAtePieces2());
+        lblP1AtePieces.setText(PIECESATE+borad.getParent().getAtePieces1());
+        lblP2AtePieces.setText(PIECESATE+borad.getParent().getAtePieces2());
+    }
+    
+    /**
+     * Muestra el Player que esta en turno coloreandolo del color de piezas que esta usando
+     */
+    public void showPlayerActive(){
+        if(borad.getActivo().equals(borad.getPlayer1())){
+            lblPlayer1.setForeground(java.awt.Color.RED);
+            lblPlayer2.setForeground(java.awt.Color.BLACK);
+            
+            lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
+            lblPlayer2.setIcon(null);
+        }else{
+            lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
+            lblPlayer1.setForeground(java.awt.Color.BLACK);
+            
+            lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
+            lblPlayer1.setIcon(null);
+        }
+    }
+    
+    /**
+     * Toma todas las jugadas que se han hecho durante el juego del arraylist que esta
+     * en board y las agrega al textAreal
+     */
+    public void showAllJugadas(){
+        ArrayList<String> jugadas = borad.getParent().getJugadas();
+        String j="";
+        for (String jugada : jugadas) {
+            j += String.format("%s\n", jugada);
+        }
+        tableProcesoDelGame.setText(j);
+    }
+
+    private void init() {
+        casillas = new Casilla[borad.SIZE][borad.SIZE];
+        lblPlayer1.setText(borad.getPlayer1().getName());
+        lblPlayer2.setText(borad.getPlayer2().getName());
+        showPiecesAte();
+    }
+
+    public void doNothing(Casilla casilla) {
+        casilla.unSelect();
     }
 }

@@ -74,8 +74,8 @@ public class Casilla extends javax.swing.JToggleButton{
             System.out.println("cambio la pieza "+ c.getPiece() +" de: "+old+" a: "+ now);
             setPiece(c.getPiece());
             c.deletePiece();
-            unSelect();//setSelected(false);
-            c.unSelect();//c.setSelected(false);
+            unSelect();
+            c.unSelect();
             return true;
         }
         return false;

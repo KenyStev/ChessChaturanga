@@ -5,6 +5,8 @@
  */
 package ChessChaturanga.Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author KenyStev
@@ -15,18 +17,17 @@ public class Board {
     private Piece kingGreen, kingRed;
     private User player1, player2, activo;
     private boolean active;
-    private int atePieces1, atePieces2;
+    private Partida parent;
     
-    //Constructor para crear una nueva partida
+    //Constructor para crear un nuevo Tablero
     public Board(User play1, User play2) {
         pieces = new Piece[SIZE][SIZE];
         player1 = play1;
         player2 = play2;
         activo=player1;
         active=true;
-        atePieces1=0;
-        atePieces2=0;
         initPieces();
+        setColorOfUsers();
     }
 
     //Constructor para cargar partida
@@ -35,9 +36,13 @@ public class Board {
         this.player1 = board.player1;
         this.player2 = board.player2;
         this.activo = board.active?player1:player2;
-        this.active=board.active;
-        this.atePieces1 = board.atePieces1;
-        this.atePieces2 = board.atePieces2;
+        this.active = board.active;
+        setColorOfUsers();
+    }
+    
+    public final void setColorOfUsers(){
+        player1.setColor(Color.RED);
+        player2.setColor(Color.GREEN);
     }
     
     /**
@@ -56,17 +61,6 @@ public class Board {
         return null;
     }
     
-    //no usado
-    public Board genMovements(){
-        for (Piece[] piece : pieces) {
-            for (Piece piece1 : piece) {
-                if(piece1!=null)
-                    piece1.genereMovementsValid(this);
-            }
-        }
-        return this;
-    }
-    
     /**
      * Intenta mover la piece, si el lugar donde se movio se comio una pieza del
      * adversario, entonces aumenta el contarod de las piezas comidas correspondiene.
@@ -77,30 +71,38 @@ public class Board {
      */
     public boolean move(Position piece, Position ne){
         boolean state = false;
-        Piece p = pieces[piece.row][piece.col];
+        Piece p = pieces[piece.row][piece.col], moveTo = pieces[ne.row][ne.col];
         if(p!=null && activo.valirColor(p.getColor())){
+            String matoPiece = "";
             state = p.mover(this, ne.row, ne.col);
             if(state){
-                if(pieces[ne.row][ne.col]!=null && !activo.valirColor(pieces[ne.row][ne.col].getColor())){
+                if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
+                    
+                    if(moveTo.equals(getKingEnemy(p))){
+                        parent.setTerminada(true);
+                        parent.setWiner(activo);
+                        parent.setLoser(!active?player1:player2);
+                    }
+                    
                     if(activo.equals(player1)){
-                        atePieces1++;
-                        System.out.println("Piezas comidas P1: "+atePieces1);
+                        parent.addAtePieces1();
+                        System.out.println("Piezas comidas P1: "+parent.getAtePieces1());
                     }
                     else{
-                        atePieces2++;
-                        System.out.println("Piezas comidas P2: "+atePieces2);
+                        parent.addAtePieces2();
+                        System.out.println("Piezas comidas P2: "+parent.getAtePieces2());
                     }
+                    matoPiece=" matando a: "+moveTo.getName()+moveTo.getColor().name();
                 }
                 pieces[ne.row][ne.col] = p;
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
+                parent.addUltimaJugada(p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne + matoPiece);
             }
         }
         return state;
     }
-    
-    
 
     public Piece[][] getPieces() {
         return pieces;
@@ -117,17 +119,17 @@ public class Board {
     public User getPlayer2() {
         return player2;
     }
-
-    public int getAtePieces1() {
-        return atePieces1;
-    }
-
-    public int getAtePieces2() {
-        return atePieces2;
-    }
     
     public void addPiece(Piece p){
         pieces[p.position.row][p.position.col] = p;
+    }
+
+    public Partida getParent() {
+        return parent;
+    }
+    
+    public void setParent(Partida parent){
+        this.parent=parent;
     }
 
     /**
