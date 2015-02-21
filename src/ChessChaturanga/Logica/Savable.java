@@ -12,10 +12,10 @@ package ChessChaturanga.Logica;
 public interface Savable {
     //serializar y deserealizar el arraylist de users
     /*funcion de buscar es propia de la clase que la implementa*/
-    //int     buscarUser(String name); //return index of userArrayList
+    int     buscarUser(String name); //return index of userArrayList
     boolean crearUser(String name, String pass, String email, String passFace);
     boolean eliminarUser(String name);
-    boolean modificarPassword(String pass);
+    boolean modificarPassword(String name, String pass);
     
     /*funcion buscar es propia de la clase que la implementa*/
     //String  buscarPartida(int num); //return path

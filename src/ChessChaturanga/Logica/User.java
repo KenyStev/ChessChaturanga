@@ -75,6 +75,8 @@ public class User {
     public boolean equals(Object obj) {
         if(obj instanceof User)
             return name.equals(((User)obj).name);
+        if(obj instanceof String)
+            return name.equals(obj);
         return false;
     }
 }
