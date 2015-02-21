@@ -51,7 +51,6 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         Btn_Salir.setText("Salir");
-        Btn_Salir.setOpaque(false);
         Btn_Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_SalirActionPerformed(evt);
@@ -61,7 +60,6 @@ public class Menu extends javax.swing.JFrame {
         Btn_Salir.setBounds(260, 260, 260, 40);
 
         Btn_IniciarSesion.setText("Iniciar sesión");
-        Btn_IniciarSesion.setOpaque(false);
         Btn_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_IniciarSesionActionPerformed(evt);
@@ -71,7 +69,6 @@ public class Menu extends javax.swing.JFrame {
         Btn_IniciarSesion.setBounds(260, 120, 260, 40);
 
         Btn_CrearUsuario.setText("Crear usuario");
-        Btn_CrearUsuario.setOpaque(false);
         Btn_CrearUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_CrearUsuarioActionPerformed(evt);

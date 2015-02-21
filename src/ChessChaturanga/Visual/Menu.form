@@ -33,7 +33,6 @@
     <Component class="javax.swing.JButton" name="Btn_Salir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Salir"/>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_SalirActionPerformed"/>
@@ -47,7 +46,6 @@
     <Component class="javax.swing.JButton" name="Btn_IniciarSesion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar sesi&#xf3;n"/>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_IniciarSesionActionPerformed"/>
@@ -61,7 +59,6 @@
     <Component class="javax.swing.JButton" name="Btn_CrearUsuario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Crear usuario"/>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_CrearUsuarioActionPerformed"/>
