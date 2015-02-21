@@ -72,11 +72,10 @@ public class Casilla extends javax.swing.JToggleButton{
         Position old = new Position(c.row, c.col), now = new Position(row, col);
         if(c.getPiece()!=null && b.move(old, now)){
             System.out.println("cambio la pieza "+ c.getPiece() +" de: "+old+" a: "+ now);
-//            b.addUltimaJugada(c.getPiece().getName()+c.getPiece().getColor().name() +" de: "+old+" a: "+ now);
             setPiece(c.getPiece());
             c.deletePiece();
-            unSelect();//setSelected(false);
-            c.unSelect();//c.setSelected(false);
+            unSelect();
+            c.unSelect();
             return true;
         }
         return false;

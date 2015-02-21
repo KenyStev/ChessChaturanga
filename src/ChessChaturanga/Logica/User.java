@@ -62,6 +62,14 @@ public class User {
     public void setPass(String pass) {
         this.pass = pass;
     }
+    
+    public void addLog(String log){
+        logs.add(log);
+    }
+    
+    void addPoints() {
+        puntos+=3;
+    }
 
     @Override
     public boolean equals(Object obj) {

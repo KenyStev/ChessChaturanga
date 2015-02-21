@@ -26,7 +26,7 @@ public class InputListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!board.borad.isTerminada())
+        if(!board.borad.getParent().isTerminada())
             board.clickedCasilla(casilla);
         else
             board.doNothing(casilla);

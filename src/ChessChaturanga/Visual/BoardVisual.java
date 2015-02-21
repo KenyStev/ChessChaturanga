@@ -25,6 +25,16 @@ public class BoardVisual extends javax.swing.JFrame {
     /**
      * Creates new form BoardVisual
      */
+    public BoardVisual(Partida parent) {
+        initComponents();
+        borad = parent.getBoard();
+        init();
+        initCasillas();
+    }
+    
+    /**
+     * Creates new form BoardVisual
+     */
     public BoardVisual(User player1, User player2) {
         initComponents();
         borad = new Board(player1, player2);
@@ -168,7 +178,8 @@ public class BoardVisual extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardVisual(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)).setVisible(true);
+                Partida game = new Partida(new Board(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)), 0);
+                new BoardVisual(game);
             }
         });
     }
@@ -288,8 +299,9 @@ public class BoardVisual extends javax.swing.JFrame {
         showAllJugadas();
         getContentPane().repaint();
         
-        if(borad.isTerminada()){
-            String msj = borad.getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getLoser().equals(borad.getPlayer1())?borad.getAtePieces2()-1:borad.getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getLoser().getName()+"!!!!";
+        if(borad.getParent().isTerminada()){
+            String msj = "EL JUGADOR : "+borad.getParent().getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getParent().getLoser().equals(borad.getPlayer1())?borad.getParent().getAtePieces2()-1:borad.getParent().getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getParent().getLoser().getName()+"!!!!";
+            borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
             JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -310,8 +322,8 @@ public class BoardVisual extends javax.swing.JFrame {
      * Actusliza las labels que mustran la cantidad de piezas comidas por cada player
      */
     private void showPiecesAte() {
-        lblP1AtePieces.setText(PIECESATE+borad.getAtePieces1());
-        lblP2AtePieces.setText(PIECESATE+borad.getAtePieces2());
+        lblP1AtePieces.setText(PIECESATE+borad.getParent().getAtePieces1());
+        lblP2AtePieces.setText(PIECESATE+borad.getParent().getAtePieces2());
     }
     
     /**
@@ -338,7 +350,7 @@ public class BoardVisual extends javax.swing.JFrame {
      * en board y las agrega al textAreal
      */
     public void showAllJugadas(){
-        ArrayList<String> jugadas = borad.getJugadas();
+        ArrayList<String> jugadas = borad.getParent().getJugadas();
         String j="";
         for (String jugada : jugadas) {
             j += String.format("%s\n", jugada);
