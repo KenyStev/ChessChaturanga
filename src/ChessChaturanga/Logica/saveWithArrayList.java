@@ -6,6 +6,7 @@
 package ChessChaturanga.Logica;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -89,6 +90,7 @@ public class saveWithArrayList implements Savable{
     public boolean sobrescribirPartida(Partida p) {
         int index = buscarPartida(p.getNum());
         if(index>=0){
+            p.setLastFechaEdited(Calendar.getInstance());
             partidas.set(index, p);
             return true;
         }
