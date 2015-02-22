@@ -10,6 +10,7 @@ import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -180,6 +181,9 @@ public class OptionsWithGame extends javax.swing.JFrame {
                     }
                 }
                 jLabel1.setText("Partida:");
+                if(cmbOptions.getItemCount()==0)
+                    JOptionPane.showMessageDialog(this, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                    
                 break;
         }
         btnPlay.setText(option.name());

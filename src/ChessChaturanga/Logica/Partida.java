@@ -119,6 +119,6 @@ public class Partida {
     
     @Override
     public String toString() {
-        return num + " vs "+board.getPlayer2().getName();
+        return num + " vs "+board.getPlayer2().getName()+" "+lastFechaEdited.getTime();
     }
 }
