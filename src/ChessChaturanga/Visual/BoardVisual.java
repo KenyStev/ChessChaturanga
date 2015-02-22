@@ -185,7 +185,7 @@ public class BoardVisual extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Partida game = new Partida(new Board(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)), 0);
-                new BoardVisual(game).setVisible(true);
+                new BoardVisual(game);
             }
         });
     }

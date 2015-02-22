@@ -5,8 +5,6 @@
  */
 package ChessChaturanga.Logica;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author KenyStev

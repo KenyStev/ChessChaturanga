@@ -113,7 +113,7 @@ public class saveWithArrayList implements Savable{
     @Override
     public boolean transferirPartida(String path, User user1, User user2) {
         Partida p = cargarPartida(Integer.parseInt(path));
-        if(p!=null){
+        if(p!=null && !p.isTerminada()){
             if(user1!=null && user2!=null){
                 if(p.getBoard().getPlayer1().equals(user1) && p.getBoard().getPlayer2().equals(user2)){
                     p.getBoard().setPlayer1(user2);

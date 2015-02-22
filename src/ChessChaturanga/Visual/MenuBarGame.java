@@ -5,9 +5,7 @@
  */
 package ChessChaturanga.Visual;
 
-import ChessChaturanga.Logica.Board;
 import ChessChaturanga.Logica.MenuListener;
-import ChessChaturanga.Logica.Partida;
 import java.awt.HeadlessException;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,7 +18,7 @@ import javax.swing.JMenuItem;
 public class MenuBarGame extends JMenuBar{
     private JMenu file, profile;
     private JMenuItem newGame, saveGame, openGame, deletGame, transferGame, ranking, logout,
-            verMisDatos, lastGames, editPass, retirarse;
+            verMisDatos, lastGames, editPass, retirarse, salir;
     private BoardVisual b;
 
     /**
@@ -51,7 +49,7 @@ public class MenuBarGame extends JMenuBar{
         transferGame = new JMenuItem("Transfer Game");
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
-        logout = new JMenuItem("Logout");
+        salir = new JMenuItem("Salir");
         
         file.add(newGame);
         file.add(saveGame);
@@ -60,16 +58,17 @@ public class MenuBarGame extends JMenuBar{
         file.add(transferGame);
         file.add(retirarse);
         file.add(ranking);
-        file.add(logout);
         
         profile = new JMenu("Profile");
         verMisDatos = new JMenuItem("Ver Mis Ultimos Datos");
         lastGames = new JMenuItem("Ver Mis Ultimos Juegos");
         editPass = new JMenuItem("Cambiar mi Pasword");
+        logout = new JMenuItem("Logout");
         
         profile.add(verMisDatos);
         profile.add(lastGames);
         profile.add(editPass);
+        profile.add(logout);
         
         add(file);
         add(profile);
@@ -85,10 +84,9 @@ public class MenuBarGame extends JMenuBar{
                 deletGame.setEnabled(false);
                 transferGame.setEnabled(false);
                 ranking.setEnabled(false);
-                logout.setEnabled(false);
+                salir.setEnabled(false);
                 break;
         }
     }
-    
     
 }

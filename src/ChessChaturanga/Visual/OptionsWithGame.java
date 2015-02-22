@@ -10,8 +10,6 @@ import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 
 /**
  *
