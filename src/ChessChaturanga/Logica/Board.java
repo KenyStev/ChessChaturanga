@@ -90,13 +90,13 @@ public class Board {
                         parent.addAtePieces2();
                         System.out.println("Piezas comidas P2: "+parent.getAtePieces2());
                     }
-                    matoPiece=" matando a: "+moveTo.getName()+moveTo.getColor().name();
+                    matoPiece=activo.getName()+" se comio a: "+moveTo.getName()+moveTo.getColor().name()+" de "+(!active?player1:player2).getName()+" con: ";
                 }
                 pieces[ne.row][ne.col] = p;
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
-                parent.addUltimaJugada(p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne + matoPiece);
+                parent.addUltimaJugada(matoPiece+p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne);
             }
         }
         return state;

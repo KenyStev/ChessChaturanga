@@ -342,12 +342,16 @@ public class BoardVisual extends javax.swing.JFrame {
             
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
+            
+            getJMenuBar().getMenu(0).setEnabled(true);
         }else{
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
             
             lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
             lblPlayer1.setIcon(null);
+            
+            getJMenuBar().getMenu(0).setEnabled(false);
         }
     }
     
