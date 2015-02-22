@@ -25,7 +25,6 @@ public class Partida {
 
     public Partida(Board board, int num) {
         this.board = board;
-        board.setParent(this);
         fechaCreada = Calendar.getInstance();
         lastFechaEdited = Calendar.getInstance();
         allMovements = new ArrayList<>();
@@ -33,7 +32,8 @@ public class Partida {
         this.num = num;
         atePieces1=0;
         atePieces2=0;
-        new BoardVisual(board).setVisible(true);
+        board.setParent(this);
+        new BoardVisual(this).setVisible(true);
     }
 
     public Board getBoard() {

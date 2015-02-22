@@ -18,7 +18,6 @@ public class User {
     private ArrayList<String> logs;
 
     public User(String name, String pass, String email, String passFace) {
-        this.color = color;
         this.name = name;
         this.pass = pass;
         this.email = email;
@@ -75,6 +74,8 @@ public class User {
     public boolean equals(Object obj) {
         if(obj instanceof User)
             return name.equals(((User)obj).name);
+        if(obj instanceof String)
+            return name.equals(obj);
         return false;
     }
 }
