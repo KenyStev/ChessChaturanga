@@ -18,7 +18,6 @@ public class User {
     private ArrayList<String> logs;
 
     public User(String name, String pass, String email, String passFace) {
-        this.color = color;
         this.name = name;
         this.pass = pass;
         this.email = email;

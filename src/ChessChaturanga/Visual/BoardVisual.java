@@ -24,16 +24,21 @@ public class BoardVisual extends javax.swing.JFrame {
 
     /**
      * Creates new form BoardVisual
+     * @param parent
      */
     public BoardVisual(Partida parent) {
         initComponents();
         borad = parent.getBoard();
+        borad.setParent(parent);
         init();
         initCasillas();
+        showAllJugadas();
     }
     
     /**
      * Creates new form BoardVisual
+     * @param player1
+     * @param player2
      */
     public BoardVisual(User player1, User player2) {
         initComponents();
@@ -44,6 +49,7 @@ public class BoardVisual extends javax.swing.JFrame {
 
     /**
      * Creates new form BoardVisual from existing partida
+     * @param b
      */
     public BoardVisual(Board b) {
         initComponents();
@@ -66,7 +72,7 @@ public class BoardVisual extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableProcesoDelGame = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(new java.awt.Rectangle(250, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
@@ -179,7 +185,7 @@ public class BoardVisual extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Partida game = new Partida(new Board(new User("Keny", "keny", null, null), new User("Konami", "kon", null, null)), 0);
-                new BoardVisual(game);
+                new BoardVisual(game).setVisible(true);
             }
         });
     }
@@ -363,9 +369,14 @@ public class BoardVisual extends javax.swing.JFrame {
         lblPlayer1.setText(borad.getPlayer1().getName());
         lblPlayer2.setText(borad.getPlayer2().getName());
         showPiecesAte();
+        setJMenuBar(new MenuBarGame(this));
     }
 
     public void doNothing(Casilla casilla) {
         casilla.unSelect();
+    }
+
+    public void savePartida() {
+        Datos.saver.guardarPartida(borad.getParent());
     }
 }

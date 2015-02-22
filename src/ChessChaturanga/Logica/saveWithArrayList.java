@@ -12,12 +12,17 @@ import java.util.ArrayList;
  * @author KenyStev
  */
 public class saveWithArrayList implements Savable{
-    private ArrayList<User> users;
-    private ArrayList<Partida> partidas;
+    public ArrayList<User> users;
+    public ArrayList<Partida> partidas;
 
     public saveWithArrayList() {
         users = new ArrayList<>();
         partidas = new ArrayList<>();
+        
+        //users de Prueba
+        for (int i=0; i<10; i++) {
+            users.add(new User("User"+i, "user"+i, null, null));
+        }
     }
 
     @Override
@@ -33,6 +38,7 @@ public class saveWithArrayList implements Savable{
     public boolean crearUser(String name, String pass, String email, String passFace) {
         if(buscarUser(name)==-1){
             users.add(new User(name, pass, email, passFace));
+            return true;
         }
         return false;
     }
@@ -42,6 +48,7 @@ public class saveWithArrayList implements Savable{
         int index = buscarUser(name);
         if(index>=0){
             users.remove(index);
+            return true;
         }
         return false;
     }
@@ -55,35 +62,71 @@ public class saveWithArrayList implements Savable{
         }
         return false;
     }
+    
+    public int buscarPartida(int num){
+        for (int i = 0; i < partidas.size(); i++) {
+            if(partidas.get(i).getNum()==num)
+                return i;
+        }
+        return -1;
+    }
 
     @Override
     public boolean crearPartida(User player1, User player2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        partidas.add(new Partida(new Board(player1, player2), partidas.size()));
+        return true;
     }
 
     @Override
     public Partida cargarPartida(int num) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int index = buscarPartida(num);
+        if(index>=0)
+            return partidas.get(index);
+        return null;
     }
 
     @Override
     public boolean sobrescribirPartida(Partida p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int index = buscarPartida(p.getNum());
+        if(index>=0){
+            partidas.set(index, p);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean guardarPartida(Partida p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return sobrescribirPartida(p);
     }
 
     @Override
     public boolean eliminarPartida(String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int index = buscarPartida(Integer.parseInt(path));
+        if(index>=0){
+            partidas.remove(index);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean transferirPartida(String path, User user1, User user2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Partida p = cargarPartida(Integer.parseInt(path));
+        if(p!=null){
+            if(user1!=null && user2!=null){
+                if(p.getBoard().getPlayer1().equals(user1) && p.getBoard().getPlayer2().equals(user2)){
+                    p.getBoard().setPlayer1(user2);
+                    p.getBoard().setPlayer2(user1);
+                    return true;
+                }
+                if(!user2.equals(user1) && buscarUser(user2.getName())>=0){
+                    p.getBoard().setPlayer1(user2);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

@@ -9,8 +9,6 @@ package ChessChaturanga.Logica;
  *
  * @author KenyStev
  */
-public class Datos {
-                                    //User de prueba
-    public static User logedin = new User("Keny", "keny", null, null);
-    public static Savable saver = new saveWithArrayList();
+public enum OptionGame {
+    NEWGAME, SAVEGAME, LOADGAME, DELETEGAME, TRASFERGAME
 }
