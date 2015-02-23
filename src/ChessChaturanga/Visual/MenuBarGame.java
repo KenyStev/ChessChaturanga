@@ -80,7 +80,7 @@ public class MenuBarGame extends JMenuBar{
                 break;
             case 'G': //Desavilitar las opciones que no lleva el Game
                 profile.setEnabled(false);
-//                openGame.setEnabled(false);
+                openGame.setEnabled(false);
                 deletGame.setEnabled(false);
                 transferGame.setEnabled(false);
                 ranking.setEnabled(false);

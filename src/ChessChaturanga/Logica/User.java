@@ -5,7 +5,7 @@
  */
 package ChessChaturanga.Logica;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,14 +15,14 @@ public class User {
     private Color color;
     private String name, pass, email, passFace;
     private int puntos;
-    private ArrayList<String> logs;
+    private LinkedList<String> logs;
 
     public User(String name, String pass, String email, String passFace) {
         this.name = name;
         this.pass = pass;
         this.email = email;
         this.passFace = passFace;
-        logs = new ArrayList<>();
+        logs = new LinkedList<>();
         puntos=0;
     }
 
@@ -63,7 +63,7 @@ public class User {
     }
     
     public void addLog(String log){
-        logs.add(log);
+        logs.addFirst(log);
     }
     
     void addPoints() {
