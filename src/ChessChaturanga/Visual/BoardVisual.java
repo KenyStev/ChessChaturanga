@@ -308,6 +308,7 @@ public class BoardVisual extends javax.swing.JFrame {
         if(borad.getParent().isTerminada()){
             String msj = "EL JUGADOR : "+borad.getParent().getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getParent().getLoser().equals(borad.getPlayer1())?borad.getParent().getAtePieces2()-1:borad.getParent().getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getParent().getLoser().getName()+"!!!!";
             borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+            Datos.logs.addFirst(msj);
             JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
         }
     }

@@ -178,8 +178,6 @@ public class OptionsWithGame extends javax.swing.JFrame {
                     }
                 }
                 jLabel1.setText("Partida:");
-                if(cmbOptions.getItemCount()==0)
-                    JOptionPane.showMessageDialog(this, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
                     
                 break;
         }
@@ -196,5 +194,9 @@ public class OptionsWithGame extends javax.swing.JFrame {
             jLabel2.setVisible(false);
             cmbUsers.setVisible(false);
         }
+    }
+    
+    public int getCount(){
+        return cmbOptions.getItemCount();
     }
 }

@@ -150,8 +150,8 @@ public class Board {
         //addPiece(new Horse());
         //addPiece(new Horse());
         
-        //addPiece(new Elephant());
-        //addPiece(new Elephant());
+        addPiece(new Elephant(Color.RED, r2, c1++));
+        addPiece(new Elephant(Color.GREEN, r1, c2--));
         
         //addPiece(new Advisor());
         //addPiece(new Advisor());
@@ -162,8 +162,8 @@ public class Board {
         addPiece(kingRed);
         addPiece(kingGreen);
         
-        //addPiece(new Elephant());
-        //addPiece(new Elephant());
+        addPiece(new Elephant(Color.RED, r2, c1++));
+        addPiece(new Elephant(Color.GREEN, r1, c2--));
         
         //addPiece(new Horse());
         //addPiece(new Horse());

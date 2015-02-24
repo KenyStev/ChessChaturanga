@@ -19,22 +19,67 @@ public class Elephant extends Piece{
 
     @Override
     protected void genereMovementsValid(Board b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int row = position.row, col = position.col;
+        
+        movementsValids.clear();
+        Piece p;
+        if(row>0 && col>0){
+            p = b.getPieceAt(row-1, col-1);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-1, col-1));
+            if(row>1 && col>1){
+                p = b.getPieceAt(row-2, col-2);
+                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col-2));
+            }
+        }
+        if(row>0 && col<b.SIZE-1){
+            p = b.getPieceAt(row-1, col+1);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-1, col+1));
+            if(row>1 && col<b.SIZE-2){
+                p = b.getPieceAt(row-2, col+2);
+                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col+2));
+            }
+        }
+        if(row<b.SIZE-1 && col>0){
+            p = b.getPieceAt(row+1, col-1);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+1, col-1));
+            if(row<b.SIZE-2 && col>1){
+                p = b.getPieceAt(row+2, col-2);
+                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col-2));
+            }
+        }
+        if(row<b.SIZE-1 && col<b.SIZE-1){
+            p = b.getPieceAt(row+1, col+1);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+1, col+1));
+            if(row<b.SIZE-2 && col<b.SIZE-2){
+                p = b.getPieceAt(row+2, col+2);
+                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col+2));
+            }
+        }
     }
 
     @Override
     protected boolean validMovement(int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (Position p : movementsValids) {
+            if(p.validar(row, col))
+                return true;
+        }
+        return false;
     }
 
     @Override
     public boolean mover(Board b, int row, int col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(validMovement(row, col)){
+            position.set(row, col);
+            genereMovementsValid(b);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public ArrayList<Position> getMovementsValids(Board b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        genereMovementsValid(b);
+        return movementsValids;
     }
     
 }
