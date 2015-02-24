@@ -9,6 +9,7 @@ import ChessChaturanga.Visual.BoardVisual;
 import ChessChaturanga.Visual.OptionsWithGame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +28,7 @@ public class MenuListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        OptionsWithGame owg;
         switch(opcion){
             case 1: //Nueva Partida
                 new OptionsWithGame(OptionGame.NEWGAME).setVisible(true);
@@ -35,13 +37,28 @@ public class MenuListener implements ActionListener{
                 b.savePartida();
                 break;
             case 3: //Cargar Partida
-                new OptionsWithGame(OptionGame.LOADGAME).setVisible(true);
+                owg = new OptionsWithGame(OptionGame.LOADGAME);
+                if(owg.getCount()==0){
+                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                    owg.dispose();
+                }else
+                    owg.setVisible(true);
                 break;
             case 4: //Eliminar Partida
-                new OptionsWithGame(OptionGame.DELETEGAME).setVisible(true);
+                owg = new OptionsWithGame(OptionGame.DELETEGAME);
+                if(owg.getCount()==0){
+                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                    owg.dispose();
+                }else
+                    owg.setVisible(true);
                 break;
             case 5: //Transferir Partida
-                new OptionsWithGame(OptionGame.TRASFERGAME).setVisible(true);
+                owg = new OptionsWithGame(OptionGame.TRASFERGAME);
+                if(owg.getCount()==0){
+                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                    owg.dispose();
+                }else
+                    owg.setVisible(true);
                 break;
         }
     }
