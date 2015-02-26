@@ -144,8 +144,8 @@ public class Board {
     private void initPieces() {
         int r1=0, r2=SIZE-1, c1=0, c2=SIZE-1;
         
-        //addPiece(new Tower());
-        //addPiece(new Tower());
+        addPiece(new Tower(Color.RED, r2, c1++));
+        addPiece(new Tower(Color.GREEN, r1, c2--));
         
         addPiece(new Horse(Color.RED, r2, c1++));
         addPiece(new Horse(Color.GREEN, r1, c2--));
@@ -168,8 +168,8 @@ public class Board {
         addPiece(new Horse(Color.RED, r2, c1++));
         addPiece(new Horse(Color.GREEN, r1, c2--));
         
-        //addPiece(new Tower()); //r1++
-        //addPiece(new Tower()); //r2--
+        addPiece(new Tower(Color.RED, r2--, c1++));     //r2--
+        addPiece(new Tower(Color.GREEN, r1++, c2--));   //r1++
         
         for (int i = 0; i < SIZE; i++) {
             addPiece(new Pawn(Color.RED, 6, i));
