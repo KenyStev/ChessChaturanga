@@ -153,8 +153,8 @@ public class Board {
         addPiece(new Elephant(Color.RED, r2, c1++));
         addPiece(new Elephant(Color.GREEN, r1, c2--));
         
-        //addPiece(new Advisor());
-        //addPiece(new Advisor());
+        addPiece(new Advisor(Color.RED, r2, c1++));
+        addPiece(new Advisor(Color.GREEN, r1, c2--));
         
         kingRed = new King(Color.RED, r2, c1++);
         kingGreen = new King(Color.GREEN, r1, c2--);
