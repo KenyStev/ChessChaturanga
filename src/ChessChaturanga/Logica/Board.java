@@ -35,7 +35,7 @@ public class Board {
         this.player2 = board.player2;
         this.activo = board.active?player1:player2;
         this.active = board.active;
-        setColorOfUsers();
+        //setColorOfUsers();
     }
     
     public final void setColorOfUsers(){
@@ -165,8 +165,9 @@ public class Board {
         addPiece(new Elephant(Color.RED, r2, c1++));
         addPiece(new Elephant(Color.GREEN, r1, c2--));
         
-        //addPiece(new Horse());
-        //addPiece(new Horse());
+        //Dennis
+        addPiece(new Horse(Color.RED,r2,c1++));
+        addPiece(new Horse(Color.GREEN, r1, c2--));
         
         //addPiece(new Tower()); //r1++
         //addPiece(new Tower()); //r2--
