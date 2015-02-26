@@ -231,9 +231,9 @@ public class BoardVisual extends javax.swing.JFrame {
         for (Position m : movementsValids) {
             casillas[m.row][m.col].activeToMove();
             if(casillas[m.row][m.col].getPiece()==null)
-                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove.png")));
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove"+casillaActiva.getPiece()+".png")));
             else
-                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove"+casillas[m.row][m.col].getPiece()+".png")));
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toEat"+casillas[m.row][m.col].getPiece()+".png")));
         }
         getContentPane().repaint();
     }
@@ -276,17 +276,23 @@ public class BoardVisual extends javax.swing.JFrame {
                 //Si se selecciona una pieza contraria que no esta activa para mover(comer), se deselecciona la que estaba si lo habia
                 (casilla.getPiece()!=null && !borad.getActivo().valirColor(casilla.getPiece().getColor()))){
             casilla.unSelect();
-            if(casillaActiva!=null)
+            if(casillaActiva!=null){
                 unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+                casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+casillaActiva.getPiece()+".png")));
+            }
             casillaActiva=null;
             reOrder();
         //sino verifica si se clickeo una casilla que tenga una pieza del mismo color que el
         //jugador activo para mover (de turno) y muestra los movimientos validos de esa pieza
         }else if(borad.getActivo().valirColor(casilla.getPiece().getColor())){
-            if(casillaActiva!=null)
+            if(casillaActiva!=null){
                 unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+                casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+casillaActiva.getPiece()+".png")));
+            }
             casillaActiva = casilla;
+            casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/selected"+casillaActiva.getPiece()+".png")));
             showWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+            casillaActiva.unSelect();
         }
     }
 

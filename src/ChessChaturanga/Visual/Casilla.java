@@ -25,7 +25,7 @@ public class Casilla extends javax.swing.JToggleButton{
     public Casilla(Rectangle rec, int r, int c) {
         setBounds(rec);
         activeToMove=false;
-        color = new Color(200, 100, 0);
+        color = new Color(150, 100, 0);
         setBackground(color);
         row=r; col=c;
     }
