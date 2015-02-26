@@ -81,11 +81,11 @@ public class BoardVisual extends javax.swing.JFrame {
         table.setLayout(tableLayout);
         tableLayout.setHorizontalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         tableLayout.setVerticalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
 
         lblPlayer2.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
@@ -109,7 +109,7 @@ public class BoardVisual extends javax.swing.JFrame {
                     .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         paneUsersInfoLayout.setVerticalGroup(
             paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +119,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -383,5 +383,6 @@ public class BoardVisual extends javax.swing.JFrame {
 
     public void savePartida() {
         Datos.saver.guardarPartida(borad.getParent());
+        
     }
 }

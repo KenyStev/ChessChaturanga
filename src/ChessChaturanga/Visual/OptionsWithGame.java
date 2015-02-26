@@ -10,7 +10,6 @@ import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -173,7 +172,7 @@ public class OptionsWithGame extends javax.swing.JFrame {
             case TRASFERGAME: 
                 if (Datos.saver instanceof saveWithArrayList) {
                     for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
-                        if(Datos.logedin.equals(p.getBoard().getPlayer1()))
+                        if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
                             cmbOptions.addItem(p);
                     }
                 }
