@@ -85,11 +85,13 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SalirActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_Btn_SalirActionPerformed
 
     private void Btn_CrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CrearUsuarioActionPerformed
-        // TODO add your handling code here:
+        ChangeUser User = new ChangeUser();
+        this.setVisible(false);
+        User.setVisible(true);
     }//GEN-LAST:event_Btn_CrearUsuarioActionPerformed
 
     private void Btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IniciarSesionActionPerformed

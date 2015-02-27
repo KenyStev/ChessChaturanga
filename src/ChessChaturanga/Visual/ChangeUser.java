@@ -5,17 +5,30 @@
  */
 package ChessChaturanga.Visual;
 
+import ChessChaturanga.Logica.saveWithArrayList;
+import com.sun.awt.AWTUtilities;
+import java.awt.Shape;
+import java.awt.event.KeyEvent;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dmenjivar
  */
 public class ChangeUser extends javax.swing.JFrame {
-
+    public saveWithArrayList User = new saveWithArrayList();
     /**
      * Creates new form ChangeUser
      */
     public ChangeUser() {
+        setUndecorated(true) ; //Quitamos el borde de las jframe
+        setOpacity(0.8f);//con la f aclaramos que es float 
         initComponents();
+        setLocationRelativeTo(null); // Ponemos en el centro la jframe
+        Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 30, 30);
+        //Shape forma =  new Ellipse2D.Float(0,0,getWidth(),getHeight()); 
+        AWTUtilities.setWindowShape(this,forma); 
     }
 
     /**
@@ -27,21 +40,228 @@ public class ChangeUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TxtUserName = new javax.swing.JTextField();
+        TxtPassword = new javax.swing.JTextField();
+        TxtEmail = new javax.swing.JTextField();
+        TxtEmailPassword = new javax.swing.JTextField();
+        BtnChange = new javax.swing.JButton();
+        BtnDelete = new javax.swing.JButton();
+        BtnSave = new javax.swing.JButton();
+        BtnClose = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TxtUserName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtUserNameKeyPressed(evt);
+            }
+        });
+
+        BtnChange.setText("Change");
+        BtnChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnChangeActionPerformed(evt);
+            }
+        });
+
+        BtnDelete.setText("Delete");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
+
+        BtnSave.setText("Save");
+        BtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSaveActionPerformed(evt);
+            }
+        });
+
+        BtnClose.setText("Close");
+        BtnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCloseActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setText("Password");
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel2.setText("User Name");
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel3.setText("Password Email");
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setText("Email");
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ChessChaturanga/Assets/Chess-Board-Background-Wallpaper.jpg"))); // NOI18N
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ChessChaturanga/Assets/Chess-Board-Background-Wallpaper.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 581, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel6)
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(350, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(TxtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BtnChange, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(TxtEmail)
+                                    .addComponent(TxtEmailPassword)
+                                    .addComponent(TxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(44, 44, 44))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(TxtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(TxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtEmailPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnChange, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnChangeActionPerformed
+        try{
+            String UserN = TxtUserName.getText();
+            String Pass = TxtPassword.getText();
+            if(User.buscarUser(UserN)!=-1){
+                User.users.get(User.buscarUser(UserN)).setPass(Pass);
+                Clean();
+                JOptionPane.showMessageDialog(null, "Change successful", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnChangeActionPerformed
+
+    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
+        this.dispose();
+        Menu M = new Menu();
+        M.setVisible(true);
+    }//GEN-LAST:event_BtnCloseActionPerformed
+
+    private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
+        try{
+            String UserN = TxtUserName.getText();
+            String PassW = TxtPassword.getText();
+            String Email = TxtEmail.getText();
+            String PassEmail = TxtEmailPassword.getText();
+            if(User.crearUser(UserN, PassW, Email, PassEmail)){
+                JOptionPane.showMessageDialog(null, "Save", "Message", JOptionPane.INFORMATION_MESSAGE);
+                Clean();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Don't Save already exist", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnSaveActionPerformed
+
+    private void Clean(){
+        TxtUserName.setText("");
+        TxtPassword.setText("");
+        TxtEmail.setText("");
+        TxtEmailPassword.setText("");
+    }
+    private void TxtUserNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtUserNameKeyPressed
+        try{
+            String UserN = TxtUserName.getText();
+            int Pos = User.buscarUser(UserN);
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                TxtPassword.setText(User.users.get(Pos).getPass());
+                TxtEmail.setText(User.users.get(Pos).getEmail());
+                TxtEmailPassword.setText(User.users.get(Pos).getPassFace());
+            }
+            else{
+                //JOptionPane.showMessageDialog(null, "Don't exist", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Don't exist", "Message", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Error", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_TxtUserNameKeyPressed
+
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        try{
+            String UserN = TxtUserName.getText();
+            
+            if(User.buscarUser(UserN)!=-1){
+                if(JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    JOptionPane.showMessageDialog(null, "Deleted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    User.eliminarUser(UserN);
+                    Clean();
+                } 
+                else{
+                    //JOptionPane.showMessageDialog(null, "Cancel", "Message", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Don't exist", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +299,19 @@ public class ChangeUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnChange;
+    private javax.swing.JButton BtnClose;
+    private javax.swing.JButton BtnDelete;
+    private javax.swing.JButton BtnSave;
+    private javax.swing.JTextField TxtEmail;
+    private javax.swing.JTextField TxtEmailPassword;
+    private javax.swing.JTextField TxtPassword;
+    private javax.swing.JTextField TxtUserName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }
