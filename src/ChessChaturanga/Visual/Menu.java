@@ -27,7 +27,10 @@ public class Menu extends javax.swing.JFrame {
         setLocationRelativeTo(null); // Ponemos en el centro la jframe
         Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 30, 30);
         //Shape forma =  new Ellipse2D.Float(0,0,getWidth(),getHeight()); 
-        AWTUtilities.setWindowShape(this, forma)  ; 
+        AWTUtilities.setWindowShape(this, forma);
+        TxtUserName.setVisible(false);
+        TxtPassword.setVisible(false);
+        Btn_Back.setVisible(false);
     }
 
     /**
@@ -42,6 +45,9 @@ public class Menu extends javax.swing.JFrame {
         Btn_Salir = new javax.swing.JButton();
         Btn_IniciarSesion = new javax.swing.JButton();
         Btn_CrearUsuario = new javax.swing.JButton();
+        TxtPassword = new javax.swing.JTextField();
+        TxtUserName = new javax.swing.JTextField();
+        Btn_Back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,6 +82,19 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(Btn_CrearUsuario);
         Btn_CrearUsuario.setBounds(260, 190, 260, 40);
+        getContentPane().add(TxtPassword);
+        TxtPassword.setBounds(290, 230, 210, 30);
+        getContentPane().add(TxtUserName);
+        TxtUserName.setBounds(290, 160, 210, 30);
+
+        Btn_Back.setText("Atras");
+        Btn_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_BackActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Btn_Back);
+        Btn_Back.setBounds(700, 10, 60, 23);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ChessChaturanga/Assets/vintage-chess-pieces-20736-1920x1080.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -95,11 +114,26 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_CrearUsuarioActionPerformed
 
     private void Btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IniciarSesionActionPerformed
-        //Abrimos otra jframe con este codigo.
+        TxtUserName.setVisible(true);
+        TxtPassword.setVisible(true);
+        Btn_CrearUsuario.setVisible(false);
+        Btn_IniciarSesion.setVisible(false);
+        Btn_Salir.setVisible(false);
+        Btn_Back.setVisible(true);
+//Abrimos otra jframe con este codigo.
         //Login Log = new Login();
         //this.setVisible(false);
         //Log.setVisible(true);
     }//GEN-LAST:event_Btn_IniciarSesionActionPerformed
+
+    private void Btn_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_BackActionPerformed
+        TxtUserName.setVisible(false);
+        TxtPassword.setVisible(false);
+        Btn_CrearUsuario.setVisible(true);
+        Btn_IniciarSesion.setVisible(true);
+        Btn_Salir.setVisible(true);
+        Btn_Back.setVisible(false);
+    }//GEN-LAST:event_Btn_BackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,9 +171,12 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_Back;
     private javax.swing.JButton Btn_CrearUsuario;
     private javax.swing.JButton Btn_IniciarSesion;
     private javax.swing.JButton Btn_Salir;
+    private javax.swing.JTextField TxtPassword;
+    private javax.swing.JTextField TxtUserName;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
