@@ -7,6 +7,8 @@ package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.MenuListener;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,6 +22,7 @@ public class MenuBarGame extends JMenuBar{
     private JMenuItem newGame, saveGame, openGame, deletGame, transferGame, ranking, logout,
             verMisDatos, lastGames, editPass, retirarse, salir;
     private BoardVisual b;
+    private Menu m;
 
     /**
      * Recibe el tipo de Frame al que se le pondra el menu:
@@ -27,14 +30,21 @@ public class MenuBarGame extends JMenuBar{
      * @param type
      * @throws HeadlessException 
      */
-    public MenuBarGame(char type) throws HeadlessException {
+    public MenuBarGame(char type) {
         init(type);
     }
     
-    public MenuBarGame(BoardVisual b) throws HeadlessException {
+    public MenuBarGame(BoardVisual b) {
         this.b=b;
         init('G');
     }
+    
+    public MenuBarGame(Menu b)  {
+        this.m=b;
+        init('M');
+    }
+    
+    
     
     public void init(char type){
         file = new JMenu("File");
@@ -47,6 +57,7 @@ public class MenuBarGame extends JMenuBar{
         deletGame = new JMenuItem("Delet Game");
         deletGame.addActionListener(new MenuListener(b, MenuListener.DELET));
         transferGame = new JMenuItem("Transfer Game");
+        transferGame.addActionListener(new MenuListener(b, MenuListener.TRANSFER));
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
@@ -64,6 +75,14 @@ public class MenuBarGame extends JMenuBar{
         lastGames = new JMenuItem("Ver Mis Ultimos Juegos");
         editPass = new JMenuItem("Cambiar mi Pasword");
         logout = new JMenuItem("Logout");
+        logout.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Login().setVisible(true);
+                m.dispose();
+            }
+        });
         
         profile.add(verMisDatos);
         profile.add(lastGames);

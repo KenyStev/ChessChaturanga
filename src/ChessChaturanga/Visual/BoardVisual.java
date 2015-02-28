@@ -28,7 +28,7 @@ public class BoardVisual extends javax.swing.JFrame {
      */
     public BoardVisual(Partida parent) {
         initComponents();
-        borad = parent.getBoard();
+        borad = new Board(parent.getBoard());
         borad.setParent(parent);
         init();
         initCasillas();
@@ -53,7 +53,7 @@ public class BoardVisual extends javax.swing.JFrame {
      */
     public BoardVisual(Board b) {
         initComponents();
-        borad=b;
+        borad=new Board(b);
         casillas = new Casilla[borad.SIZE][borad.SIZE];
         init();
         initCasillas();
