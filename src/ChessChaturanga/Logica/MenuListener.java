@@ -8,6 +8,7 @@ package ChessChaturanga.Logica;
 import ChessChaturanga.Visual.BoardVisual;
 import ChessChaturanga.Visual.Menu;
 import ChessChaturanga.Visual.OptionsWithGame;
+import ChessChaturanga.Visual.OptionsWithMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -18,10 +19,11 @@ import javax.swing.JOptionPane;
  */
 public class MenuListener implements ActionListener{
     private BoardVisual b;
-    private Menu m;
+    private Menu menu;
     private int opcion, type;
     
-    public static final int NEW=1, SAVE=2, LOAD=3, DELET=4, TRANSFER=5;
+    public static final int NEW=1, SAVE=2, LOAD=3, DELETE=4, 
+            TRANSFER=5, RETIRO=6, EDITPASS=7, LASTGAMES=8, SHOWPROFILE=9, LOGOUT=10;
     
     public MenuListener(BoardVisual obj, int opcion) {
         this.b = obj;
@@ -30,7 +32,7 @@ public class MenuListener implements ActionListener{
     }
     
     public MenuListener(Menu obj, int opcion) {
-        this.m = obj;
+        this.menu = obj;
         type = 'M';
         this.opcion = opcion;
     }
@@ -39,15 +41,19 @@ public class MenuListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         OptionsWithGame owg;
         switch(opcion){
-            case 1: //Nueva Partida
+            case NEW: //Nueva Partida
                 if(type=='G')
                     new OptionsWithGame(OptionGame.NEWGAME).setVisible(true);
-                
+                else if(type=='M'){
+                    OptionsWithMenu m = new OptionsWithMenu(OptionGame.NEWGAME);
+                    m.setVisible(true);
+                    menu.getjDP().add(m);
+                }
                 break;
-            case 2: //Salvar Partida
+            case SAVE: //Salvar Partida
                 b.savePartida();
                 break;
-            case 3: //Cargar Partida
+            case LOAD: //Cargar Partida
                 if(type=='G'){
                     owg = new OptionsWithGame(OptionGame.LOADGAME);
                     if(owg.getCount()==0){
@@ -55,9 +61,11 @@ public class MenuListener implements ActionListener{
                         owg.dispose();
                     }else
                         owg.setVisible(true);
+                }else if(type=='M'){
+                    
                 }
                 break;
-            case 4: //Eliminar Partida
+            case DELETE: //Eliminar Partida
                 if(type=='G'){
                     owg = new OptionsWithGame(OptionGame.DELETEGAME);
                     if(owg.getCount()==0){
@@ -65,9 +73,11 @@ public class MenuListener implements ActionListener{
                         owg.dispose();
                     }else
                         owg.setVisible(true);
+                }else if(type=='M'){
+                    
                 }
                 break;
-            case 5: //Transferir Partida
+            case TRANSFER: //Transferir Partida
                 if(type=='G'){
                     owg = new OptionsWithGame(OptionGame.TRASFERGAME);
                     if(owg.getCount()==0){
@@ -75,8 +85,20 @@ public class MenuListener implements ActionListener{
                         owg.dispose();
                     }else
                         owg.setVisible(true);
+                }else if(type=='M'){
+                    
                 }
                 break;
+            case RETIRO: //Retirarse del Juego
+                b.retirarse(); break;
+            case EDITPASS: //Cambiar Password
+                menu.showChangePass(); break;
+            case LASTGAMES://Mostrar ultimos Juegos
+                menu.showLastGames(); break;
+            case SHOWPROFILE:
+                menu.showProfile(); break;
+            case LOGOUT:
+                menu.dispose(); break;
         }
     }
     

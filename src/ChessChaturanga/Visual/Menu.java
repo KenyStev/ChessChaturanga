@@ -6,15 +6,15 @@
 package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.Datos;
-import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 
 /**
  *
- * @author dmenjivar
+ * @author kenystev
  */
 public class Menu extends javax.swing.JFrame {
+    private JDesktopPane jDP;
     
     /**
      * Creates new form Menu
@@ -82,11 +82,33 @@ public class Menu extends javax.swing.JFrame {
 
     private void init() {
         setJMenuBar(new MenuBarGame(this));
-        JDesktopPane jDP = new JDesktopPane();
+        jDP = new JDesktopPane();
         getContentPane().add(jDP);
         jDP.setBounds(getContentPane().getBounds());
         JMenu loged = new JMenu("Logedin: "+Datos.logedin.getName());
         loged.setEnabled(false);
         getJMenuBar().add(loged);
+    }
+
+    public void showChangePass() {
+        ChangePass cp = new ChangePass();
+        cp.setVisible(true);
+        jDP.add(cp);
+    }
+
+    public void showProfile() {
+        Profile p = new Profile();
+        p.setVisible(true);
+        jDP.add(p);
+    }
+
+    public void showLastGames() {
+        LastGames p = new LastGames();
+        p.setVisible(true);
+        jDP.add(p);
+    }
+
+    public JDesktopPane getjDP() {
+        return jDP;
     }
 }

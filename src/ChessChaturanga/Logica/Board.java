@@ -173,8 +173,8 @@ public class Board {
         addPiece(new Tower(Color.GREEN, r1++, c2--));   //r1++
         
         for (int i = 0; i < SIZE; i++) {
-            addPiece(new Pawn(Color.RED, 6, i));
-            addPiece(new Pawn(Color.GREEN, 1, i));
+            addPiece(new Pawn(Color.RED, r2, i));
+            addPiece(new Pawn(Color.GREEN, r1, i));
         }
     }
     

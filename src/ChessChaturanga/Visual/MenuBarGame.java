@@ -49,18 +49,28 @@ public class MenuBarGame extends JMenuBar{
     public void init(char type){
         file = new JMenu("File");
         newGame = new JMenuItem("New Game");
-        newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
         saveGame = new JMenuItem("Save Game");
-        saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
         openGame = new JMenuItem("Open Game");
-        openGame.addActionListener(new MenuListener(b, MenuListener.LOAD));
         deletGame = new JMenuItem("Delet Game");
-        deletGame.addActionListener(new MenuListener(b, MenuListener.DELET));
         transferGame = new JMenuItem("Transfer Game");
-        transferGame.addActionListener(new MenuListener(b, MenuListener.TRANSFER));
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
+        if(type=='G'){
+            newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
+            saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
+            openGame.addActionListener(new MenuListener(b, MenuListener.LOAD));
+            deletGame.addActionListener(new MenuListener(b, MenuListener.DELETE));
+            transferGame.addActionListener(new MenuListener(b, MenuListener.TRANSFER));
+            retirarse.addActionListener(new MenuListener(b, MenuListener.RETIRO));
+        }else if(type=='M'){
+            newGame.addActionListener(new MenuListener(m, MenuListener.NEW));
+            saveGame.addActionListener(new MenuListener(m, MenuListener.SAVE));
+            openGame.addActionListener(new MenuListener(m, MenuListener.LOAD));
+            deletGame.addActionListener(new MenuListener(m, MenuListener.DELETE));
+            transferGame.addActionListener(new MenuListener(m, MenuListener.TRANSFER));
+            retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));    
+        }
         
         file.add(newGame);
         file.add(saveGame);
@@ -69,20 +79,17 @@ public class MenuBarGame extends JMenuBar{
         file.add(transferGame);
         file.add(retirarse);
         file.add(ranking);
+        file.add(salir);
         
         profile = new JMenu("Profile");
-        verMisDatos = new JMenuItem("Ver Mis Ultimos Datos");
+        verMisDatos = new JMenuItem("Ver Mis Datos");
+        verMisDatos.addActionListener(new MenuListener(m, MenuListener.SHOWPROFILE));
         lastGames = new JMenuItem("Ver Mis Ultimos Juegos");
+        lastGames.addActionListener(new MenuListener(m, MenuListener.LASTGAMES));
         editPass = new JMenuItem("Cambiar mi Pasword");
+        editPass.addActionListener(new MenuListener(m, MenuListener.EDITPASS));
         logout = new JMenuItem("Logout");
-        logout.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Login().setVisible(true);
-                m.dispose();
-            }
-        });
+        logout.addActionListener(new MenuListener(m, MenuListener.LOGOUT));
         
         profile.add(verMisDatos);
         profile.add(lastGames);

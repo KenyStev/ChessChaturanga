@@ -130,6 +130,25 @@ public class saveWithArrayList implements Savable{
         }
         return false;
     }
+    
+    public int findGamesPendientes() {
+        int pendientes=0;
+        for (Partida game : partidas) {
+            if(Datos.logedin.equals(game.getBoard().getPlayer1()) && !game.isTerminada())
+                pendientes++;
+        }
+        return pendientes;
+    }
+
+    @Override
+    public ArrayList<String> findLogs() {
+        ArrayList<String> userLogs = new ArrayList<>();
+        for (String log : Datos.logs) {
+            if(log.contains(Datos.logedin.getName()))
+                userLogs.add(log);
+        }
+        return userLogs;
+    }
 
     @Override
     public boolean serializar(Object obj) {

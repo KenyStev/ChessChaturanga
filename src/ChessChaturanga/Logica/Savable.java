@@ -5,6 +5,8 @@
  */
 package ChessChaturanga.Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author KenyStev
@@ -26,6 +28,8 @@ public interface Savable {
     boolean guardarPartida(Partida p);
     boolean eliminarPartida(String path);
     boolean transferirPartida(String path, User user1, User user2);
+    int findGamesPendientes();
+    ArrayList<String> findLogs();
     
     boolean serializar(Object obj);
     Object deserializar(String path);

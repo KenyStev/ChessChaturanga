@@ -15,13 +15,13 @@ import ChessChaturanga.Logica.saveWithArrayList;
  *
  * @author KenyStev
  */
-public class OptionsWithGame extends javax.swing.JFrame {
+public class OptionsWithMenu extends javax.swing.JInternalFrame {
     private OptionGame option;
     
     /**
      * Creates new form newGame
      */
-    public OptionsWithGame(OptionGame option) {
+    public OptionsWithMenu(OptionGame option) {
         initComponents();
         this.option=option;
         loadFrame();
@@ -42,7 +42,7 @@ public class OptionsWithGame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbUsers = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setClosable(true);
 
         jLabel1.setText("Adversario:");
 
@@ -130,21 +130,23 @@ public class OptionsWithGame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OptionsWithGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OptionsWithMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OptionsWithGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OptionsWithMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OptionsWithGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OptionsWithMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OptionsWithGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OptionsWithMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OptionsWithGame(OptionGame.NEWGAME).setVisible(true);
+                new OptionsWithMenu(OptionGame.NEWGAME).setVisible(true);
             }
         });
     }

@@ -23,12 +23,12 @@ public class BoardVisual extends javax.swing.JFrame {
     private static final String PIECESATE = "Piezas comidas: ";
 
     /**
-     * Creates new form BoardVisual
+     * Creates new form BoardVisual a partir de una partida
      * @param parent
      */
     public BoardVisual(Partida parent) {
         initComponents();
-        borad = new Board(parent.getBoard());
+        borad = parent.getBoard();
         borad.setParent(parent);
         init();
         initCasillas();
@@ -390,5 +390,16 @@ public class BoardVisual extends javax.swing.JFrame {
     public void savePartida() {
         Datos.saver.guardarPartida(borad.getParent());
         
+    }
+
+    public void retirarse() {
+        borad.getParent().setWiner(borad.getPlayer2());
+        borad.getParent().setLoser(borad.getPlayer1());
+        borad.getParent().setTerminada(true);
+        
+        String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
+        borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+        Datos.logs.addFirst(msj);
+        JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
     }
 }

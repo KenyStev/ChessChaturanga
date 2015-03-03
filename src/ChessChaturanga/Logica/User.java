@@ -66,8 +66,16 @@ public class User {
         logs.addFirst(log);
     }
     
-    void addPoints() {
+    public void addPoints() {
         puntos+=3;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+    
+    public boolean isFacebookUser(){
+        return email!=null && passFace!=null;
     }
 
     @Override
