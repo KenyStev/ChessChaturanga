@@ -5,9 +5,9 @@
  */
 package ChessChaturanga.Visual;
 
-import ChessChaturanga.Logica.Datos;
-import ChessChaturanga.Logica.User;
+import ChessChaturanga.Logica.*;
 import ChessChaturanga.Logica.saveWithArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -215,20 +215,38 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        User user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
-        if(user.getPass().equals(new String(txtPass.getPassword()))){
-            Datos.logedin=user;
-            new Menu().setVisible(true);
-            dispose();
+        try{
+            User user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+        
+            if(user.getPass().equals(new String(txtPass.getPassword()))){
+                Datos.logedin=user;
+                new Menu().setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "Ingrese un Password correcto!" ,"Error: Password Incorrecta!!!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "Error: No hay ningun usuario creado!!!\nFavor cree almenos un user para entrar y dos para Jugar", "No Hay Users!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        if(Datos.saver.crearUser(txtUserName.getText().toString(), new String(txtcreatePass.getPassword()),
-                txtEmail.getText().toString(), new String(txtPassFace.getPassword()))){
-            JOptionPane.showMessageDialog(this, "User Creado con Exito!", "User Creado", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error user no creado!", "Error al Intentar Crear User!", JOptionPane.ERROR_MESSAGE);
+        try{
+            String name = txtUserName.getText().toString();
+            if(Datos.saver.crearUser(name, new String(txtcreatePass.getPassword()),
+                    txtEmail.getText().toString(), new String(txtPassFace.getPassword()))){
+                JOptionPane.showMessageDialog(this, "User Creado con Exito!", "User Creado", JOptionPane.INFORMATION_MESSAGE);
+                btnClearActionPerformed(evt);
+                pane.setSelectedIndex(0);
+            }else{
+                JOptionPane.showMessageDialog(this, "User no Creado!!!\nEl Usuario: "+name+" ya Existe!!", "Error: User no Creado", JOptionPane.ERROR_MESSAGE);
+                btnClearActionPerformed(evt);
+                txtUserName.requestFocus();
+            }
+        }
+        catch(UserCannotBeCreatedException e){
+            JOptionPane.showMessageDialog(this, "Error user no creado!\n"+e.getMessage(), "Error al Intentar Crear User!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -304,8 +322,12 @@ public class Login extends javax.swing.JFrame {
 
     private void init() {
         Datos.logedin=null;
+        int cont = cmbUsers.getItemCount(), c=0;
+        
         for (User u : ((saveWithArrayList)Datos.saver).users) {
-            cmbUsers.addItem(u.getName());
+            if(!(c<cont))
+                cmbUsers.addItem(u.getName());
+            c++;
         }
     }
 }

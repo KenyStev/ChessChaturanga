@@ -66,7 +66,7 @@ public class Profile extends javax.swing.JInternalFrame {
                     .addComponent(lblUser)
                     .addComponent(lblScore)
                     .addComponent(lblGamesPen))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

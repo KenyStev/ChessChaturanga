@@ -21,9 +21,9 @@ public class saveWithArrayList implements Savable{
         partidas = new ArrayList<>();
         
         //users de Prueba
-        for (int i=0; i<100; i++) {
-            users.add(new User("User"+i, "user"+i, null, null));
-        }
+//        for (int i=0; i<100; i++) {
+//            users.add(new User("User"+i, "user"+i, null, null));
+//        }
     }
 
     @Override
@@ -36,7 +36,13 @@ public class saveWithArrayList implements Savable{
     }
 
     @Override
-    public boolean crearUser(String name, String pass, String email, String passFace) {
+    public boolean crearUser(String name, String pass, String email, String passFace) throws UserCannotBeCreatedException {
+        
+        if(name==null || pass==null || email==null || passFace==null)
+            throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is null");
+        if(name.equals("") || pass.equals("") || email.equals("") || passFace.equals(""))
+            throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is empty");
+        
         if(buscarUser(name)==-1){
             users.add(new User(name, pass, email, passFace));
             return true;

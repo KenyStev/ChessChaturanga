@@ -42,6 +42,7 @@ public class MenuListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         OptionsWithGame owg;
+        OptionsWithMenu owm;
         switch(opcion){
             case NEW: //Nueva Partida
                 if(type=='G')
@@ -64,7 +65,14 @@ public class MenuListener implements ActionListener{
                     }else
                         owg.setVisible(true);
                 }else if(type=='M'){
-                    
+                    owm = new OptionsWithMenu(OptionGame.LOADGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
                 }
                 break;
             case DELETE: //Eliminar Partida
@@ -76,7 +84,14 @@ public class MenuListener implements ActionListener{
                     }else
                         owg.setVisible(true);
                 }else if(type=='M'){
-                    
+                    owm = new OptionsWithMenu(OptionGame.DELETEGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
                 }
                 break;
             case TRANSFER: //Transferir Partida
@@ -88,7 +103,14 @@ public class MenuListener implements ActionListener{
                     }else
                         owg.setVisible(true);
                 }else if(type=='M'){
-                    
+                    owm = new OptionsWithMenu(OptionGame.TRASFERGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
                 }
                 break;
             case RETIRO: //Retirarse del Juego
