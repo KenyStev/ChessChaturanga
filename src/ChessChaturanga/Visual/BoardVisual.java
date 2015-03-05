@@ -388,8 +388,12 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     public void savePartida() {
-        Datos.saver.guardarPartida(borad.getParent());
-        
+        if(Datos.saver.guardarPartida(borad.getParent())){
+            JOptionPane.showMessageDialog(this, "Partida Guardada Exitosame!!!", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al Intentar Guardar Partida!!!", "Partida no Guardada", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void retirarse() {

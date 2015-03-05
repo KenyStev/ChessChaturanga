@@ -6,6 +6,7 @@
 package ChessChaturanga.Logica;
 
 import ChessChaturanga.Visual.BoardVisual;
+import ChessChaturanga.Visual.Login;
 import ChessChaturanga.Visual.Menu;
 import ChessChaturanga.Visual.OptionsWithGame;
 import ChessChaturanga.Visual.OptionsWithMenu;
@@ -23,7 +24,8 @@ public class MenuListener implements ActionListener{
     private int opcion, type;
     
     public static final int NEW=1, SAVE=2, LOAD=3, DELETE=4, 
-            TRANSFER=5, RETIRO=6, EDITPASS=7, LASTGAMES=8, SHOWPROFILE=9, LOGOUT=10;
+            TRANSFER=5, RETIRO=6, EDITPASS=7, LASTGAMES=8, 
+            SHOWPROFILE=9, LOGOUT=10, RANKING=11;
     
     public MenuListener(BoardVisual obj, int opcion) {
         this.b = obj;
@@ -98,7 +100,10 @@ public class MenuListener implements ActionListener{
             case SHOWPROFILE:
                 menu.showProfile(); break;
             case LOGOUT:
+                new Login().setVisible(true);
                 menu.dispose(); break;
+            case RANKING: 
+                menu.showRanking(); break;
         }
     }
     

@@ -21,7 +21,7 @@ public class saveWithArrayList implements Savable{
         partidas = new ArrayList<>();
         
         //users de Prueba
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<100; i++) {
             users.add(new User("User"+i, "user"+i, null, null));
         }
     }

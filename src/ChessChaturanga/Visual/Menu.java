@@ -111,4 +111,10 @@ public class Menu extends javax.swing.JFrame {
     public JDesktopPane getjDP() {
         return jDP;
     }
+
+    public void showRanking() {
+        Ranking p = new Ranking();
+        p.setVisible(true);
+        jDP.add(p);
+    }
 }

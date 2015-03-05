@@ -63,13 +63,15 @@ public class MenuBarGame extends JMenuBar{
             deletGame.addActionListener(new MenuListener(b, MenuListener.DELETE));
             transferGame.addActionListener(new MenuListener(b, MenuListener.TRANSFER));
             retirarse.addActionListener(new MenuListener(b, MenuListener.RETIRO));
+            ranking.addActionListener(new MenuListener(b, MenuListener.RANKING));
         }else if(type=='M'){
             newGame.addActionListener(new MenuListener(m, MenuListener.NEW));
             saveGame.addActionListener(new MenuListener(m, MenuListener.SAVE));
             openGame.addActionListener(new MenuListener(m, MenuListener.LOAD));
             deletGame.addActionListener(new MenuListener(m, MenuListener.DELETE));
             transferGame.addActionListener(new MenuListener(m, MenuListener.TRANSFER));
-            retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));    
+            retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));  
+            ranking.addActionListener(new MenuListener(m, MenuListener.RANKING));
         }
         
         file.add(newGame);
