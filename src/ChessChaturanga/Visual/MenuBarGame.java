@@ -44,8 +44,6 @@ public class MenuBarGame extends JMenuBar{
         init('M');
     }
     
-    
-    
     public void init(char type){
         file = new JMenu("File");
         newGame = new JMenuItem("New Game");
@@ -56,6 +54,13 @@ public class MenuBarGame extends JMenuBar{
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
+        salir.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         if(type=='G'){
             newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
             saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
