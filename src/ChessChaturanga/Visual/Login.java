@@ -36,11 +36,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         pane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        cmbUsers = new javax.swing.JComboBox();
         txtPass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
+        txtUsername = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         txtUserName = new javax.swing.JTextField();
         txtcreatePass = new javax.swing.JPasswordField();
@@ -92,8 +92,8 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbUsers, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(txtUsername))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -101,8 +101,8 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -223,7 +223,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         try{
-            User user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+            User user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(txtUsername.getText()));
         
             if(user.getPass().equals(new String(txtPass.getPassword()))){
                 Datos.logedin=user;
@@ -236,8 +236,11 @@ public class Login extends javax.swing.JFrame {
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(this, "Error: No hay ningun usuario creado!!!\nFavor cree almenos un user para entrar y dos para Jugar", "No Hay Users!", JOptionPane.ERROR_MESSAGE);
         }
+        catch(ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(this, "Error: User or Pass Invalid!!!\nPlease enter an user and pass valid", "invalid User!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnOKActionPerformed
-
+    
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         try{
             String name = txtUserName.getText().toString();
@@ -246,6 +249,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "User Creado con Exito!", "User Creado", JOptionPane.INFORMATION_MESSAGE);
                 btnClearActionPerformed(evt);
                 pane.setSelectedIndex(0);
+                txtUsername.requestFocus();
             }else{
                 JOptionPane.showMessageDialog(this, "User no Creado!!!\nEl Usuario: "+name+" ya Existe!!", "Error: User no Creado", JOptionPane.ERROR_MESSAGE);
                 btnClearActionPerformed(evt);
@@ -309,7 +313,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnOK;
-    private javax.swing.JComboBox cmbUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -325,17 +328,18 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JPasswordField txtPassFace;
     private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField txtUsername;
     private javax.swing.JPasswordField txtcreatePass;
     // End of variables declaration//GEN-END:variables
 
     private void init() {
         Datos.logedin=null;
-        int cont = cmbUsers.getItemCount(), c=0;
-        
-        for (User u : ((saveWithArrayList)Datos.saver).users) {
-            if(!(c<cont))
-                cmbUsers.addItem(u.getName());
-            c++;
-        }
+//        int cont = cmbUsers.getItemCount(), c=0;
+//        
+//        for (User u : ((saveWithArrayList)Datos.saver).users) {
+//            if(!(c<cont))
+//                cmbUsers.addItem(u.getName());
+//            c++;
+//        }
     }
 }

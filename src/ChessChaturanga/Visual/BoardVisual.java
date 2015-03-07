@@ -350,7 +350,7 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
             
-            getJMenuBar().getMenu(0).setEnabled(true);
+//            getJMenuBar().getMenu(0).setEnabled(true);
         }else{
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
@@ -358,7 +358,7 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
             lblPlayer1.setIcon(null);
             
-            getJMenuBar().getMenu(0).setEnabled(false);
+//            getJMenuBar().getMenu(0).setEnabled(false);
         }
     }
     
@@ -397,13 +397,19 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     public void retirarse() {
-        borad.getParent().setWiner(borad.getPlayer2());
-        borad.getParent().setLoser(borad.getPlayer1());
+        borad.getParent().setWiner(getUserNotActive());
+        borad.getParent().setLoser(borad.getActivo());
         borad.getParent().setTerminada(true);
         
         String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
         borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
         Datos.logs.addFirst(msj);
         JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private User getUserNotActive(){
+        if(borad.getActivo().equals(borad.getPlayer1()))
+            return borad.getPlayer2();
+        return borad.getPlayer1();
     }
 }

@@ -88,8 +88,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cmbUsers" max="32767" attributes="0"/>
-                                  <Component id="txtPass" min="-2" pref="158" max="-2" attributes="0"/>
+                                  <Component id="txtPass" pref="158" max="32767" attributes="0"/>
+                                  <Component id="txtUsername" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -102,8 +102,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbUsers" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtUsername" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -118,13 +118,6 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JComboBox" name="cmbUsers">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JPasswordField" name="txtPass">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -144,6 +137,8 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOKActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtUsername">
             </Component>
           </SubComponents>
         </Container>
