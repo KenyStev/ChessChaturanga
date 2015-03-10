@@ -6,7 +6,10 @@
 package ChessChaturanga.Logica;
 
 import ChessChaturanga.Visual.BoardVisual;
+import ChessChaturanga.Visual.Login;
+import ChessChaturanga.Visual.Menu;
 import ChessChaturanga.Visual.OptionsWithGame;
+import ChessChaturanga.Visual.OptionsWithMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -17,49 +20,112 @@ import javax.swing.JOptionPane;
  */
 public class MenuListener implements ActionListener{
     private BoardVisual b;
-    private int opcion;
+    private Menu menu;
+    private int opcion, type;
     
-    public static final int NEW=1, SAVE=2, LOAD=3, DELET=4, TRANSFER=5;
+    public static final int NEW=1, SAVE=2, LOAD=3, DELETE=4, 
+            TRANSFER=5, RETIRO=6, EDITPASS=7, LASTGAMES=8, 
+            SHOWPROFILE=9, LOGOUT=10, RANKING=11;
     
     public MenuListener(BoardVisual obj, int opcion) {
         this.b = obj;
+        type = 'G';
+        this.opcion = opcion;
+    }
+    
+    public MenuListener(Menu obj, int opcion) {
+        this.menu = obj;
+        type = 'M';
         this.opcion = opcion;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         OptionsWithGame owg;
+        OptionsWithMenu owm;
         switch(opcion){
-            case 1: //Nueva Partida
-                new OptionsWithGame(OptionGame.NEWGAME).setVisible(true);
+            case NEW: //Nueva Partida
+                if(type=='G')
+                    new OptionsWithGame(OptionGame.NEWGAME).setVisible(true);
+                else if(type=='M'){
+                    OptionsWithMenu m = new OptionsWithMenu(OptionGame.NEWGAME);
+                    m.setVisible(true);
+                    menu.getjDP().add(m);
+                }
                 break;
-            case 2: //Salvar Partida
+            case SAVE: //Salvar Partida
                 b.savePartida();
                 break;
-            case 3: //Cargar Partida
-                owg = new OptionsWithGame(OptionGame.LOADGAME);
-                if(owg.getCount()==0){
-                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
-                    owg.dispose();
-                }else
-                    owg.setVisible(true);
+            case LOAD: //Cargar Partida
+                if(type=='G'){
+                    owg = new OptionsWithGame(OptionGame.LOADGAME);
+                    if(owg.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owg.dispose();
+                    }else
+                        owg.setVisible(true);
+                }else if(type=='M'){
+                    owm = new OptionsWithMenu(OptionGame.LOADGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
+                }
                 break;
-            case 4: //Eliminar Partida
-                owg = new OptionsWithGame(OptionGame.DELETEGAME);
-                if(owg.getCount()==0){
-                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
-                    owg.dispose();
-                }else
-                    owg.setVisible(true);
+            case DELETE: //Eliminar Partida
+                if(type=='G'){
+                    owg = new OptionsWithGame(OptionGame.DELETEGAME);
+                    if(owg.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owg.dispose();
+                    }else
+                        owg.setVisible(true);
+                }else if(type=='M'){
+                    owm = new OptionsWithMenu(OptionGame.DELETEGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
+                }
                 break;
-            case 5: //Transferir Partida
-                owg = new OptionsWithGame(OptionGame.TRASFERGAME);
-                if(owg.getCount()==0){
-                    JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
-                    owg.dispose();
-                }else
-                    owg.setVisible(true);
+            case TRANSFER: //Transferir Partida
+                if(type=='G'){
+                    owg = new OptionsWithGame(OptionGame.TRASFERGAME);
+                    if(owg.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owg.dispose();
+                    }else
+                        owg.setVisible(true);
+                }else if(type=='M'){
+                    owm = new OptionsWithMenu(OptionGame.TRASFERGAME);
+                    if(owm.getCount()==0){
+                        JOptionPane.showMessageDialog(null, "No Hay Partidas Guardadas!!!", "No hay Partidas!!!", JOptionPane.INFORMATION_MESSAGE);
+                        owm.dispose();
+                    }else{
+                        menu.getjDP().add(owm);
+                        owm.setVisible(true);
+                    }
+                }
                 break;
+            case RETIRO: //Retirarse del Juego
+                b.retirarse(); break;
+            case EDITPASS: //Cambiar Password
+                menu.showChangePass(); break;
+            case LASTGAMES://Mostrar ultimos Juegos
+                menu.showLastGames(); break;
+            case SHOWPROFILE:
+                menu.showProfile(); break;
+            case LOGOUT:
+                new Login().setVisible(true);
+                menu.dispose(); break;
+            case RANKING: 
+                menu.showRanking(); break;
         }
     }
     

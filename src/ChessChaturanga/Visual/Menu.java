@@ -4,30 +4,24 @@
  * and open the template in the editor.
  */
 package ChessChaturanga.Visual;
-import com.sun.awt.AWTUtilities; 
 
-import java.awt.Shape; 
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.JFrame;
+import ChessChaturanga.Logica.Datos;
+import javax.swing.JDesktopPane;
+import javax.swing.JMenu;
 
 /**
  *
- * @author dmenjivar
+ * @author kenystev
  */
 public class Menu extends javax.swing.JFrame {
+    private JDesktopPane jDP;
     
     /**
      * Creates new form Menu
      */
     public Menu() {
-        setUndecorated(true) ; //Quitamos el borde de las jframe
-        setOpacity(0.8f);//con la f aclaramos que es float 
         initComponents();
-        setLocationRelativeTo(null); // Ponemos en el centro la jframe
-        Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 30, 30);
-        //Shape forma =  new Ellipse2D.Float(0,0,getWidth(),getHeight()); 
-        AWTUtilities.setWindowShape(this, forma)  ; 
+        init();
     }
 
     /**
@@ -39,65 +33,14 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Btn_Salir = new javax.swing.JButton();
-        Btn_IniciarSesion = new javax.swing.JButton();
-        Btn_CrearUsuario = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chess Chaturanga");
         setPreferredSize(new java.awt.Dimension(760, 430));
         setResizable(false);
         getContentPane().setLayout(null);
 
-        Btn_Salir.setText("Salir");
-        Btn_Salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_SalirActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Btn_Salir);
-        Btn_Salir.setBounds(260, 260, 260, 40);
-
-        Btn_IniciarSesion.setText("Iniciar sesión");
-        Btn_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_IniciarSesionActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Btn_IniciarSesion);
-        Btn_IniciarSesion.setBounds(260, 120, 260, 40);
-
-        Btn_CrearUsuario.setText("Crear usuario");
-        Btn_CrearUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_CrearUsuarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Btn_CrearUsuario);
-        Btn_CrearUsuario.setBounds(260, 190, 260, 40);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ChessChaturanga/Assets/vintage-chess-pieces-20736-1920x1080.jpg"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 770, 430);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void Btn_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SalirActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_Btn_SalirActionPerformed
-
-    private void Btn_CrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CrearUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_CrearUsuarioActionPerformed
-
-    private void Btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_IniciarSesionActionPerformed
-        //Abrimos otra jframe con este codigo.
-        //Login Log = new Login();
-        //this.setVisible(false);
-        //Log.setVisible(true);
-    }//GEN-LAST:event_Btn_IniciarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,9 +78,43 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Btn_CrearUsuario;
-    private javax.swing.JButton Btn_IniciarSesion;
-    private javax.swing.JButton Btn_Salir;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+        setJMenuBar(new MenuBarGame(this));
+        jDP = new JDesktopPane();
+        getContentPane().add(jDP);
+        jDP.setBounds(getContentPane().getBounds());
+        JMenu loged = new JMenu("Logedin: "+Datos.logedin.getName());
+        loged.setEnabled(false);
+        getJMenuBar().add(loged);
+    }
+
+    public void showChangePass() {
+        ChangePass cp = new ChangePass();
+        cp.setVisible(true);
+        jDP.add(cp);
+    }
+
+    public void showProfile() {
+        Profile p = new Profile();
+        p.setVisible(true);
+        jDP.add(p);
+    }
+
+    public void showLastGames() {
+        LastGames p = new LastGames();
+        p.setVisible(true);
+        jDP.add(p);
+    }
+
+    public JDesktopPane getjDP() {
+        return jDP;
+    }
+
+    public void showRanking() {
+        Ranking p = new Ranking();
+        p.setVisible(true);
+        jDP.add(p);
+    }
 }

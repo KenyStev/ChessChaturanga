@@ -10,7 +10,6 @@ import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -98,11 +97,18 @@ public class OptionsWithGame extends javax.swing.JFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         boolean state=false;
+        Partida p;
         switch(option){
             case NEWGAME: state = Datos.saver.crearPartida(Datos.logedin, getUser()); break;
-            case LOADGAME: Partida p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
+            case LOADGAME: p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
                 if(p!=null){state=true; new BoardVisual(p).setVisible(state);} break;
             case DELETEGAME: state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); break;
+            case TRASFERGAME: 
+                User user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                if(Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2)){
+                    state=true;
+                }
+                break;
         }
         if(state)dispose();
     }//GEN-LAST:event_btnPlayActionPerformed
@@ -163,7 +169,8 @@ public class OptionsWithGame extends javax.swing.JFrame {
             case NEWGAME:
                 if (Datos.saver instanceof saveWithArrayList) {
                     for (User u : ((saveWithArrayList) Datos.saver).users) {
-                        cmbOptions.addItem(u.getName());
+                        if(!u.equals(Datos.logedin))
+                            cmbOptions.addItem(u.getName());
                     }
                 }
             break;
@@ -173,7 +180,7 @@ public class OptionsWithGame extends javax.swing.JFrame {
             case TRASFERGAME: 
                 if (Datos.saver instanceof saveWithArrayList) {
                     for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
-                        if(Datos.logedin.equals(p.getBoard().getPlayer1()))
+                        if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
                             cmbOptions.addItem(p);
                     }
                 }
@@ -185,7 +192,8 @@ public class OptionsWithGame extends javax.swing.JFrame {
         if(option == OptionGame.TRASFERGAME){
             if (Datos.saver instanceof saveWithArrayList) {
                     for (User u : ((saveWithArrayList) Datos.saver).users) {
-                        cmbUsers.addItem(u.getName());
+                        if(!u.equals(Datos.logedin))
+                            cmbUsers.addItem(u.getName());
                     }
                 }
             jLabel2.setVisible(true);

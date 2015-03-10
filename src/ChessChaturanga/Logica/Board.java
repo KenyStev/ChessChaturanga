@@ -132,6 +132,7 @@ public class Board {
 
     public void setPlayer1(User player1) {
         this.player1 = player1;
+//        activo = active?player1:player2;
     }
 
     public void setPlayer2(User player2) {
@@ -144,17 +145,17 @@ public class Board {
     private void initPieces() {
         int r1=0, r2=SIZE-1, c1=0, c2=SIZE-1;
         
-        //addPiece(new Tower());
-        //addPiece(new Tower());
+        addPiece(new Tower(Color.RED, r2, c1++));
+        addPiece(new Tower(Color.GREEN, r1, c2--));
         
-        //addPiece(new Horse());
-        //addPiece(new Horse());
+        addPiece(new Horse(Color.RED, r2, c1++));
+        addPiece(new Horse(Color.GREEN, r1, c2--));
         
         addPiece(new Elephant(Color.RED, r2, c1++));
         addPiece(new Elephant(Color.GREEN, r1, c2--));
         
-        //addPiece(new Advisor());
-        //addPiece(new Advisor());
+        addPiece(new Advisor(Color.RED, r2, c1++));
+        addPiece(new Advisor(Color.GREEN, r1, c2--));
         
         kingRed = new King(Color.RED, r2, c1++);
         kingGreen = new King(Color.GREEN, r1, c2--);
@@ -165,15 +166,15 @@ public class Board {
         addPiece(new Elephant(Color.RED, r2, c1++));
         addPiece(new Elephant(Color.GREEN, r1, c2--));
         
-        //addPiece(new Horse());
-        //addPiece(new Horse());
+        addPiece(new Horse(Color.RED, r2, c1++));
+        addPiece(new Horse(Color.GREEN, r1, c2--));
         
-        //addPiece(new Tower()); //r1++
-        //addPiece(new Tower()); //r2--
+        addPiece(new Tower(Color.RED, r2--, c1++));     //r2--
+        addPiece(new Tower(Color.GREEN, r1++, c2--));   //r1++
         
         for (int i = 0; i < SIZE; i++) {
-            addPiece(new Pawn(Color.RED, 6, i));
-            addPiece(new Pawn(Color.GREEN, 1, i));
+            addPiece(new Pawn(Color.RED, r2, i));
+            addPiece(new Pawn(Color.GREEN, r1, i));
         }
     }
     

@@ -21,9 +21,9 @@ public class saveWithArrayList implements Savable{
         partidas = new ArrayList<>();
         
         //users de Prueba
-        for (int i=0; i<10; i++) {
-            users.add(new User("User"+i, "user"+i, null, null));
-        }
+//        for (int i=0; i<100; i++) {
+//            users.add(new User("User"+i, "user"+i, null, null));
+//        }
     }
 
     @Override
@@ -36,7 +36,13 @@ public class saveWithArrayList implements Savable{
     }
 
     @Override
-    public boolean crearUser(String name, String pass, String email, String passFace) {
+    public boolean crearUser(String name, String pass, String email, String passFace) throws UserCannotBeCreatedException {
+        
+        if(name==null || pass==null)
+            throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is null");
+        if(name.equals("") || pass.equals(""))
+            throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is empty");
+        
         if(buscarUser(name)==-1){
             users.add(new User(name, pass, email, passFace));
             return true;
@@ -129,6 +135,25 @@ public class saveWithArrayList implements Savable{
             }
         }
         return false;
+    }
+    
+    public int findGamesPendientes() {
+        int pendientes=0;
+        for (Partida game : partidas) {
+            if(Datos.logedin.equals(game.getBoard().getPlayer1()) && !game.isTerminada())
+                pendientes++;
+        }
+        return pendientes;
+    }
+
+    @Override
+    public ArrayList<String> findLogs() {
+        ArrayList<String> userLogs = new ArrayList<>();
+        for (String log : Datos.logs) {
+            if(log.contains(Datos.logedin.getName()))
+                userLogs.add(log);
+        }
+        return userLogs;
     }
 
     @Override

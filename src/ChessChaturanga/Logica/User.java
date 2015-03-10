@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author KenyStev
  */
-public class User {
+public class User implements Comparable<User>{
     private Color color;
     private String name, pass, email, passFace;
     private int puntos;
@@ -66,8 +66,16 @@ public class User {
         logs.addFirst(log);
     }
     
-    void addPoints() {
+    public void addPoints() {
         puntos+=3;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+    
+    public boolean isFacebookUser(){
+        return email!=null && passFace!=null;
     }
 
     @Override
@@ -77,5 +85,12 @@ public class User {
         if(obj instanceof String)
             return name.equals(obj);
         return false;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        if(puntos>o.getPuntos())
+            return -1;
+        return 1;
     }
 }

@@ -23,37 +23,21 @@ public class Elephant extends Piece{
         
         movementsValids.clear();
         Piece p;
-        if(row>0 && col>0){
-            p = b.getPieceAt(row-1, col-1);
-            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-1, col-1));
-            if(row>1 && col>1){
-                p = b.getPieceAt(row-2, col-2);
-                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col-2));
-            }
+        if(row>1 && col>1){
+            p = b.getPieceAt(row-2, col-2);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col-2));
         }
-        if(row>0 && col<b.SIZE-1){
-            p = b.getPieceAt(row-1, col+1);
-            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-1, col+1));
-            if(row>1 && col<b.SIZE-2){
-                p = b.getPieceAt(row-2, col+2);
-                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col+2));
-            }
+        if(row>1 && col<b.SIZE-2){
+            p = b.getPieceAt(row-2, col+2);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row-2, col+2));
         }
-        if(row<b.SIZE-1 && col>0){
-            p = b.getPieceAt(row+1, col-1);
-            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+1, col-1));
-            if(row<b.SIZE-2 && col>1){
-                p = b.getPieceAt(row+2, col-2);
-                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col-2));
-            }
+        if(row<b.SIZE-2 && col>1){
+            p = b.getPieceAt(row+2, col-2);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col-2));
         }
-        if(row<b.SIZE-1 && col<b.SIZE-1){
-            p = b.getPieceAt(row+1, col+1);
-            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+1, col+1));
-            if(row<b.SIZE-2 && col<b.SIZE-2){
-                p = b.getPieceAt(row+2, col+2);
-                if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col+2));
-            }
+        if(row<b.SIZE-2 && col<b.SIZE-2){
+            p = b.getPieceAt(row+2, col+2);
+            if(p==null || (p!=null && isEnemy(p))) movementsValids.add(new Position(row+2, col+2));
         }
     }
 

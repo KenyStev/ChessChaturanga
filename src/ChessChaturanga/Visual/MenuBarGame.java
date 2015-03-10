@@ -7,6 +7,8 @@ package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.MenuListener;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,6 +22,7 @@ public class MenuBarGame extends JMenuBar{
     private JMenuItem newGame, saveGame, openGame, deletGame, transferGame, ranking, logout,
             verMisDatos, lastGames, editPass, retirarse, salir;
     private BoardVisual b;
+    private Menu m;
 
     /**
      * Recibe el tipo de Frame al que se le pondra el menu:
@@ -27,29 +30,54 @@ public class MenuBarGame extends JMenuBar{
      * @param type
      * @throws HeadlessException 
      */
-    public MenuBarGame(char type) throws HeadlessException {
+    public MenuBarGame(char type) {
         init(type);
     }
     
-    public MenuBarGame(BoardVisual b) throws HeadlessException {
+    public MenuBarGame(BoardVisual b) {
         this.b=b;
         init('G');
+    }
+    
+    public MenuBarGame(Menu b)  {
+        this.m=b;
+        init('M');
     }
     
     public void init(char type){
         file = new JMenu("File");
         newGame = new JMenuItem("New Game");
-        newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
         saveGame = new JMenuItem("Save Game");
-        saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
         openGame = new JMenuItem("Open Game");
-        openGame.addActionListener(new MenuListener(b, MenuListener.LOAD));
         deletGame = new JMenuItem("Delet Game");
-        deletGame.addActionListener(new MenuListener(b, MenuListener.DELET));
         transferGame = new JMenuItem("Transfer Game");
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
+        salir.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        if(type=='G'){
+            newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
+            saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
+            openGame.addActionListener(new MenuListener(b, MenuListener.LOAD));
+            deletGame.addActionListener(new MenuListener(b, MenuListener.DELETE));
+            transferGame.addActionListener(new MenuListener(b, MenuListener.TRANSFER));
+            retirarse.addActionListener(new MenuListener(b, MenuListener.RETIRO));
+            ranking.addActionListener(new MenuListener(b, MenuListener.RANKING));
+        }else if(type=='M'){
+            newGame.addActionListener(new MenuListener(m, MenuListener.NEW));
+            saveGame.addActionListener(new MenuListener(m, MenuListener.SAVE));
+            openGame.addActionListener(new MenuListener(m, MenuListener.LOAD));
+            deletGame.addActionListener(new MenuListener(m, MenuListener.DELETE));
+            transferGame.addActionListener(new MenuListener(m, MenuListener.TRANSFER));
+            retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));  
+            ranking.addActionListener(new MenuListener(m, MenuListener.RANKING));
+        }
         
         file.add(newGame);
         file.add(saveGame);
@@ -58,12 +86,17 @@ public class MenuBarGame extends JMenuBar{
         file.add(transferGame);
         file.add(retirarse);
         file.add(ranking);
+        file.add(salir);
         
         profile = new JMenu("Profile");
-        verMisDatos = new JMenuItem("Ver Mis Ultimos Datos");
+        verMisDatos = new JMenuItem("Ver Mis Datos");
+        verMisDatos.addActionListener(new MenuListener(m, MenuListener.SHOWPROFILE));
         lastGames = new JMenuItem("Ver Mis Ultimos Juegos");
+        lastGames.addActionListener(new MenuListener(m, MenuListener.LASTGAMES));
         editPass = new JMenuItem("Cambiar mi Pasword");
+        editPass.addActionListener(new MenuListener(m, MenuListener.EDITPASS));
         logout = new JMenuItem("Logout");
+        logout.addActionListener(new MenuListener(m, MenuListener.LOGOUT));
         
         profile.add(verMisDatos);
         profile.add(lastGames);

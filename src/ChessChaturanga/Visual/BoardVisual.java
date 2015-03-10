@@ -23,7 +23,7 @@ public class BoardVisual extends javax.swing.JFrame {
     private static final String PIECESATE = "Piezas comidas: ";
 
     /**
-     * Creates new form BoardVisual
+     * Creates new form BoardVisual a partir de una partida
      * @param parent
      */
     public BoardVisual(Partida parent) {
@@ -43,18 +43,6 @@ public class BoardVisual extends javax.swing.JFrame {
     public BoardVisual(User player1, User player2) {
         initComponents();
         borad = new Board(player1, player2);
-        init();
-        initCasillas();
-    }
-
-    /**
-     * Creates new form BoardVisual from existing partida
-     * @param b
-     */
-    public BoardVisual(Board b) {
-        initComponents();
-        borad=b;
-        casillas = new Casilla[borad.SIZE][borad.SIZE];
         init();
         initCasillas();
     }
@@ -81,11 +69,11 @@ public class BoardVisual extends javax.swing.JFrame {
         table.setLayout(tableLayout);
         tableLayout.setHorizontalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 557, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         tableLayout.setVerticalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
         );
 
         lblPlayer2.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
@@ -109,7 +97,7 @@ public class BoardVisual extends javax.swing.JFrame {
                     .addComponent(lblPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         paneUsersInfoLayout.setVerticalGroup(
             paneUsersInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +107,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblP2AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(lblP1AtePieces, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,9 +219,9 @@ public class BoardVisual extends javax.swing.JFrame {
         for (Position m : movementsValids) {
             casillas[m.row][m.col].activeToMove();
             if(casillas[m.row][m.col].getPiece()==null)
-                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove.png")));
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove"+casillaActiva.getPiece()+".png")));
             else
-                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toMove"+casillas[m.row][m.col].getPiece()+".png")));
+                casillas[m.row][m.col].setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/toEat"+casillas[m.row][m.col].getPiece()+".png")));
         }
         getContentPane().repaint();
     }
@@ -276,17 +264,23 @@ public class BoardVisual extends javax.swing.JFrame {
                 //Si se selecciona una pieza contraria que no esta activa para mover(comer), se deselecciona la que estaba si lo habia
                 (casilla.getPiece()!=null && !borad.getActivo().valirColor(casilla.getPiece().getColor()))){
             casilla.unSelect();
-            if(casillaActiva!=null)
+            if(casillaActiva!=null){
                 unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+                casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+casillaActiva.getPiece()+".png")));
+            }
             casillaActiva=null;
             reOrder();
         //sino verifica si se clickeo una casilla que tenga una pieza del mismo color que el
         //jugador activo para mover (de turno) y muestra los movimientos validos de esa pieza
         }else if(borad.getActivo().valirColor(casilla.getPiece().getColor())){
-            if(casillaActiva!=null)
+            if(casillaActiva!=null){
                 unShowWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+                casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/"+casillaActiva.getPiece()+".png")));
+            }
             casillaActiva = casilla;
+            casillaActiva.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/selected"+casillaActiva.getPiece()+".png")));
             showWhereCanMove(casillaActiva.getPiece().getMovementsValids(borad));
+            casillaActiva.unSelect();
         }
     }
 
@@ -310,6 +304,8 @@ public class BoardVisual extends javax.swing.JFrame {
             borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
             Datos.logs.addFirst(msj);
             JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+            
+            share(msj);
         }
     }
 
@@ -344,7 +340,6 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
             
-            getJMenuBar().getMenu(0).setEnabled(true);
         }else{
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
@@ -352,7 +347,6 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
             lblPlayer1.setIcon(null);
             
-            getJMenuBar().getMenu(0).setEnabled(false);
         }
     }
     
@@ -382,6 +376,37 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     public void savePartida() {
-        Datos.saver.guardarPartida(borad.getParent());
+        if(Datos.saver.guardarPartida(borad.getParent())){
+            JOptionPane.showMessageDialog(this, "Partida Guardada Exitosame!!!", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al Intentar Guardar Partida!!!", "Partida no Guardada", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void retirarse() {
+        borad.getParent().setWiner(getUserNotActive());
+        borad.getParent().setLoser(borad.getActivo());
+        borad.getParent().setTerminada(true);
+        
+        String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
+        borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+        Datos.logs.addFirst(msj);
+        JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+        
+        share(msj);
+    }
+    
+    private User getUserNotActive(){
+        if(borad.getActivo().equals(borad.getPlayer1()))
+            return borad.getPlayer2();
+        return borad.getPlayer1();
+    }
+
+    private void share(String msj) {
+        if(JOptionPane.showConfirmDialog(this, "Le gustaria Publicar el Post en Facebook?", "Share Post", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            if(SecretAccess.shareLog(msj))
+                JOptionPane.showMessageDialog(this,"El Log se Posteo en su muro exitosamente", "Posteado Exitosamente!!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
