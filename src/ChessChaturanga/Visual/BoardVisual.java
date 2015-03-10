@@ -6,14 +6,7 @@
 package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.*;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-import facebook4j.PostUpdate;
-import facebook4j.auth.AccessToken;
 import java.awt.Rectangle;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -28,12 +21,6 @@ public class BoardVisual extends javax.swing.JFrame {
     private Casilla[][] casillas;
     private Casilla casillaActiva;
     private static final String PIECESATE = "Piezas comidas: ";
-    
-    /* Datos para conectarse con Facebook
-    appId: 864852790242246
-    appSecret: 6815803482791c6a6a7f469260edcca5
-    Access Token: CAACEdEose0cBACL6PmNadEg9ZC7eKJAoxZC15Qaad1ZAdonZBlAMBqqGGbOZAtnVjcfyZA4ETBAQEWqWGVI0eLeJA04ZAZAXetl0R1k0YoeFkc1RhpReffVq5E9OvY0DvOXImLs70EBiaxLYSvGzh17HmOEmimKZBO4GXaixwcHgfjD8Hyt84rCj09UT9OBn21Oow5xWH6dWdzLigncn7XS1yJIMGc51ByJgZD
-    */
 
     /**
      * Creates new form BoardVisual a partir de una partida
@@ -365,7 +352,6 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
             
-//            getJMenuBar().getMenu(0).setEnabled(true);
         }else{
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
@@ -373,7 +359,6 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnGreen.png")));
             lblPlayer1.setIcon(null);
             
-//            getJMenuBar().getMenu(0).setEnabled(false);
         }
     }
     
