@@ -243,9 +243,9 @@ public class Login extends javax.swing.JFrame {
     
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         try{
-            String name = txtUserName.getText().toString();
+            String name = txtUserName.getText();
             if(Datos.saver.crearUser(name, new String(txtcreatePass.getPassword()),
-                    txtEmail.getText().toString(), new String(txtPassFace.getPassword()))){
+                    txtEmail.getText(), new String(txtPassFace.getPassword()))){
                 JOptionPane.showMessageDialog(this, "User Creado con Exito!", "User Creado", JOptionPane.INFORMATION_MESSAGE);
                 btnClearActionPerformed(evt);
                 pane.setSelectedIndex(0);

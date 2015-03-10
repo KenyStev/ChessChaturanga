@@ -6,7 +6,14 @@
 package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.*;
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
+import facebook4j.PostUpdate;
+import facebook4j.auth.AccessToken;
 import java.awt.Rectangle;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -21,6 +28,12 @@ public class BoardVisual extends javax.swing.JFrame {
     private Casilla[][] casillas;
     private Casilla casillaActiva;
     private static final String PIECESATE = "Piezas comidas: ";
+    
+    /* Datos para conectarse con Facebook
+    appId: 864852790242246
+    appSecret: 6815803482791c6a6a7f469260edcca5
+    Access Token: CAACEdEose0cBACL6PmNadEg9ZC7eKJAoxZC15Qaad1ZAdonZBlAMBqqGGbOZAtnVjcfyZA4ETBAQEWqWGVI0eLeJA04ZAZAXetl0R1k0YoeFkc1RhpReffVq5E9OvY0DvOXImLs70EBiaxLYSvGzh17HmOEmimKZBO4GXaixwcHgfjD8Hyt84rCj09UT9OBn21Oow5xWH6dWdzLigncn7XS1yJIMGc51ByJgZD
+    */
 
     /**
      * Creates new form BoardVisual a partir de una partida
@@ -316,6 +329,8 @@ public class BoardVisual extends javax.swing.JFrame {
             borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
             Datos.logs.addFirst(msj);
             JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+            
+            share(msj);
         }
     }
 
@@ -405,11 +420,20 @@ public class BoardVisual extends javax.swing.JFrame {
         borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
         Datos.logs.addFirst(msj);
         JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+        
+        share(msj);
     }
     
     private User getUserNotActive(){
         if(borad.getActivo().equals(borad.getPlayer1()))
             return borad.getPlayer2();
         return borad.getPlayer1();
+    }
+
+    private void share(String msj) {
+        if(JOptionPane.showConfirmDialog(this, "Le gustaria Publicar el Post en Facebook?", "Share Post", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            if(SecretAccess.shareLog(msj))
+                JOptionPane.showMessageDialog(this,"El Log se Posteo en su muro exitosamente", "Posteado Exitosamente!!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

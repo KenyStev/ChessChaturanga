@@ -38,9 +38,9 @@ public class saveWithArrayList implements Savable{
     @Override
     public boolean crearUser(String name, String pass, String email, String passFace) throws UserCannotBeCreatedException {
         
-        if(name==null || pass==null || email==null || passFace==null)
+        if(name==null || pass==null)
             throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is null");
-        if(name.equals("") || pass.equals("") || email.equals("") || passFace.equals(""))
+        if(name.equals("") || pass.equals(""))
             throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is empty");
         
         if(buscarUser(name)==-1){
