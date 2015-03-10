@@ -46,18 +46,6 @@ public class BoardVisual extends javax.swing.JFrame {
         init();
         initCasillas();
     }
-
-    /**
-     * Creates new form BoardVisual from existing partida
-     * @param b
-     */
-    public BoardVisual(Board b) {
-        initComponents();
-        borad=new Board(b);
-        casillas = new Casilla[borad.SIZE][borad.SIZE];
-        init();
-        initCasillas();
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
