@@ -91,7 +91,7 @@ public class Board {
                 p = e.getPromotion();
                 String toPromotion = p.getName()+p.getColor().name();
                 wasPromotied = " --> Siendo Promocionado a: "+toPromotion;
-//                JOptionPane.showMessageDialog(this, pieceMoved+" fue Promocionado a: "+toPromotion, matoPiece, SIZE);
+                JOptionPane.showMessageDialog(null, pieceMoved+" fue Promocionado a: "+toPromotion, wasPromotied, JOptionPane.INFORMATION_MESSAGE);
             }
             if(state){
                 if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
