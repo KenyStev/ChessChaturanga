@@ -5,6 +5,7 @@
  */
 package ChessChaturanga.Visual;
 
+import ChessChaturanga.Logica.Pieces.Piece;
 import ChessChaturanga.Logica.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -409,16 +410,19 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     public void retirarse() {
-        borad.getParent().setWiner(getUserNotActive());
-        borad.getParent().setLoser(borad.getActivo());
-        borad.getParent().setTerminada(true);
-        
-        String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
-        borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
-        Datos.logs.addFirst(msj);
-        JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
-        
-        share(msj);
+        if(!borad.getParent().isTerminada()){
+            borad.getParent().setWiner(getUserNotActive());
+            borad.getParent().setLoser(borad.getActivo());
+            borad.getParent().setTerminada(true);
+            
+            String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
+            borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+            Datos.logs.addFirst(msj);
+            JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+            
+            share(msj);
+        }else
+            JOptionPane.showMessageDialog(this,"El Juego ya termino y no Puede Retirarse!!!", "Fin de la Partida!", JOptionPane.ERROR_MESSAGE);
     }
     
     private User getUserNotActive(){

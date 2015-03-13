@@ -10,6 +10,7 @@ import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -96,21 +97,27 @@ public class OptionsWithGame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
-        boolean state=false;
-        Partida p;
-        switch(option){
-            case NEWGAME: state = Datos.saver.crearPartida(Datos.logedin, getUser()); break;
-            case LOADGAME: p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
+        try{
+            boolean state=false;
+            Partida p;
+            switch(option){
+                case NEWGAME: state = Datos.saver.crearPartida(Datos.logedin, getUser()); break;
+                case LOADGAME: p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
                 if(p!=null){state=true; new BoardVisual(p).setVisible(state);} break;
-            case DELETEGAME: state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); break;
-            case TRASFERGAME: 
-                User user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
-                if(Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2)){
-                    state=true;
-                }
-                break;
+                case DELETEGAME: state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); break;
+                case TRASFERGAME:
+                    User user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                    if(Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2)){
+                        state=true;
+                    }
+                    break;
+            }
+            if(state)dispose();
         }
-        if(state)dispose();
+        catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "Error: No hay ningun usuario creado!!!\nFavor cree almenos dos users para Jugar", "No Hay Users!", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
     }//GEN-LAST:event_btnPlayActionPerformed
 
     /**

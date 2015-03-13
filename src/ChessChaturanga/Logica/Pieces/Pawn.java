@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ChessChaturanga.Logica;
+package ChessChaturanga.Logica.Pieces;
 
+import ChessChaturanga.Logica.Board;
+import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.NewPawnPromotionException;
+import ChessChaturanga.Logica.Position;
 import java.util.ArrayList;
 
 /**
@@ -82,6 +86,8 @@ public class Pawn extends Piece{
         if(isValid){
             position.set(row, col);
             genereMovementsValid(b);
+            if(row==0 || row==7)
+                throw new NewPawnPromotionException(row, col);
         }
         return isValid;
     }

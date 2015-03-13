@@ -5,6 +5,15 @@
  */
 package ChessChaturanga.Logica;
 
+import ChessChaturanga.Logica.Pieces.King;
+import ChessChaturanga.Logica.Pieces.Tower;
+import ChessChaturanga.Logica.Pieces.Pawn;
+import ChessChaturanga.Logica.Pieces.Horse;
+import ChessChaturanga.Logica.Pieces.Advisor;
+import ChessChaturanga.Logica.Pieces.Elephant;
+import ChessChaturanga.Logica.Pieces.Piece;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author KenyStev
@@ -71,8 +80,19 @@ public class Board {
         boolean state = false;
         Piece p = pieces[piece.row][piece.col], moveTo = pieces[ne.row][ne.col];
         if(p!=null && activo.valirColor(p.getColor())){
-            String matoPiece = "";
-            state = p.mover(this, ne.row, ne.col);
+            String matoPiece = "", pieceMoved = "", wasPromotied = "";
+            try{
+                state = p.mover(this, ne.row, ne.col);
+                pieceMoved = p.getName()+p.getColor().name();
+            }
+            catch(NewPawnPromotionException e){
+                state=true;
+                pieceMoved = p.getName()+p.getColor().name();
+                p = e.getPromotion();
+                String toPromotion = p.getName()+p.getColor().name();
+                wasPromotied = " --> Siendo Promocionado a: "+toPromotion;
+//                JOptionPane.showMessageDialog(this, pieceMoved+" fue Promocionado a: "+toPromotion, matoPiece, SIZE);
+            }
             if(state){
                 if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
                     
@@ -96,7 +116,7 @@ public class Board {
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
-                parent.addUltimaJugada(matoPiece+p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne);
+                parent.addUltimaJugada(matoPiece + pieceMoved +" de: "+piece+" a: "+ ne + wasPromotied);
             }
         }
         return state;

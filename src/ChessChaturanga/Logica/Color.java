@@ -13,7 +13,7 @@ public enum Color {
     GREEN{ //Piezas de Arriba
 
         @Override
-        String getCapital() {
+        public String getCapital() {
             return "V";
         }
         
@@ -21,11 +21,11 @@ public enum Color {
     RED{ //Piezas de Abajo
 
         @Override
-        String getCapital() {
+        public String getCapital() {
             return "R";
         }
         
     };
     
-    abstract String getCapital();
+    public abstract String getCapital();
 }

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ChessChaturanga.Logica;
+package ChessChaturanga.Logica.Pieces;
 
+import ChessChaturanga.Logica.Board;
+import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.Position;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +18,7 @@ public abstract class Piece{
     protected ArrayList<Position> movementsValids= new ArrayList<>();
     protected Color color;
     protected String name;
-    protected Position position;
+    public Position position;
 
     public Piece(String name,Color color, int row, int col) {
         this.color=color;
