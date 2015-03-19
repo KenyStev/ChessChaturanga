@@ -70,6 +70,11 @@ public class BoardVisual extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(250, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout tableLayout = new javax.swing.GroupLayout(table);
         table.setLayout(tableLayout);
@@ -163,6 +168,10 @@ public class BoardVisual extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
