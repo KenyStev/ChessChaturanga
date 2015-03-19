@@ -8,13 +8,14 @@ package ChessChaturanga.Logica.Pieces;
 import ChessChaturanga.Logica.Board;
 import ChessChaturanga.Logica.Color;
 import ChessChaturanga.Logica.Position;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author KenyStev
  */
-public abstract class Piece{
+public abstract class Piece implements Serializable{
     protected ArrayList<Position> movementsValids= new ArrayList<>();
     protected Color color;
     protected String name;

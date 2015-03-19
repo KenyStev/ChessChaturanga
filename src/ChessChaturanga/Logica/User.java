@@ -5,13 +5,14 @@
  */
 package ChessChaturanga.Logica;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  *
  * @author KenyStev
  */
-public class User implements Comparable<User>{
+public class User implements Comparable<User>, Serializable{
     private Color color;
     private String name, pass, email, passFace;
     private int puntos;

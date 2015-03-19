@@ -6,6 +6,7 @@
 package ChessChaturanga.Logica;
 
 import ChessChaturanga.Visual.BoardVisual;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,7 +14,7 @@ import java.util.Calendar;
  *
  * @author KenyStev
  */
-public class Partida {
+public class Partida implements Serializable{
     private Board board;
     private User winer, loser;
     private Calendar fechaCreada, lastFechaEdited;
@@ -119,6 +120,6 @@ public class Partida {
     
     @Override
     public String toString() {
-        return num + " vs "+board.getPlayer2().getName()+" "+lastFechaEdited.getTime();
+        return num + "_ vs "+board.getPlayer2().getName()+" "+lastFechaEdited.getTime();
     }
 }

@@ -6,6 +6,7 @@
 package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.Datos;
+import ChessChaturanga.Logica.SaveWithFiles;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
 import java.util.ArrayList;
@@ -100,6 +101,9 @@ public class Ranking extends javax.swing.JInternalFrame {
         
         if(Datos.saver instanceof saveWithArrayList){
             users = ((saveWithArrayList)Datos.saver).users;
+        }
+        if(Datos.saver instanceof SaveWithFiles){
+            users = ((SaveWithFiles)Datos.saver).users;
         }
         users = sort(users);
         data = new String[users.size()][3];

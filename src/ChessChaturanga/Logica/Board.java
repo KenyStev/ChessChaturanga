@@ -12,13 +12,14 @@ import ChessChaturanga.Logica.Pieces.Horse;
 import ChessChaturanga.Logica.Pieces.Advisor;
 import ChessChaturanga.Logica.Pieces.Elephant;
 import ChessChaturanga.Logica.Pieces.Piece;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author KenyStev
  */
-public class Board {
+public class Board implements Serializable{
     public static final int SIZE = 8;
     private Piece[][] pieces;
     private Piece kingGreen, kingRed;

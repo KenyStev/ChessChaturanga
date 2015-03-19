@@ -157,7 +157,7 @@ public class saveWithArrayList implements Savable{
     }
 
     @Override
-    public boolean serializar(Object obj) {
+    public boolean serializar(String path, Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

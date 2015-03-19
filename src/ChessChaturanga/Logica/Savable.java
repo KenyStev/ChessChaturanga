@@ -31,6 +31,6 @@ public interface Savable {
     int findGamesPendientes();
     ArrayList<String> findLogs();
     
-    boolean serializar(Object obj);
+    boolean serializar(String path, Object obj);
     Object deserializar(String path);
 }

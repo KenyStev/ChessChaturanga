@@ -8,8 +8,10 @@ package ChessChaturanga.Visual;
 import ChessChaturanga.Logica.Datos;
 import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
+import ChessChaturanga.Logica.SaveWithFiles;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -106,7 +108,11 @@ public class OptionsWithGame extends javax.swing.JFrame {
                 if(p!=null){state=true; new BoardVisual(p).setVisible(state);} break;
                 case DELETEGAME: state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); break;
                 case TRASFERGAME:
-                    User user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                    User user2 = null;
+                    if(Datos.saver instanceof saveWithArrayList)
+                        user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                    else if(Datos.saver instanceof SaveWithFiles)
+                        user2 = ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
                     if(Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2)){
                         state=true;
                     }
@@ -159,6 +165,8 @@ public class OptionsWithGame extends javax.swing.JFrame {
     public User getUser() {
         if (Datos.saver instanceof saveWithArrayList) {
             return ((saveWithArrayList) Datos.saver).users.get(Datos.saver.buscarUser(cmbOptions.getSelectedItem().toString()));
+        }else if (Datos.saver instanceof SaveWithFiles) {
+            return ((SaveWithFiles) Datos.saver).users.get(Datos.saver.buscarUser(cmbOptions.getSelectedItem().toString()));
         }
         return null;
     }
@@ -179,6 +187,11 @@ public class OptionsWithGame extends javax.swing.JFrame {
                         if(!u.equals(Datos.logedin))
                             cmbOptions.addItem(u.getName());
                     }
+                }else if (Datos.saver instanceof SaveWithFiles) {
+                    for (User u : ((SaveWithFiles) Datos.saver).users) {
+                        if(!u.equals(Datos.logedin))
+                            cmbOptions.addItem(u.getName());
+                    }
                 }
             break;
                 //En las siguientes tres opciones se muestra solo las partidas del user logedin
@@ -190,6 +203,15 @@ public class OptionsWithGame extends javax.swing.JFrame {
                         if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
                             cmbOptions.addItem(p);
                     }
+                }else if(Datos.saver instanceof SaveWithFiles){
+                    SaveWithFiles saver = (SaveWithFiles)Datos.saver;
+                    File userDir = new File(saver.userPath(Datos.logedin.getName()));
+                    for (File p : userDir.listFiles()) {
+                        if(!p.getName().equals("counter.cht")){
+                            Partida par = (Partida)saver.deserializar(p.getPath());
+                            cmbOptions.addItem(par);
+                        }
+                    }
                 }
                 jLabel1.setText("Partida:");
                     
@@ -198,11 +220,16 @@ public class OptionsWithGame extends javax.swing.JFrame {
         btnPlay.setText(option.name());
         if(option == OptionGame.TRASFERGAME){
             if (Datos.saver instanceof saveWithArrayList) {
-                    for (User u : ((saveWithArrayList) Datos.saver).users) {
-                        if(!u.equals(Datos.logedin))
-                            cmbUsers.addItem(u.getName());
-                    }
+                for (User u : ((saveWithArrayList) Datos.saver).users) {
+                    if(!u.equals(Datos.logedin))
+                        cmbUsers.addItem(u.getName());
                 }
+            }else if (Datos.saver instanceof SaveWithFiles) {
+                for (User u : ((SaveWithFiles) Datos.saver).users) {
+                    if(!u.equals(Datos.logedin))
+                        cmbUsers.addItem(u.getName());
+                }
+            }
             jLabel2.setVisible(true);
             cmbUsers.setVisible(true);
         }else{

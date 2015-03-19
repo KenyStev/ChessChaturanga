@@ -5,11 +5,13 @@
  */
 package ChessChaturanga.Logica;
 
+import java.io.Serializable;
+
 /**
  *
  * @author KenyStev
  */
-public enum Color {
+public enum Color implements Serializable{
     GREEN{ //Piezas de Arriba
 
         @Override
