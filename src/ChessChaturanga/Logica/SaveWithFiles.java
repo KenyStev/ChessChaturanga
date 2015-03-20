@@ -29,7 +29,7 @@ public class SaveWithFiles implements Savable{
     }
     
     public String userPath(String user){
-        return ROOT_PATH + "/" + user.toLowerCase().trim();
+        return ROOT_PATH + "/" + user;
     }
     
     private String getGamePath(User user, int code){
@@ -71,6 +71,9 @@ public class SaveWithFiles implements Savable{
             throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is null");
         if(name.equals("") || pass.equals(""))
             throw new UserCannotBeCreatedException(name, "(User, pass, email or passFace) is empty");
+        if(name.contains(" "))
+            throw new UserCannotBeCreatedException(name, " cannot should has empty space");
+        
         
         if(buscarUser(name)==-1){
             users.add(new User(name, pass, email, passFace));
@@ -148,30 +151,34 @@ public class SaveWithFiles implements Savable{
     public boolean transferirPartida(String path, User user1, User user2) {
         Partida p = cargarPartida(Integer.parseInt(path));
         if(p!=null && !p.isTerminada()){
+            System.out.println("Encontro lapartida");
             if(user1!=null && user2!=null){
                 if(p.getBoard().getPlayer1().equals(user1) && p.getBoard().getPlayer2().equals(user2)){
                     p.getBoard().setPlayer1(user2);
                     p.getBoard().setPlayer2(user1);
                     
+                    System.out.println("son los dos jugadores del juego");
+                    
                     int code = getAvaibleCode(user2);
                     
-                    File from = new File(getGamePath(user1, Integer.parseInt(path))),
-                         to = new File(getGamePath(user2, code));
+                    p.setNum(code);
                     
-                    serializar(to.getPath(), p);
-                    from.delete();
-                    return true;
-                }
-                if(!user2.equals(user1) && buscarUser(user2.getName())>=0){
+                    File from = new File(getGamePath(user1, Integer.parseInt(path)));
+                    
+                    if(serializar(getGamePath(user2, code), p)){
+                        from.delete();
+                        return true;
+                    }
+                }else if(!user2.equals(user1) && buscarUser(user2.getName())>=0){
                     p.getBoard().setPlayer1(user2);
                     int code = getAvaibleCode(user2);
+                    p.setNum(code);
+                    File from = new File(getGamePath(user1, Integer.parseInt(path)));
                     
-                    File from = new File(getGamePath(user1, Integer.parseInt(path))),
-                         to = new File(getGamePath(user2, code));
-                    
-                    serializar(to.getPath(), p);
-                    from.delete();
-                    return true;
+                    if(serializar(getGamePath(user2, code), p)){
+                        from.delete();
+                        return true;
+                    }
                 }
             }
         }

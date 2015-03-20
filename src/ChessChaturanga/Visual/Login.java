@@ -7,7 +7,6 @@ package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.*;
 import ChessChaturanga.Logica.saveWithArrayList;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**

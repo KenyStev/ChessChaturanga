@@ -100,6 +100,7 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         try{
+            System.out.println("Clickeado el Boton Opcion: "+option.name());
             boolean state=false;
             Partida p=null;
             switch(option){
@@ -110,8 +111,10 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
                     else if(Datos.saver instanceof SaveWithFiles){
                         String[] index= cmbOptions.getSelectedItem().toString().split("_");
                         p = Datos.saver.cargarPartida(Integer.parseInt(index[0]));
+                        System.out.println("Valor de p: "+p);
                     }
-                if(p!=null){state=true; new BoardVisual(p).setVisible(state);} break;
+                if(p!=null){state=true; new BoardVisual(p).setVisible(state);
+                    System.out.println("Estado: "+state);} break;
                 case DELETEGAME: 
                     if(Datos.saver instanceof saveWithArrayList)
                         state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); 

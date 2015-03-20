@@ -9,11 +9,15 @@ import ChessChaturanga.Logica.Datos;
 import ChessChaturanga.Logica.SaveWithFiles;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeSet;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.plaf.TableUI;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,22 +44,98 @@ public class Ranking extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn = new javax.swing.JPanel();
+        btnSaveFile = new javax.swing.JButton();
+        rank = new javax.swing.JPanel();
+
+        btnSaveFile.setText("Save");
+        btnSaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveFileActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btnLayout = new javax.swing.GroupLayout(btn);
+        btn.setLayout(btnLayout);
+        btnLayout.setHorizontalGroup(
+            btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnLayout.createSequentialGroup()
+                .addComponent(btnSaveFile)
+                .addGap(0, 35, Short.MAX_VALUE))
+        );
+        btnLayout.setVerticalGroup(
+            btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(btnSaveFile))
+        );
+
+        javax.swing.GroupLayout rankLayout = new javax.swing.GroupLayout(rank);
+        rank.setLayout(rankLayout);
+        rankLayout.setHorizontalGroup(
+            rankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 403, Short.MAX_VALUE)
+        );
+        rankLayout.setVerticalGroup(
+            rankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(rank, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 283, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 250, Short.MAX_VALUE)
+                .addComponent(btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(rank, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveFileActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Archivo de Texto", ".txt"));
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Documento .doc", ".doc"));
+        int returnVal = chooser.showSaveDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    chooser.getSelectedFile().getPath());
+        }
+        
+        try(FileWriter fw = new FileWriter(chooser.getSelectedFile().getPath()+".txt", false)){
+            fw.write("*----- RANKING "+new Date()+" -----*\n\n");
+            
+            for (String t : getColumnNames()) {
+                fw.write(t+"\t");
+            }
+            fw.write("\n");
+            
+            for (String[] data : getData()) {
+                for (String s : data) {
+                    fw.write(s+"\t");
+                }
+                fw.write("\n");
+            }
+        }
+        catch(IOException e){
+            System.out.println("Error: "+e);
+        }
+    }//GEN-LAST:event_btnSaveFileActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btn;
+    private javax.swing.JButton btnSaveFile;
+    private javax.swing.JPanel rank;
     // End of variables declaration//GEN-END:variables
 
     private void init() {
@@ -63,8 +143,8 @@ public class Ranking extends javax.swing.JInternalFrame {
         
         JScrollPane scroller = new JScrollPane();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(rank);
+        rank.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -83,8 +163,9 @@ public class Ranking extends javax.swing.JInternalFrame {
         
         scroller.setVisible(true);
         scroller.setViewportView(table);
-        getContentPane().add(scroller);
-        table.setBounds(getBounds());
+//        getContentPane().add(scroller);
+        rank.add(scroller);
+        table.setBounds(rank.getBounds());
         table.setVisible(true);
         table.setEnabled(false);
         table.repaint();
@@ -92,7 +173,7 @@ public class Ranking extends javax.swing.JInternalFrame {
     }
     
     private String[] getColumnNames(){
-        return new String[] {"Lugar","Username","Puntos"};
+        return new String[] {"Lugar","Puntos","Username"};
     }
     
     private String[][] getData(){
@@ -108,10 +189,16 @@ public class Ranking extends javax.swing.JInternalFrame {
         users = sort(users);
         data = new String[users.size()][3];
         
+//        for (int i = 0; i < users.size(); i++) {
+//            data[i][0] = (i+1)+"";
+//            data[i][1] = users.get(i).getName();
+//            data[i][2] = users.get(i).getPuntos()+"";
+//        }
+        
         for (int i = 0; i < users.size(); i++) {
             data[i][0] = (i+1)+"";
-            data[i][1] = users.get(i).getName();
-            data[i][2] = users.get(i).getPuntos()+"";
+            data[i][1] = users.get(i).getPuntos()+"";
+            data[i][2] = users.get(i).getName();
         }
         
         return data;
