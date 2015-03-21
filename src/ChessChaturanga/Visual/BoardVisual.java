@@ -223,15 +223,28 @@ public class BoardVisual extends javax.swing.JFrame {
     private void initCasillas() {
         Piece[][] pieces = borad.getPieces();
         table.setBounds(table.getX(), table.getY(), 0, 0);
-        for (int i = 0; i < casillas.length; i++) {
-            for (int j = 0; j < casillas.length; j++) {
-                casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64), j,i);
-                casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
-                casillas[j][i].setPiece(pieces[j][i]);
-                table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
-                table.add(casillas[j][i]);
+        if(borad.isFlipy()){
+            for (int c=0, i = casillas.length-1; i >= 0; i--, c++) {
+                for (int r=0, j = casillas.length-1; j >= 0; j--, r++) {
+                    casillas[j][i] = new Casilla(new Rectangle(c * 64, r * 64, 64, 64), j,i);
+                    casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
+                    casillas[j][i].setPiece(pieces[j][i]);
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
+            }
+        }else{
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64), j,i);
+                    casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
+                    casillas[j][i].setPiece(pieces[j][i]);
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
             }
         }
+        
         showPlayerActive();
     }
 
@@ -284,6 +297,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 //y luego actualiza los labels de las piezas comidas
                 casillaActiva=null;
                 showPiecesAte();
+                reOrderCasillas();
             }
         //sino verifica si se clickeo una casilla vacia osea que no hay una pieza en ella
         }else if(casilla.getPiece()==null || 
@@ -323,6 +337,7 @@ public class BoardVisual extends javax.swing.JFrame {
         }
         showPlayerActive();
         showAllJugadas();
+//        reOrderCasillas();
         getContentPane().repaint();
         
         if(borad.getParent().isTerminada()){
@@ -334,6 +349,27 @@ public class BoardVisual extends javax.swing.JFrame {
             Datos.saver.guardarPartida(borad.getParent());
             
             share(msj);
+        }
+    }
+    
+    public void reOrderCasillas(){
+        table.setBounds(table.getX(), table.getY(), 0, 0);
+        if(borad.isFlipy()){
+            for (int c=0, i = casillas.length-1; i >= 0; i--, c++) {
+                for (int r=0, j = casillas.length-1; j >= 0; j--, r++) {
+                    casillas[j][i].setBounds(new Rectangle(c * 64, r * 64, 64, 64));
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
+            }
+        }else{
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    casillas[j][i].setBounds(new Rectangle(i * 64, j * 64, 64, 64));
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
+            }
         }
     }
 

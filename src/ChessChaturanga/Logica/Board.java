@@ -24,7 +24,7 @@ public class Board implements Serializable{
     private Piece[][] pieces;
     private Piece kingGreen, kingRed;
     private User player1, player2, activo;
-    private boolean active;
+    private boolean active, flipy;
     private Partida parent;
     
     //Constructor para crear un nuevo Tablero
@@ -34,19 +34,20 @@ public class Board implements Serializable{
         player2 = play2;
         activo=player1;
         active=true;
+        flipy = false;
         initPieces();
         setColorOfUsers();
     }
 
     //Constructor para cargar partida
-    public Board(Board board) {
-        this.pieces = board.getPieces();
-        this.player1 = board.player1;
-        this.player2 = board.player2;
-        this.activo = board.active?player1:player2;
-        this.active = board.active;
-        setColorOfUsers();
-    }
+//    public Board(Board board) {
+//        this.pieces = board.getPieces();
+//        this.player1 = board.player1;
+//        this.player2 = board.player2;
+//        this.activo = board.active?player1:player2;
+//        this.active = board.active;
+//        setColorOfUsers();
+//    }
     
     public final void setColorOfUsers(){
         player1.setColor(Color.RED);
@@ -117,10 +118,19 @@ public class Board implements Serializable{
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
+                flip();
                 parent.addUltimaJugada(matoPiece + pieceMoved +" de: "+piece+" a: "+ ne + wasPromotied);
             }
         }
         return state;
+    }
+    
+    private void flip(){
+        flipy = !flipy;
+    }
+
+    public boolean isFlipy() {
+        return flipy;
     }
 
     public Piece[][] getPieces() {
