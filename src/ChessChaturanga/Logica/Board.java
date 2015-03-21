@@ -153,7 +153,7 @@ public class Board implements Serializable{
 
     public void setPlayer1(User player1) {
         this.player1 = player1;
-//        activo = active?player1:player2;
+        activo = active?this.player1:player2;
     }
 
     public void setPlayer2(User player2) {

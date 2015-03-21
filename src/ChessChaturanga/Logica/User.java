@@ -65,6 +65,7 @@ public class User implements Comparable<User>, Serializable{
     
     public void addLog(String log){
         logs.addFirst(log);
+//        Datos.logs.addFirst(log);
     }
     
     public void addPoints() {

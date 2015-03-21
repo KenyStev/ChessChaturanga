@@ -26,19 +26,58 @@ public class Datos {
         if(saver instanceof SaveWithFiles){
             SaveWithFiles save = (SaveWithFiles)saver;
             ArrayList<User> tmp = (ArrayList<User>)save.deserializar(USERS_PATH);
-            if(tmp!=null)
+            if(tmp!=null){
                 save.users = tmp;
-            
-            LinkedList<String> tmpLogs = (LinkedList<String>)save.deserializar(LOGS_PATH);
-            if(tmpLogs!=null)
-                logs = tmpLogs;
+                System.out.println("deserealizados Users");
+            }
         }
     }
     
     public static void unLoadUsers() {
-        if(saver.serializar(USERS_PATH, ((SaveWithFiles)saver).users))
-            System.out.println("Se Serializo users");
+        if(saver instanceof SaveWithFiles){
+            SaveWithFiles save = (SaveWithFiles)saver;
+            if(saver.serializar(USERS_PATH, save.users))
+                System.out.println("Se Serializo users");
+        }
+    }
+    
+    public static void loadLogs(){
+        if(saver instanceof SaveWithFiles){
+            SaveWithFiles save = (SaveWithFiles)saver;
+            LinkedList<String> tmpLogs = (LinkedList<String>)save.deserializar(LOGS_PATH);
+            if(tmpLogs!=null){
+                logs = tmpLogs;
+                System.out.println("deserealizados logs");
+            }
+        }
+    }
+    
+    public static void unLoadLogs(){
         if(saver.serializar(LOGS_PATH, logs))
             System.out.println("Se Serializo logs");
+    }
+    
+    public static ArrayList<String> findLogs() {
+        ArrayList<String> userLogs = new ArrayList<>();
+        findLogs(userLogs, 0);
+//        for (String log : Datos.logs) {
+//            String[] data = log.split(" ");
+//            for (String s : data) {
+//                if(s.equals(Datos.logedin.getName()))
+//                    userLogs.add(log);
+//            }
+//        }
+        return userLogs;
+    }
+    
+    private static void findLogs(ArrayList<String> userLogs, int index) {
+        if(index < logs.size()) {
+            String[] data = logs.get(index).split(" ");
+            for (String s : data) {
+                if(s.equals(Datos.logedin.getName()))
+                    userLogs.add(logs.get(index));
+            }
+            findLogs(userLogs, index+1);
+        }
     }
 }

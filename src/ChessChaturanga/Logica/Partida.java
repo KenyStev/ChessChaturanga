@@ -78,12 +78,21 @@ public class Partida implements Serializable{
     }
 
     public void setWiner(User winer) {
-        this.winer = winer;
-        winer.addPoints();
+//        this.winer = winer;
+//        this.winer.addPoints();
+//        System.out.println("Winer: "+this.winer.getName()+" Points: "+this.winer.getPuntos());
+        
+//        if(((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName())) == winer)
+//            System.out.println("Estan en el mismo espacio de memoria");
+        
+//        ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName())).addPoints();
+        this.winer = ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName()));
+        this.winer.addPoints();
     }
 
     public void setLoser(User loser) {
         this.loser = loser;
+        System.out.println("Loser: "+this.loser.getName());
     }
 
     public User getWiner() {

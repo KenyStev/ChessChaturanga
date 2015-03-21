@@ -57,9 +57,19 @@ public class SaveWithFiles implements Savable{
     
     @Override
     public int buscarUser(String name) {
-        for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).equals(name))
-                return i;
+//        for (int i = 0; i < users.size(); i++) {
+//            if(users.get(i).equals(name))
+//                return i;
+//        }
+//        return -1;
+        return buscarUser(name, 0);
+    }
+    
+    private int buscarUser(String name, int index){
+        if(index<users.size()){
+            if(users.get(index).equals(name))
+                return index;
+            return buscarUser(name, index+1);
         }
         return -1;
     }
@@ -154,8 +164,8 @@ public class SaveWithFiles implements Savable{
             System.out.println("Encontro lapartida");
             if(user1!=null && user2!=null){
                 if(p.getBoard().getPlayer1().equals(user1) && p.getBoard().getPlayer2().equals(user2)){
-                    p.getBoard().setPlayer1(user2);
                     p.getBoard().setPlayer2(user1);
+                    p.getBoard().setPlayer1(user2);
                     
                     System.out.println("son los dos jugadores del juego");
                     
@@ -201,18 +211,18 @@ public class SaveWithFiles implements Savable{
         return pendientes;
     }
     
-    @Override
-    public ArrayList<String> findLogs() {
-        ArrayList<String> userLogs = new ArrayList<>();
-        for (String log : Datos.logs) {
-            String[] data = log.split(" ");
-            for (String s : data) {
-                if(s.equals(Datos.logedin.getName()))
-                    userLogs.add(log);
-            }
-        }
-        return userLogs;
-    }
+//    @Override
+//    public ArrayList<String> findLogs() {
+//        ArrayList<String> userLogs = new ArrayList<>();
+//        for (String log : Datos.logs) {
+//            String[] data = log.split(" ");
+//            for (String s : data) {
+//                if(s.equals(Datos.logedin.getName()))
+//                    userLogs.add(log);
+//            }
+//        }
+//        return userLogs;
+//    }
     
     @Override
     public boolean serializar(String path, Object obj) {

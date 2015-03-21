@@ -238,14 +238,14 @@ public class Login extends javax.swing.JFrame {
                 new Menu().setVisible(true);
                 dispose();
             }else{
-                JOptionPane.showMessageDialog(this, "Ingrese un Password correcto!" ,"Error: Password Incorrecta!!!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: User or Pass Invalid!!!\nPlease enter an user and pass valid", "invalid User!", JOptionPane.ERROR_MESSAGE);
             }
         }
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(this, "Error: No hay ningun usuario creado!!!\nFavor cree almenos un user para entrar y dos para Jugar", "No Hay Users!", JOptionPane.ERROR_MESSAGE);
         }
         catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(this, "Error: User or Pass Invalid!!!\nPlease enter an user and pass valid", "invalid User!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: usuario no existe!!!\nFavor cree almenos un user para entrar y dos para Jugar\no ingrese un user y pass correcto", "User no Found!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnOKActionPerformed
     
@@ -258,6 +258,8 @@ public class Login extends javax.swing.JFrame {
                 btnClearActionPerformed(evt);
                 pane.setSelectedIndex(0);
                 txtUsername.requestFocus();
+                Datos.unLoadUsers();
+//                init();
             }else{
                 JOptionPane.showMessageDialog(this, "User no Creado!!!\nEl Usuario: "+name+" ya Existe!!", "Error: User no Creado", JOptionPane.ERROR_MESSAGE);
                 btnClearActionPerformed(evt);
@@ -279,7 +281,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void paneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paneFocusGained
-        init();
+//        init();
     }//GEN-LAST:event_paneFocusGained
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

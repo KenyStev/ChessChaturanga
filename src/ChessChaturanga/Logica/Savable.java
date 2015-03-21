@@ -29,7 +29,7 @@ public interface Savable {
     boolean eliminarPartida(String path);
     boolean transferirPartida(String path, User user1, User user2);
     int findGamesPendientes();
-    ArrayList<String> findLogs();
+//    ArrayList<String> findLogs();
     
     boolean serializar(String path, Object obj);
     Object deserializar(String path);

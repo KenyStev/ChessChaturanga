@@ -54,13 +54,7 @@ public class MenuBarGame extends JMenuBar{
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
-        salir.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        
         if(type=='G'){
             newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
             saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
@@ -77,6 +71,7 @@ public class MenuBarGame extends JMenuBar{
             transferGame.addActionListener(new MenuListener(m, MenuListener.TRANSFER));
             retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));  
             ranking.addActionListener(new MenuListener(m, MenuListener.RANKING));
+            salir.addActionListener(new MenuListener(m, MenuListener.EXIT));
         }
         
         file.add(newGame);

@@ -75,6 +75,6 @@ public class LastGames extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void init() {
-        listLogs.setListData(Datos.saver.findLogs().toArray());
+        listLogs.setListData(Datos.findLogs().toArray());
     }
 }

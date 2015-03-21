@@ -31,6 +31,7 @@ public class BoardVisual extends javax.swing.JFrame {
         initComponents();
         borad = parent.getBoard();
         borad.setParent(parent);
+        borad.setColorOfUsers();
         init();
         initCasillas();
         showAllJugadas();
@@ -367,7 +368,7 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
             
-        }else{
+        }else if(borad.getActivo().equals(borad.getPlayer2())){
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
             

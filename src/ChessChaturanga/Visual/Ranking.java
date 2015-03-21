@@ -105,13 +105,21 @@ public class Ranking extends javax.swing.JInternalFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Archivo de Texto", ".txt"));
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Documento .doc", ".doc"));
-        int returnVal = chooser.showSaveDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getPath());
+        int returnVal=0;
+        try{
+            returnVal = chooser.showSaveDialog(this);
         }
-        
+        catch(NullPointerException e){
+            System.out.println("Error: "+e);
+        }
         try(FileWriter fw = new FileWriter(chooser.getSelectedFile().getPath()+".txt", false)){
+            
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+                System.out.println("You chose to open this file: " +
+                        chooser.getSelectedFile().getPath());
+            }
+        
+        
             fw.write("*----- RANKING "+new Date()+" -----*\n\n");
             
             for (String t : getColumnNames()) {
@@ -127,6 +135,9 @@ public class Ranking extends javax.swing.JInternalFrame {
             }
         }
         catch(IOException e){
+            System.out.println("Error: "+e);
+        }
+        catch(NullPointerException e){
             System.out.println("Error: "+e);
         }
     }//GEN-LAST:event_btnSaveFileActionPerformed

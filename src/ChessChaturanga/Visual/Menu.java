@@ -49,6 +49,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Datos.unLoadUsers();
+        Datos.unLoadLogs();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -97,6 +98,7 @@ public class Menu extends javax.swing.JFrame {
         JMenu loged = new JMenu("Logedin: "+Datos.logedin.getName());
         loged.setEnabled(false);
         getJMenuBar().add(loged);
+        Datos.loadLogs();
     }
 
     public void showChangePass() {
