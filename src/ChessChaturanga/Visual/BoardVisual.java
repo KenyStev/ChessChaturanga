@@ -297,7 +297,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 //y luego actualiza los labels de las piezas comidas
                 casillaActiva=null;
                 showPiecesAte();
-                reOrderCasillas();
+                if(borad.isFlip()) reOrderCasillas();
             }
         //sino verifica si se clickeo una casilla vacia osea que no hay una pieza en ella
         }else if(casilla.getPiece()==null || 
@@ -353,24 +353,24 @@ public class BoardVisual extends javax.swing.JFrame {
     }
     
     public void reOrderCasillas(){
-        table.setBounds(table.getX(), table.getY(), 0, 0);
         if(borad.isFlipy()){
+            jLabel1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/colFlip.png")));
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/romFlip.png")));
             for (int c=0, i = casillas.length-1; i >= 0; i--, c++) {
                 for (int r=0, j = casillas.length-1; j >= 0; j--, r++) {
                     casillas[j][i].setBounds(new Rectangle(c * 64, r * 64, 64, 64));
-                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
-                    table.add(casillas[j][i]);
                 }
             }
         }else{
+            jLabel1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/col.png")));
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/rom.png")));
             for (int i = 0; i < casillas.length; i++) {
                 for (int j = 0; j < casillas.length; j++) {
                     casillas[j][i].setBounds(new Rectangle(i * 64, j * 64, 64, 64));
-                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
-                    table.add(casillas[j][i]);
                 }
             }
         }
+        getContentPane().repaint();
     }
 
     /**
