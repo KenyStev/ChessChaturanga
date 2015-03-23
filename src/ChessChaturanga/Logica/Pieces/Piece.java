@@ -8,6 +8,7 @@ package ChessChaturanga.Logica.Pieces;
 import ChessChaturanga.Logica.Board;
 import ChessChaturanga.Logica.Color;
 import ChessChaturanga.Logica.Position;
+import ChessChaturanga.Visual.BoardVisual;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -60,13 +61,37 @@ public abstract class Piece implements Serializable{
      */
     public abstract ArrayList<Position> getMovementsValids(Board b);
     
-    public boolean isInMyRoad(Piece p){
-        for (Position m : movementsValids) {
-            if(m.validar(p.position.row, p.position.col))
-                return true;
-        }
-        return false;
-    }
+//    public boolean isInMyRoad(int index, Piece p, ArrayList<Position> moves){
+//        if(index<moves.size()){
+//            if(moves.get(index).validar(p.position.row, p.position.col))
+//                return true;
+//            return isInMyRoad(index+1, p, moves);
+//        }
+//        return false;
+//    }
+//    
+//    public boolean isInMyRoad(Piece p, ArrayList<Position> moves){
+//        return isInMyRoad(0, p, moves);
+////    }
+//    
+//    public boolean isInMyRoad(Piece p, ArrayList<Position> moves){
+//        for (Position move : moves) {
+//            if(move.validar(p.position.row, p.position.col))
+//                return true;
+//        }
+//        return false;
+//    }
+//    
+//    public boolean kingInMyRoad(Board b){
+//        King kEnemy = b.getKingEnemy(this);
+//        kEnemy.setInJacke(false);
+//        if(isInMyRoad(kEnemy, getMovementsValids(b))){
+//            System.out.println("Rey: "+ kEnemy +" in my road");
+//            kEnemy.setInJacke(true);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public String getName() {
         return name;

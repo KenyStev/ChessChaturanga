@@ -88,6 +88,8 @@ public class Pawn extends Piece{
             genereMovementsValid(b);
             if(row==0 || row==7)
                 throw new NewPawnPromotionException(row, col);
+            
+//            kingInMyRoad(b);
         }
         return isValid;
     }
@@ -107,5 +109,16 @@ public class Pawn extends Piece{
         
         return movements;
     }
-    
+
+//    @Override
+//    public boolean kingInMyRoad(Board b) {
+//        King kEnemy = b.getKingEnemy(this);
+//        kEnemy.setInJacke(false);
+//        if(isInMyRoad(kEnemy, attaksValids)){
+//            System.out.println("Rey: "+ kEnemy +" in my road");
+//            kEnemy.setInJacke(true);
+//            return true;
+//        }
+//        return false;
+//    }
 }

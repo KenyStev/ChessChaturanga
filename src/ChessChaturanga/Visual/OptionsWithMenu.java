@@ -203,64 +203,69 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadFrame() {
-        switch(option){
-            case NEWGAME:
+        try{
+            switch(option){
+                case NEWGAME:
+                    if (Datos.saver instanceof saveWithArrayList) {
+                        for (User u : ((saveWithArrayList) Datos.saver).users) {
+                            if(!u.equals(Datos.logedin))
+                                cmbOptions.addItem(u.getName());
+                        }
+                    }else if (Datos.saver instanceof SaveWithFiles) {
+                        for (User u : ((SaveWithFiles) Datos.saver).users) {
+                            if(!u.equals(Datos.logedin))
+                                cmbOptions.addItem(u.getName());
+                        }
+                    }
+                    break;
+                    //En las siguientes tres opciones se muestra solo las partidas del user logedin
+                case LOADGAME:
+                case DELETEGAME:
+                case TRASFERGAME:
+                    if (Datos.saver instanceof saveWithArrayList) {
+                        for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
+                            if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
+                                cmbOptions.addItem(p);
+                        }
+                    }else if(Datos.saver instanceof SaveWithFiles){
+                        SaveWithFiles saver = (SaveWithFiles)Datos.saver;
+                        File userDir = new File(saver.userPath(Datos.logedin.getName()));
+                        for (File p : userDir.listFiles()) {
+                            if(!p.getName().equals("counter.cht")){
+                                Partida par = (Partida)saver.deserializar(p.getPath());
+                                if(!par.isTerminada())
+                                    cmbOptions.addItem(par);
+                                else
+                                    p.delete();
+                            }
+                        }
+                    }
+                    jLabel1.setText("Partida:");
+                    
+                    break;
+            }
+            btnPlay.setText(option.name());
+            if(option == OptionGame.TRASFERGAME){
                 if (Datos.saver instanceof saveWithArrayList) {
                     for (User u : ((saveWithArrayList) Datos.saver).users) {
                         if(!u.equals(Datos.logedin))
-                            cmbOptions.addItem(u.getName());
+                            cmbUsers.addItem(u.getName());
                     }
                 }else if (Datos.saver instanceof SaveWithFiles) {
                     for (User u : ((SaveWithFiles) Datos.saver).users) {
                         if(!u.equals(Datos.logedin))
-                            cmbOptions.addItem(u.getName());
+                            cmbUsers.addItem(u.getName());
                     }
                 }
-            break;
-                //En las siguientes tres opciones se muestra solo las partidas del user logedin
-            case LOADGAME:
-            case DELETEGAME:
-            case TRASFERGAME: 
-                if (Datos.saver instanceof saveWithArrayList) {
-                    for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
-                        if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
-                            cmbOptions.addItem(p);
-                    }
-                }else if(Datos.saver instanceof SaveWithFiles){
-                    SaveWithFiles saver = (SaveWithFiles)Datos.saver;
-                    File userDir = new File(saver.userPath(Datos.logedin.getName()));
-                    for (File p : userDir.listFiles()) {
-                        if(!p.getName().equals("counter.cht")){
-                            Partida par = (Partida)saver.deserializar(p.getPath());
-                            if(!par.isTerminada())
-                                cmbOptions.addItem(par);
-                            else
-                                p.delete();
-                        }
-                    }
-                }
-                jLabel1.setText("Partida:");
-                    
-                break;
-        }
-        btnPlay.setText(option.name());
-        if(option == OptionGame.TRASFERGAME){
-            if (Datos.saver instanceof saveWithArrayList) {
-                for (User u : ((saveWithArrayList) Datos.saver).users) {
-                    if(!u.equals(Datos.logedin))
-                        cmbUsers.addItem(u.getName());
-                }
-            }else if (Datos.saver instanceof SaveWithFiles) {
-                for (User u : ((SaveWithFiles) Datos.saver).users) {
-                    if(!u.equals(Datos.logedin))
-                        cmbUsers.addItem(u.getName());
-                }
+                jLabel2.setVisible(true);
+                cmbUsers.setVisible(true);
+            }else{
+                jLabel2.setVisible(false);
+                cmbUsers.setVisible(false);
             }
-            jLabel2.setVisible(true);
-            cmbUsers.setVisible(true);
-        }else{
-            jLabel2.setVisible(false);
-            cmbUsers.setVisible(false);
+        }
+        catch(Exception e){
+            System.out.println("Error: "+e);
         }
     }
     

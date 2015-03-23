@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class Board implements Serializable{
     public static final int SIZE = 8;
     private Piece[][] pieces;
-    private Piece kingGreen, kingRed;
+    private King kingGreen, kingRed;
     private User player1, player2, activo;
     private boolean active, flip;
     private Partida parent;
@@ -119,6 +119,14 @@ public class Board implements Serializable{
                 active=!active;
                 activo = active?player1:player2;
                 parent.addUltimaJugada(matoPiece + pieceMoved +" de: "+piece+" a: "+ ne + wasPromotied);
+                
+//                if(kingRed.isInJacke()){
+//                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingRed, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+//                }
+//                if(kingGreen.isInJacke()){
+//                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingGreen, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+//                }
+                
             }
         }
         return state;
