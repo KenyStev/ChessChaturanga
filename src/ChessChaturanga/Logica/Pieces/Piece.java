@@ -72,26 +72,26 @@ public abstract class Piece implements Serializable{
 //    
 //    public boolean isInMyRoad(Piece p, ArrayList<Position> moves){
 //        return isInMyRoad(0, p, moves);
-////    }
-//    
-//    public boolean isInMyRoad(Piece p, ArrayList<Position> moves){
-//        for (Position move : moves) {
-//            if(move.validar(p.position.row, p.position.col))
-//                return true;
-//        }
-//        return false;
 //    }
-//    
-//    public boolean kingInMyRoad(Board b){
-//        King kEnemy = b.getKingEnemy(this);
-//        kEnemy.setInJacke(false);
-//        if(isInMyRoad(kEnemy, getMovementsValids(b))){
-//            System.out.println("Rey: "+ kEnemy +" in my road");
-//            kEnemy.setInJacke(true);
-//            return true;
-//        }
-//        return false;
-//    }
+    
+    public boolean isInMyRoad(Piece p, ArrayList<Position> moves){
+        for (Position move : moves) {
+            if(move.validar(p.position.row, p.position.col))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean kingInMyRoad(Board b){
+        King kEnemy = b.getKingEnemy(this);
+        kEnemy.setInJacke(false);
+        if(isInMyRoad(kEnemy, getMovementsValids(b))){
+            System.out.println("Rey: "+ kEnemy +" in my road");
+            kEnemy.setInJacke(true);
+            return true;
+        }
+        return false;
+    }
 
     public String getName() {
         return name;

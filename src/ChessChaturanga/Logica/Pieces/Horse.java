@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author dmenjivar
+ * @author KenyStev
  */
 public class Horse extends Piece{
 
@@ -93,7 +93,7 @@ public class Horse extends Piece{
         if(isvalid){
             position.set(row, col);
             genereMovementsValid(b);
-//            kingInMyRoad(b);
+            kingInMyRoad(b);
         }
         return isvalid;
     }

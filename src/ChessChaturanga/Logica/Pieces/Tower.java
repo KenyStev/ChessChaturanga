@@ -44,7 +44,7 @@ public class Tower extends Piece{
         if(validMovement(row, col)){
             position.set(row, col);
             genereMovementsValid(b);
-//            kingInMyRoad(b);
+            kingInMyRoad(b);
             return true;
         }
         return false;

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class King extends Piece{
     
-    private boolean moveLikeHorse; //inJacke;
+    private boolean moveLikeHorse, inJacke;
     private ArrayList<Position> posLikeHorse;
 
     public King(Color color, int row, int col) {
@@ -171,31 +171,31 @@ public class King extends Piece{
         if(isvalid){
             position.set(row, col);
             genereMovementsValid(b);
-//            kingInMyRoad(b);
+            kingInMyRoad(b);
         }
         return isvalid;
     }
 
-//    public void setInJacke(boolean inJacke) {
-//        this.inJacke = inJacke;
-//    }
-//
-//    public boolean isInJacke() {
-//        return inJacke;
-//    }
+    public void setInJacke(boolean inJacke) {
+        this.inJacke = inJacke;
+    }
 
-//    @Override
-//    public boolean kingInMyRoad(Board b) {
-//        super.kingInMyRoad(b); 
-//        setInJacke(false);
-//        for (Piece[] piece2 : b.getPieces()) {
-//            for (Piece piece : piece2) {
-//                if(piece!=null && isEnemy(piece) && piece.isInMyRoad(this, getMovementsValids(b))){
-//                    setInJacke(true);
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
+    public boolean isInJacke() {
+        return inJacke;
+    }
+
+    @Override
+    public boolean kingInMyRoad(Board b) {
+        super.kingInMyRoad(b); 
+        setInJacke(false);
+        for (Piece[] piece2 : b.getPieces()) {
+            for (Piece piece : piece2) {
+                if(piece!=null && isEnemy(piece) && !(piece instanceof King) && piece.isInMyRoad(this, getMovementsValids(b))){
+                    setInJacke(true);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -120,12 +120,12 @@ public class Board implements Serializable{
                 activo = active?player1:player2;
                 parent.addUltimaJugada(matoPiece + pieceMoved +" de: "+piece+" a: "+ ne + wasPromotied);
                 
-//                if(kingRed.isInJacke()){
-//                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingRed, "Jacke", JOptionPane.INFORMATION_MESSAGE);
-//                }
-//                if(kingGreen.isInJacke()){
-//                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingGreen, "Jacke", JOptionPane.INFORMATION_MESSAGE);
-//                }
+                if(kingRed.isInJacke()){
+                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingRed, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(kingGreen.isInJacke()){
+                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingGreen, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+                }
                 
             }
         }
