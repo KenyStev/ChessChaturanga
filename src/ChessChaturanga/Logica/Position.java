@@ -5,11 +5,13 @@
  */
 package ChessChaturanga.Logica;
 
+import java.io.Serializable;
+
 /**
  *
  * @author KenyStev
  */
-public class Position {
+public class Position implements Serializable{
     public int row, col;
 
     public Position(int row, int col) {

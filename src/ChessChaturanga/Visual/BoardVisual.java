@@ -5,6 +5,7 @@
  */
 package ChessChaturanga.Visual;
 
+import ChessChaturanga.Logica.Pieces.Piece;
 import ChessChaturanga.Logica.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class BoardVisual extends javax.swing.JFrame {
         initComponents();
         borad = parent.getBoard();
         borad.setParent(parent);
+        borad.setColorOfUsers();
         init();
         initCasillas();
         showAllJugadas();
@@ -221,15 +223,28 @@ public class BoardVisual extends javax.swing.JFrame {
     private void initCasillas() {
         Piece[][] pieces = borad.getPieces();
         table.setBounds(table.getX(), table.getY(), 0, 0);
-        for (int i = 0; i < casillas.length; i++) {
-            for (int j = 0; j < casillas.length; j++) {
-                casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64), j,i);
-                casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
-                casillas[j][i].setPiece(pieces[j][i]);
-                table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
-                table.add(casillas[j][i]);
+        if(borad.isFlipy()){
+            for (int c=0, i = casillas.length-1; i >= 0; i--, c++) {
+                for (int r=0, j = casillas.length-1; j >= 0; j--, r++) {
+                    casillas[j][i] = new Casilla(new Rectangle(c * 64, r * 64, 64, 64), j,i);
+                    casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
+                    casillas[j][i].setPiece(pieces[j][i]);
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
+            }
+        }else{
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    casillas[j][i] = new Casilla(new Rectangle(i * 64, j * 64, 64, 64), j,i);
+                    casillas[j][i].addActionListener(new InputListener(casillas[j][i], this));
+                    casillas[j][i].setPiece(pieces[j][i]);
+                    table.setBounds(table.getX(), table.getY(), table.getWidth() + casillas[j][i].getWidth(), table.getHeight() + casillas[j][i].getHeight());
+                    table.add(casillas[j][i]);
+                }
             }
         }
+        
         showPlayerActive();
     }
 
@@ -282,6 +297,7 @@ public class BoardVisual extends javax.swing.JFrame {
                 //y luego actualiza los labels de las piezas comidas
                 casillaActiva=null;
                 showPiecesAte();
+                if(borad.isFlip()) reOrderCasillas();
             }
         //sino verifica si se clickeo una casilla vacia osea que no hay una pieza en ella
         }else if(casilla.getPiece()==null || 
@@ -321,16 +337,40 @@ public class BoardVisual extends javax.swing.JFrame {
         }
         showPlayerActive();
         showAllJugadas();
+//        reOrderCasillas();
         getContentPane().repaint();
         
         if(borad.getParent().isTerminada()){
-            String msj = "EL JUGADOR : "+borad.getParent().getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getParent().getLoser().equals(borad.getPlayer1())?borad.getParent().getAtePieces2()-1:borad.getParent().getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getParent().getLoser().getName()+"!!!!";
+            String msj = "EL JUGADOR : "+borad.getParent().getWiner().getName()+" HA ¡TRIUNFADO! SE COMIO AL REY Y A "+(borad.getParent().getLoser().equals(borad.getPlayer1())?borad.getParent().getAtePieces2()-1:borad.getParent().getAtePieces1()-1)+" PIEZAS MAS DEL JUGADOR 2: "+borad.getParent().getLoser().getName()+" !!!!";
             borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
             Datos.logs.addFirst(msj);
             JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
             
+            Datos.saver.guardarPartida(borad.getParent());
+            
             share(msj);
         }
+    }
+    
+    public void reOrderCasillas(){
+        if(borad.isFlipy()){
+            jLabel1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/colFlip.png")));
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/romFlip.png")));
+            for (int c=0, i = casillas.length-1; i >= 0; i--, c++) {
+                for (int r=0, j = casillas.length-1; j >= 0; j--, r++) {
+                    casillas[j][i].setBounds(new Rectangle(c * 64, r * 64, 64, 64));
+                }
+            }
+        }else{
+            jLabel1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/col.png")));
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/rom.png")));
+            for (int i = 0; i < casillas.length; i++) {
+                for (int j = 0; j < casillas.length; j++) {
+                    casillas[j][i].setBounds(new Rectangle(i * 64, j * 64, 64, 64));
+                }
+            }
+        }
+        getContentPane().repaint();
     }
 
     /**
@@ -364,7 +404,7 @@ public class BoardVisual extends javax.swing.JFrame {
             lblPlayer1.setIcon(new ImageIcon(getClass().getResource("/ChessChaturanga/Assets/turnRed.png")));
             lblPlayer2.setIcon(null);
             
-        }else{
+        }else if(borad.getActivo().equals(borad.getPlayer2())){
             lblPlayer2.setForeground(new java.awt.Color(34, 128, 2));
             lblPlayer1.setForeground(java.awt.Color.BLACK);
             
@@ -409,16 +449,21 @@ public class BoardVisual extends javax.swing.JFrame {
     }
 
     public void retirarse() {
-        borad.getParent().setWiner(getUserNotActive());
-        borad.getParent().setLoser(borad.getActivo());
-        borad.getParent().setTerminada(true);
-        
-        String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
-        borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
-        Datos.logs.addFirst(msj);
-        JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
-        
-        share(msj);
+        if(!borad.getParent().isTerminada()){
+            borad.getParent().setWiner(getUserNotActive());
+            borad.getParent().setLoser(borad.getActivo());
+            borad.getParent().setTerminada(true);
+            
+            String msj = "EL JUGADOR : "+borad.getParent().getLoser().getName()+" HA ¡RETIRADO! Y DEJA AL JUGADOR 2: "+borad.getParent().getWiner().getName()+" COMO GANADOR!!!!";
+            borad.getParent().getWiner().addLog(msj); //Los logs se muestran en el perfil del usuario ganador o del logedin???
+            Datos.logs.addFirst(msj);
+            JOptionPane.showMessageDialog(this,msj, "Fin de la Partida!", JOptionPane.INFORMATION_MESSAGE);
+            
+            Datos.saver.guardarPartida(borad.getParent());
+            
+            share(msj);
+        }else
+            JOptionPane.showMessageDialog(this,"El Juego ya termino y no Puede Retirarse!!!", "Fin de la Partida!", JOptionPane.ERROR_MESSAGE);
     }
     
     private User getUserNotActive(){

@@ -137,6 +137,7 @@ public class saveWithArrayList implements Savable{
         return false;
     }
     
+    @Override
     public int findGamesPendientes() {
         int pendientes=0;
         for (Partida game : partidas) {
@@ -146,18 +147,18 @@ public class saveWithArrayList implements Savable{
         return pendientes;
     }
 
-    @Override
-    public ArrayList<String> findLogs() {
-        ArrayList<String> userLogs = new ArrayList<>();
-        for (String log : Datos.logs) {
-            if(log.contains(Datos.logedin.getName()))
-                userLogs.add(log);
-        }
-        return userLogs;
-    }
+//    @Override
+//    public ArrayList<String> findLogs() {
+//        ArrayList<String> userLogs = new ArrayList<>();
+//        for (String log : Datos.logs) {
+//            if(log.contains(Datos.logedin.getName()))
+//                userLogs.add(log);
+//        }
+//        return userLogs;
+//    }
 
     @Override
-    public boolean serializar(Object obj) {
+    public boolean serializar(String path, Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

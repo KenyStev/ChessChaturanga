@@ -7,7 +7,6 @@ package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.*;
 import ChessChaturanga.Logica.saveWithArrayList;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,6 +57,11 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         pane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
@@ -223,21 +227,25 @@ public class Login extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         try{
-            User user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(txtUsername.getText()));
-        
+            User user=null;
+            if(Datos.saver instanceof saveWithArrayList)
+                user = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(txtUsername.getText()));
+            else if(Datos.saver instanceof SaveWithFiles)
+                user = ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(txtUsername.getText()));
+            
             if(user.getPass().equals(new String(txtPass.getPassword()))){
                 Datos.logedin=user;
                 new Menu().setVisible(true);
                 dispose();
             }else{
-                JOptionPane.showMessageDialog(this, "Ingrese un Password correcto!" ,"Error: Password Incorrecta!!!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: User or Pass Invalid!!!\nPlease enter an user and pass valid", "invalid User!", JOptionPane.ERROR_MESSAGE);
             }
         }
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(this, "Error: No hay ningun usuario creado!!!\nFavor cree almenos un user para entrar y dos para Jugar", "No Hay Users!", JOptionPane.ERROR_MESSAGE);
         }
         catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(this, "Error: User or Pass Invalid!!!\nPlease enter an user and pass valid", "invalid User!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: usuario no existe!!!\nFavor cree almenos un user para entrar y dos para Jugar\no ingrese un user y pass correcto", "User no Found!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnOKActionPerformed
     
@@ -250,6 +258,8 @@ public class Login extends javax.swing.JFrame {
                 btnClearActionPerformed(evt);
                 pane.setSelectedIndex(0);
                 txtUsername.requestFocus();
+                Datos.unLoadUsers();
+//                init();
             }else{
                 JOptionPane.showMessageDialog(this, "User no Creado!!!\nEl Usuario: "+name+" ya Existe!!", "Error: User no Creado", JOptionPane.ERROR_MESSAGE);
                 btnClearActionPerformed(evt);
@@ -271,8 +281,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void paneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paneFocusGained
-        init();
+//        init();
     }//GEN-LAST:event_paneFocusGained
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Datos.unLoadUsers();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -334,12 +348,6 @@ public class Login extends javax.swing.JFrame {
 
     private void init() {
         Datos.logedin=null;
-//        int cont = cmbUsers.getItemCount(), c=0;
-//        
-//        for (User u : ((saveWithArrayList)Datos.saver).users) {
-//            if(!(c<cont))
-//                cmbUsers.addItem(u.getName());
-//            c++;
-//        }
+        Datos.loadUsers();
     }
 }

@@ -25,7 +25,7 @@ public class MenuListener implements ActionListener{
     
     public static final int NEW=1, SAVE=2, LOAD=3, DELETE=4, 
             TRANSFER=5, RETIRO=6, EDITPASS=7, LASTGAMES=8, 
-            SHOWPROFILE=9, LOGOUT=10, RANKING=11;
+            SHOWPROFILE=9, LOGOUT=10, RANKING=11, EXIT=12;
     
     public MenuListener(BoardVisual obj, int opcion) {
         this.b = obj;
@@ -122,10 +122,17 @@ public class MenuListener implements ActionListener{
             case SHOWPROFILE:
                 menu.showProfile(); break;
             case LOGOUT:
+                Datos.unLoadUsers();
+                Datos.unLoadLogs();
                 new Login().setVisible(true);
                 menu.dispose(); break;
             case RANKING: 
                 menu.showRanking(); break;
+            case EXIT: 
+                Datos.unLoadUsers();
+                Datos.unLoadLogs();
+                System.exit(0);
+                break;
         }
     }
     

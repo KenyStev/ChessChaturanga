@@ -6,6 +6,7 @@
 package ChessChaturanga.Logica;
 
 import ChessChaturanga.Visual.BoardVisual;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -13,7 +14,7 @@ import java.util.Calendar;
  *
  * @author KenyStev
  */
-public class Partida {
+public class Partida implements Serializable{
     private Board board;
     private User winer, loser;
     private Calendar fechaCreada, lastFechaEdited;
@@ -77,12 +78,21 @@ public class Partida {
     }
 
     public void setWiner(User winer) {
-        this.winer = winer;
-        winer.addPoints();
+//        this.winer = winer;
+//        this.winer.addPoints();
+//        System.out.println("Winer: "+this.winer.getName()+" Points: "+this.winer.getPuntos());
+        
+//        if(((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName())) == winer)
+//            System.out.println("Estan en el mismo espacio de memoria");
+        
+//        ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName())).addPoints();
+        this.winer = ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(winer.getName()));
+        this.winer.addPoints();
     }
 
     public void setLoser(User loser) {
         this.loser = loser;
+        System.out.println("Loser: "+this.loser.getName());
     }
 
     public User getWiner() {
@@ -119,6 +129,6 @@ public class Partida {
     
     @Override
     public String toString() {
-        return num + " vs "+board.getPlayer2().getName()+" "+lastFechaEdited.getTime();
+        return num + "_ vs "+board.getPlayer2().getName()+" "+lastFechaEdited.getTime();
     }
 }

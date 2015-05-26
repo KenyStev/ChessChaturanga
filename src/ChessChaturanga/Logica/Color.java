@@ -5,15 +5,17 @@
  */
 package ChessChaturanga.Logica;
 
+import java.io.Serializable;
+
 /**
  *
  * @author KenyStev
  */
-public enum Color {
+public enum Color implements Serializable{
     GREEN{ //Piezas de Arriba
 
         @Override
-        String getCapital() {
+        public String getCapital() {
             return "V";
         }
         
@@ -21,11 +23,11 @@ public enum Color {
     RED{ //Piezas de Abajo
 
         @Override
-        String getCapital() {
+        public String getCapital() {
             return "R";
         }
         
     };
     
-    abstract String getCapital();
+    public abstract String getCapital();
 }

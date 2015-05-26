@@ -8,8 +8,10 @@ package ChessChaturanga.Visual;
 import ChessChaturanga.Logica.Datos;
 import ChessChaturanga.Logica.OptionGame;
 import ChessChaturanga.Logica.Partida;
+import ChessChaturanga.Logica.SaveWithFiles;
 import ChessChaturanga.Logica.User;
 import ChessChaturanga.Logica.saveWithArrayList;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -98,17 +100,39 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
 
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         try{
+            System.out.println("Clickeado el Boton Opcion: "+option.name());
             boolean state=false;
-            Partida p;
+            Partida p=null;
             switch(option){
                 case NEWGAME: state = Datos.saver.crearPartida(Datos.logedin, getUser()); break;
-                case LOADGAME: p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
-                if(p!=null){state=true; new BoardVisual(p).setVisible(state);} break;
-                case DELETEGAME: state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); break;
+                case LOADGAME: 
+                    if(Datos.saver instanceof saveWithArrayList)
+                        p = Datos.saver.cargarPartida(cmbOptions.getSelectedIndex());
+                    else if(Datos.saver instanceof SaveWithFiles){
+                        String[] index= cmbOptions.getSelectedItem().toString().split("_");
+                        p = Datos.saver.cargarPartida(Integer.parseInt(index[0]));
+                        System.out.println("Valor de p: "+p);
+                    }
+                if(p!=null){state=true; new BoardVisual(p).setVisible(state);
+                    System.out.println("Estado: "+state);} break;
+                case DELETEGAME: 
+                    if(Datos.saver instanceof saveWithArrayList)
+                        state = Datos.saver.eliminarPartida(cmbOptions.getSelectedIndex()+""); 
+                    if(Datos.saver instanceof SaveWithFiles){
+                        String[] index = cmbOptions.getSelectedItem().toString().split("_");
+                        state = Datos.saver.eliminarPartida(index[0]);
+                    }
+                break;
                 case TRASFERGAME:
-                    User user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
-                    if(Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2)){
-                        state=true;
+                    User user2 = null;
+                    if(Datos.saver instanceof saveWithArrayList){
+                        user2 = ((saveWithArrayList)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                        state = Datos.saver.transferirPartida(""+cmbOptions.getSelectedIndex(), Datos.logedin, user2);
+                    }
+                    if(Datos.saver instanceof SaveWithFiles){
+                        user2 = ((SaveWithFiles)Datos.saver).users.get(Datos.saver.buscarUser(cmbUsers.getSelectedItem().toString()));
+                        String[] index = cmbOptions.getSelectedItem().toString().split("_");
+                        state = Datos.saver.transferirPartida(index[0], Datos.logedin, user2);
                     }
                     break;
             }
@@ -164,6 +188,8 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
     public User getUser() {
         if (Datos.saver instanceof saveWithArrayList) {
             return ((saveWithArrayList) Datos.saver).users.get(Datos.saver.buscarUser(cmbOptions.getSelectedItem().toString()));
+        }else if (Datos.saver instanceof SaveWithFiles) {
+            return ((SaveWithFiles) Datos.saver).users.get(Datos.saver.buscarUser(cmbOptions.getSelectedItem().toString()));
         }
         return null;
     }
@@ -177,42 +203,69 @@ public class OptionsWithMenu extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadFrame() {
-        switch(option){
-            case NEWGAME:
-                if (Datos.saver instanceof saveWithArrayList) {
-                    for (User u : ((saveWithArrayList) Datos.saver).users) {
-                        if(!u.equals(Datos.logedin))
-                            cmbOptions.addItem(u.getName());
+        try{
+            switch(option){
+                case NEWGAME:
+                    if (Datos.saver instanceof saveWithArrayList) {
+                        for (User u : ((saveWithArrayList) Datos.saver).users) {
+                            if(!u.equals(Datos.logedin))
+                                cmbOptions.addItem(u.getName());
+                        }
+                    }else if (Datos.saver instanceof SaveWithFiles) {
+                        for (User u : ((SaveWithFiles) Datos.saver).users) {
+                            if(!u.equals(Datos.logedin))
+                                cmbOptions.addItem(u.getName());
+                        }
                     }
-                }
-            break;
-                //En las siguientes tres opciones se muestra solo las partidas del user logedin
-            case LOADGAME:
-            case DELETEGAME:
-            case TRASFERGAME: 
-                if (Datos.saver instanceof saveWithArrayList) {
-                    for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
-                        if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
-                            cmbOptions.addItem(p);
+                    break;
+                    //En las siguientes tres opciones se muestra solo las partidas del user logedin
+                case LOADGAME:
+                case DELETEGAME:
+                case TRASFERGAME:
+                    if (Datos.saver instanceof saveWithArrayList) {
+                        for (Partida p : ((saveWithArrayList) Datos.saver).partidas) {
+                            if(Datos.logedin.equals(p.getBoard().getPlayer1()) && !p.isTerminada())
+                                cmbOptions.addItem(p);
+                        }
+                    }else if(Datos.saver instanceof SaveWithFiles){
+                        SaveWithFiles saver = (SaveWithFiles)Datos.saver;
+                        File userDir = new File(saver.userPath(Datos.logedin.getName()));
+                        for (File p : userDir.listFiles()) {
+                            if(!p.getName().equals("counter.cht")){
+                                Partida par = (Partida)saver.deserializar(p.getPath());
+                                if(!par.isTerminada())
+                                    cmbOptions.addItem(par);
+                                else
+                                    p.delete();
+                            }
+                        }
                     }
-                }
-                jLabel1.setText("Partida:");
+                    jLabel1.setText("Partida:");
                     
-                break;
-        }
-        btnPlay.setText(option.name());
-        if(option == OptionGame.TRASFERGAME){
-            if (Datos.saver instanceof saveWithArrayList) {
+                    break;
+            }
+            btnPlay.setText(option.name());
+            if(option == OptionGame.TRASFERGAME){
+                if (Datos.saver instanceof saveWithArrayList) {
                     for (User u : ((saveWithArrayList) Datos.saver).users) {
                         if(!u.equals(Datos.logedin))
                             cmbUsers.addItem(u.getName());
                     }
+                }else if (Datos.saver instanceof SaveWithFiles) {
+                    for (User u : ((SaveWithFiles) Datos.saver).users) {
+                        if(!u.equals(Datos.logedin))
+                            cmbUsers.addItem(u.getName());
+                    }
                 }
-            jLabel2.setVisible(true);
-            cmbUsers.setVisible(true);
-        }else{
-            jLabel2.setVisible(false);
-            cmbUsers.setVisible(false);
+                jLabel2.setVisible(true);
+                cmbUsers.setVisible(true);
+            }else{
+                jLabel2.setVisible(false);
+                cmbUsers.setVisible(false);
+            }
+        }
+        catch(Exception e){
+            System.out.println("Error: "+e);
         }
     }
     

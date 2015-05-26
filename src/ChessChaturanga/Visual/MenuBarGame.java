@@ -9,6 +9,7 @@ import ChessChaturanga.Logica.MenuListener;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,6 +22,7 @@ public class MenuBarGame extends JMenuBar{
     private JMenu file, profile;
     private JMenuItem newGame, saveGame, openGame, deletGame, transferGame, ranking, logout,
             verMisDatos, lastGames, editPass, retirarse, salir;
+    private JCheckBoxMenuItem flip;
     private BoardVisual b;
     private Menu m;
 
@@ -54,13 +56,17 @@ public class MenuBarGame extends JMenuBar{
         retirarse = new JMenuItem("Retirarse");
         ranking = new JMenuItem("Ranking");
         salir = new JMenuItem("Salir");
-        salir.addActionListener(new ActionListener() {
+        flip = new JCheckBoxMenuItem("Flip Board");
+        flip.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                boolean state = flip.getState();
+                b.borad.setFlip(state);
+                b.reOrderCasillas();
             }
         });
+        
         if(type=='G'){
             newGame.addActionListener(new MenuListener(b, MenuListener.NEW));
             saveGame.addActionListener(new MenuListener(b, MenuListener.SAVE));
@@ -77,6 +83,7 @@ public class MenuBarGame extends JMenuBar{
             transferGame.addActionListener(new MenuListener(m, MenuListener.TRANSFER));
             retirarse.addActionListener(new MenuListener(m, MenuListener.RETIRO));  
             ranking.addActionListener(new MenuListener(m, MenuListener.RANKING));
+            salir.addActionListener(new MenuListener(m, MenuListener.EXIT));
         }
         
         file.add(newGame);
@@ -86,6 +93,7 @@ public class MenuBarGame extends JMenuBar{
         file.add(transferGame);
         file.add(retirarse);
         file.add(ranking);
+        file.add(flip);
         file.add(salir);
         
         profile = new JMenu("Profile");
@@ -110,6 +118,7 @@ public class MenuBarGame extends JMenuBar{
             case 'M': //Desavilitar las opciones que no lleva el Menu
                 saveGame.setEnabled(false);
                 retirarse.setEnabled(false);
+                flip.setEnabled(false);
                 break;
             case 'G': //Desavilitar las opciones que no lleva el Game
                 profile.setEnabled(false);

@@ -5,16 +5,26 @@
  */
 package ChessChaturanga.Logica;
 
+import ChessChaturanga.Logica.Pieces.King;
+import ChessChaturanga.Logica.Pieces.Tower;
+import ChessChaturanga.Logica.Pieces.Pawn;
+import ChessChaturanga.Logica.Pieces.Horse;
+import ChessChaturanga.Logica.Pieces.Advisor;
+import ChessChaturanga.Logica.Pieces.Elephant;
+import ChessChaturanga.Logica.Pieces.Piece;
+import java.io.Serializable;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author KenyStev
  */
-public class Board {
+public class Board implements Serializable{
     public static final int SIZE = 8;
     private Piece[][] pieces;
-    private Piece kingGreen, kingRed;
+    private King kingGreen, kingRed;
     private User player1, player2, activo;
-    private boolean active;
+    private boolean active, flip;
     private Partida parent;
     
     //Constructor para crear un nuevo Tablero
@@ -24,19 +34,20 @@ public class Board {
         player2 = play2;
         activo=player1;
         active=true;
+        flip=false;
         initPieces();
         setColorOfUsers();
     }
 
     //Constructor para cargar partida
-    public Board(Board board) {
-        this.pieces = board.getPieces();
-        this.player1 = board.player1;
-        this.player2 = board.player2;
-        this.activo = board.active?player1:player2;
-        this.active = board.active;
-        setColorOfUsers();
-    }
+//    public Board(Board board) {
+//        this.pieces = board.getPieces();
+//        this.player1 = board.player1;
+//        this.player2 = board.player2;
+//        this.activo = board.active?player1:player2;
+//        this.active = board.active;
+//        setColorOfUsers();
+//    }
     
     public final void setColorOfUsers(){
         player1.setColor(Color.RED);
@@ -71,8 +82,19 @@ public class Board {
         boolean state = false;
         Piece p = pieces[piece.row][piece.col], moveTo = pieces[ne.row][ne.col];
         if(p!=null && activo.valirColor(p.getColor())){
-            String matoPiece = "";
-            state = p.mover(this, ne.row, ne.col);
+            String matoPiece = "", pieceMoved = "", wasPromotied = "";
+            try{
+                state = p.mover(this, ne.row, ne.col);
+                pieceMoved = p.getName()+p.getColor().name();
+            }
+            catch(NewPawnPromotionException e){
+                state=true;
+                pieceMoved = p.getName()+p.getColor().name();
+                p = e.getPromotion();
+                String toPromotion = p.getName()+p.getColor().name();
+                wasPromotied = " --> Siendo Promocionado a: "+toPromotion;
+                JOptionPane.showMessageDialog(null, pieceMoved+" fue Promocionado a: "+toPromotion, wasPromotied, JOptionPane.INFORMATION_MESSAGE);
+            }
             if(state){
                 if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
                     
@@ -96,10 +118,30 @@ public class Board {
                 pieces[piece.row][piece.col]=null;
                 active=!active;
                 activo = active?player1:player2;
-                parent.addUltimaJugada(matoPiece+p.getName()+p.getColor().name() +" de: "+piece+" a: "+ ne);
+                parent.addUltimaJugada(matoPiece + pieceMoved +" de: "+piece+" a: "+ ne + wasPromotied);
+                
+                if(kingRed.isInJacke()){
+                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingRed, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(kingGreen.isInJacke()){
+                    JOptionPane.showMessageDialog(null, "Esta en Jacke: "+kingGreen, "Jacke", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
             }
         }
         return state;
+    }
+
+    public boolean isFlipy() {
+        return !active;
+    }
+
+    public boolean isFlip() {
+        return flip;
+    }
+
+    public void setFlip(boolean flip) {
+        this.flip = flip;
     }
 
     public Piece[][] getPieces() {
@@ -132,7 +174,7 @@ public class Board {
 
     public void setPlayer1(User player1) {
         this.player1 = player1;
-//        activo = active?player1:player2;
+        activo = active?this.player1:player2;
     }
 
     public void setPlayer2(User player2) {

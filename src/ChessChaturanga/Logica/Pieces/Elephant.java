@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ChessChaturanga.Logica;
+package ChessChaturanga.Logica.Pieces;
 
+import ChessChaturanga.Logica.Board;
+import ChessChaturanga.Logica.Color;
+import ChessChaturanga.Logica.Position;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +58,7 @@ public class Elephant extends Piece{
         if(validMovement(row, col)){
             position.set(row, col);
             genereMovementsValid(b);
+            kingInMyRoad(b);
             return true;
         }
         return false;

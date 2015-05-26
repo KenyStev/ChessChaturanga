@@ -6,7 +6,7 @@
 package ChessChaturanga.Visual;
 
 import ChessChaturanga.Logica.Board;
-import ChessChaturanga.Logica.Piece;
+import ChessChaturanga.Logica.Pieces.Piece;
 import ChessChaturanga.Logica.Position;
 import java.awt.Color;
 import java.awt.Rectangle;

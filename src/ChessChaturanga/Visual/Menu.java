@@ -37,10 +37,20 @@ public class Menu extends javax.swing.JFrame {
         setTitle("Chess Chaturanga");
         setPreferredSize(new java.awt.Dimension(760, 430));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Datos.unLoadUsers();
+        Datos.unLoadLogs();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -88,6 +98,7 @@ public class Menu extends javax.swing.JFrame {
         JMenu loged = new JMenu("Logedin: "+Datos.logedin.getName());
         loged.setEnabled(false);
         getJMenuBar().add(loged);
+        Datos.loadLogs();
     }
 
     public void showChangePass() {
