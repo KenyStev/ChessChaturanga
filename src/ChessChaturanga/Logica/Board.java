@@ -97,7 +97,7 @@ public class Board implements Serializable{
             }
             if(state){
                 if(moveTo!=null && !activo.valirColor(moveTo.getColor())){
-                    
+                    //here we used a nested if conditions to check validations
                     if(moveTo.equals(getKingEnemy(p))){
                         parent.setTerminada(true);
                         parent.setWiner(activo);
